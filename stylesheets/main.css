@@ -1,20 +1,40 @@
 ﻿body {
     margin:0;
+    background:url("/resources/noisy-texture.png") repeat;
 }
+/*MAIN HEADER*/
 #header{
-    background-color:#eeeeee;
+    background:url("/resources/noisy-texture.png") repeat;
+    position:relative;
+    background-color:#f3f3f3;
     box-shadow:0px 1px 5px #888;
-    height:70px;
+    height:60px;
 }
-#title {
-    margin-left: 60px;
-    font-size: 36px;
-}
-#title a{
-    text-decoration:none;
-    color:inherit;
-}
+/*LOGO*/
 #logo {
-    margin-top: 10px;
-    margin-left: 10px;
+    margin-left:50px;
+}
+#logo img{
+    border-style:none;
+}
+/*SEARCH BOX*/
+#searchBox {
+    position:absolute;
+    margin:20px 50px;
+    width:100px;
+    height:20px;
+    padding:2px;
+    border:1px solid;
+    border-radius:10px;
+    -moz-border-radius:25px; /* Old Firefox */
+    background:url("/resources/find.png") no-repeat;
+    background-color:white;
+    color:gray;
+    outline:none;
+}
+#searchBox:focus{
+    background:none;
+    background-color:white;
+    color:black;
+    border-color:#0080a0;
 }

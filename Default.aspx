@@ -4,6 +4,6 @@
    <title>Fuddle</title>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div style="text-align:center">TEST PAGE</div>
+    <div style="text-align:center"><h1>MAIN PAGE</h1>  <a href="Upload.aspx">Upload</a></div>
 </asp:Content>
 
