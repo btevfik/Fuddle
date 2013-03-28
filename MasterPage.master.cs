@@ -31,7 +31,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
       //replace space with plus
       string query = input.Replace(" ", "+");
       //redirect to search page
-      Response.Redirect("/Search.aspx?q=" + query);
+      Response.Redirect("/Search.aspx?q=" + query+"&o=img");
     }
 
 }
