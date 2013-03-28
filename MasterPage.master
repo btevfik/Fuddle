@@ -21,10 +21,55 @@
 
             <!--Header that is common on all pages -->
             <div id="header">
+                <!--Logo -->
                 <a id="logo" href="/Default.aspx">
                     <img src="/resources/logo.png" /></a>
-                <input type="text" id="searchBox" value="     Search..." />
+                <!--Search box-->
+                <asp:Panel ID="searchPanel" DefaultButton="searchButton" runat="server">
+                    <asp:TextBox ID="searchBox" runat="server" value="     Search..."></asp:TextBox>
+                    <asp:Button ID="searchButton" runat="server" Style="display: none" OnClick="searchInput" CausesValidation="false" />
+                </asp:Panel>
+                <!--Login/Signup dropdown menu -->
+                <nav>
+                    <ul>
+                        <li id="login">
+                            <a id="login-trigger" href="#">Log in <span>▼</span>
+                            </a>
+                            <div id="login-content">
+                                <asp:Panel ID="loginPanel" DefaultButton="submit" runat="server">
+                                    <fieldset id="inputs">
+                                        <asp:TextBox ID="username" runat="server" type="email" placeholder="Your email address" ValidationGroup="emailValidationGroup" causesvalidation="true"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="password" type="password" placeholder="Password" ValidationGroup="passwordValidationGroup" causesvalidation="true"></asp:TextBox>
+                                    </fieldset>
+                                    <fieldset id="actions">
+                                        <asp:Button ID="submit" runat="server" Text="Log in" OnClick="login" />
+                                        <label id="keep">
+                                            <input type="checkbox" checked="checked">
+                                            Keep me signed in</label>
+                                    </fieldset>
+                                    <asp:Label ID="loginError" runat="server" Text=""></asp:Label>
+                                </asp:Panel>
+                            </div>
+                        </li>
+                        <li id="signup">
+                            <a href="/Register.aspx">Sign up</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
+
+            <!-- Validators -->
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
+                ControlToValidate="username"
+                ValidationGroup="emailValidationGroup"
+                runat="Server">
+            </asp:RequiredFieldValidator>
+
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2"
+                ControlToValidate="password"
+                ValidationGroup="passwordValidationGroup"
+                runat="Server">
+            </asp:RequiredFieldValidator>
 
             <!-- All content pages will render their page here -->
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

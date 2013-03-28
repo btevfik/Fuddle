@@ -17,11 +17,9 @@
 
 #container {
     font-family:remachine;
-    margin:0 auto;
-    top:50px;
     width:100%;
-    left:0;
-    position:relative;
+    position:absolute;
+    margin-top:50px;
     text-align:center;
     font-size:60px;
 }

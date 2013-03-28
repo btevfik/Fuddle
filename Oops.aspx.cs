@@ -10,7 +10,7 @@ public partial class Oops : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //get the error
-        string error = Request.QueryString["error"];
+        string error = Request.QueryString["e"];
         //set page title
         Page.Title = error;
         //set the image and text
