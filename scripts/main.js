@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    //reset searchbox 
-    $("#searchBox").val("     Search...");
+
+    //jquery placeholder plug-in for IE9
+    $('input, textarea').placeholder();
 
     /*Search Box -----------------------------------------------------------------------*/
     //focus in
     $("#searchBox").focus(function () {
-        $(this).val("");
         $(this).animate({
             width: '200px'
         },
@@ -18,7 +18,6 @@
             width: '100px'
         },
             "slow")
-        $(this).val("     Search...");
     });
 
     /*Login-Dropdown-----------------------------------------------------------------------*/

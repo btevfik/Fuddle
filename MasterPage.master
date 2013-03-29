@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
     <!-- Scripts -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/scripts/jquery.placeholder.js"></script>
     <script src="/scripts/main.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -26,7 +27,7 @@
                     <img src="/resources/logo.png" /></a>
                 <!--Search box-->
                 <asp:Panel ID="searchPanel" DefaultButton="searchButton" runat="server">
-                    <asp:TextBox ID="searchBox" runat="server" value="     Search..."></asp:TextBox>
+                    <asp:TextBox ID="searchBox" runat="server" placeholder="     Search..."></asp:TextBox>
                     <asp:Button ID="searchButton" runat="server" Style="display: none" OnClick="searchInput" CausesValidation="false" />
                 </asp:Panel>
                 <!--Login/Signup dropdown menu -->

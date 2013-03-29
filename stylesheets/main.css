@@ -3,6 +3,10 @@
     margin:0;
     background:url("/resources/noisy-texture.png") repeat;
 }
+
+/*For IE9 */
+.placeholder { color: rgba(0, 0, 0, 0.3); }
+
 /*MAIN HEADER*/
 #header{
     background:url("/resources/noisy-texture.png") repeat;
