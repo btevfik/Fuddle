@@ -41,9 +41,10 @@
                                     <fieldset id="inputs">
                                         <asp:TextBox ID="username" runat="server" type="email" placeholder="Your email address" ValidationGroup="emailValidationGroup" causesvalidation="true"></asp:TextBox>
                                         <asp:TextBox runat="server" ID="password" type="password" placeholder="Password" ValidationGroup="passwordValidationGroup" causesvalidation="true"></asp:TextBox>
+                                        <a href="/forgot">No memory like an elephant?</a>
                                     </fieldset>
                                     <fieldset id="actions">
-                                        <asp:Button ID="submit" runat="server" Text="Log in" OnClick="login" />
+                                        <asp:Button ID="submit" runat="server" Text="Let's go" OnClick="login" />
                                         <label id="keep">
                                             <input type="checkbox" checked="checked">
                                             Keep me signed in</label>

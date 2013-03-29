@@ -1,5 +1,33 @@
-﻿body {
-    font-family: Arial, Helvetica, sans-serif;
+﻿@font-face {
+    font-family: 'BebasRegular';
+    src: url('/resources/fonts/BEBAS___-webfont.eot');
+    src: url('/resources/fonts/BEBAS___-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/BEBAS___-webfont.woff') format('woff'),
+         url('/resource/fonts/BEBAS___-webfont.ttf') format('truetype'),
+         url('/resource/fonts/BEBAS___-webfont.svg#BebasRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PTSansRegular';
+    src: url('/resources/fonts/PTS55F-webfont.eot');
+    src: url('/resources/fonts/PTS55F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/PTS55F-webfont.woff') format('woff'),
+         url('/resources/fonts/PTS55F-webfont.ttf') format('truetype'),
+         url('/resources/fonts/PTS55F-webfont.svg#PTSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1, h2, h3 {
+    font-family: BebasRegular;
+    word-spacing: 10px;
+}
+
+body {
+    font-family: PTSansRegular;
+    font-size:18px;
     margin:0;
     background:url("/resources/noisy-texture.png") repeat;
 }
@@ -144,7 +172,13 @@ nav li #login-content {
 }
 
 #keep {
-  font-size:12px;
+  font-size:13px;
+}
+
+#inputs a:link, a:visited{
+    color:#0D98BA;
+    font-size:13px;
+    text-decoration:none;
 }
 
 #inputs input {
@@ -231,7 +265,8 @@ nav li #login-content {
   top: 2px;
   right: 2px;
 }
+
 #loginError {
-  color: red;
-  font-size:12px;
+  color: #d14545;
+  font-size:13px;
 }

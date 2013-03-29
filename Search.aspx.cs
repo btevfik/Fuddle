@@ -20,13 +20,13 @@ public partial class Search : System.Web.UI.Page
         LiteralControl panelText = searchresults.Controls[0] as LiteralControl;
         
         //display the query string
-        searchedQuery.Text = "You have searched for: <b>"+query+"</b><br><br>Here are the results.";
+        searchedQuery.Text = "You have searched for: <b>"+query+"</b><br><br>Fuddle found you these.";
 
         //if nothing is submitted clear the area, display message
         if (query == "" || query == null)
         {
             panelText.Text = "";
-            searchedQuery.Text = "You have searched for: nothing <b>(null)</b><br><br>Use the box in the header to search for images and users.";
+            searchedQuery.Text = "Use the box in the header to search for cute elephants.";
             return;
         }
 

@@ -19,12 +19,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
       System.Diagnostics.Debug.WriteLine("Password: " + password.Text);
       if (username.Text == "" || password.Text == "")
       {
-          loginError.Text = "Not successful. Try again.";     
+          loginError.Text = "Ah ah ah. You didn't say the magic word.";     
       }
     }
 
     //on search submit
-    protected void searchInput(object sender, EventArgs e)
+    public void searchInput(object sender, EventArgs e)
     {
       //get input
       string input = HttpUtility.HtmlEncode(searchBox.Text);

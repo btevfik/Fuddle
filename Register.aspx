@@ -4,6 +4,6 @@
     <title>Fuddle | Register</title>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div style="text-align:center"><h1>Sign Up</h1></div>
+    <div style="text-align:center"><h1>Sign Up</h1>Register form will go here.</div>
 </asp:Content>
 

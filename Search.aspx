@@ -8,7 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <!--Header -->
     <div style="text-align: center">
-        <h1>Search Results</h1>
+        <h1>Search</h1>
         <p>
             <asp:Label ID="searchedQuery" runat="server" Text=""></asp:Label>
         </p>
