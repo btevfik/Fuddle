@@ -7,10 +7,11 @@ using System.IO;
 using System.Drawing;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 public partial class Upload : System.Web.UI.Page
 {
-    protected string connString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True";
+    protected string connString = System.Configuration.ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
     {
