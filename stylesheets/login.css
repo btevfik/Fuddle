@@ -10,7 +10,7 @@ input:focus,textarea:focus {
 
 .loginControl {
   margin:0 auto;
-  width:298px;
+  width:290px;
 }
 
 #login-content {
@@ -29,7 +29,7 @@ input:focus,textarea:focus {
   -moz-border-radius: 3px 0 3px 3px;
   -webkit-border-radius: 3px 0 3px 3px;
   border-radius: 3px 0 3px 3px;
-  width:270px;
+  width:260px;
 }
 
 #inputs a:link,#inputs a:visited{
