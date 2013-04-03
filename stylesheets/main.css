@@ -56,7 +56,7 @@ body {
 }
 #searchBox {
     position:absolute;
-    margin:20px 50px;
+    margin:20px 20px;
     width:100px;
     height:20px;
     padding:2px;
@@ -131,4 +131,31 @@ body {
 #login a:hover,
 #signup a:hover {
   background: #fff;
+}
+
+/*UPLOAD BUTTON*/
+.uploadButton {
+    position:relative;
+    bottom:18px;
+    margin-left:50px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background-color:#f9f9f9;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#666666;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 11px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}.uploadButton:hover {
+	background-color:#e6e6e6;
+}
+.uploadButton:active {
+    position: relative;
 }

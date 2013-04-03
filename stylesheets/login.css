@@ -32,7 +32,7 @@ input:focus,textarea:focus {
   width:270px;
 }
 
-#inputs a:link, a:visited{
+#inputs a:link,#inputs a:visited{
     color:#0D98BA;
     font-size:13px;
     text-decoration:none;
@@ -86,7 +86,6 @@ input:focus,textarea:focus {
   padding: 0;
   width: 100px;
   cursor: pointer;
-  font: bold 14px Arial, Helvetica;
   color: #fff;
 }
 

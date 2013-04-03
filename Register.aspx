@@ -14,7 +14,5 @@
             </WizardSteps>
         </asp:CreateUserWizard>
     </div>
-
-
 </asp:Content>
 

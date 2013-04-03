@@ -25,6 +25,12 @@
                 <!--Logo -->
                 <a id="logo" href="/Default.aspx">
                     <img src="/resources/logo.png" /></a>
+                <!--Upload button --> 
+                <asp:LoginView ID="LoginView2" runat="server">
+                    <LoggedInTemplate>
+                        <asp:HyperLink ID="uploadButton" CssClass="uploadButton" runat="server" NavigateUrl="~/Upload.aspx">Upload</asp:HyperLink>
+                    </LoggedInTemplate>
+                </asp:LoginView>
                 <!--Search box-->
                 <asp:Panel ID="searchPanel" DefaultButton="searchButton" runat="server">
                     <asp:TextBox ID="searchBox" runat="server" placeholder="     Search..."></asp:TextBox>
