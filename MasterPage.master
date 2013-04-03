@@ -30,48 +30,32 @@
                     <asp:TextBox ID="searchBox" runat="server" placeholder="     Search..."></asp:TextBox>
                     <asp:Button ID="searchButton" runat="server" Style="display: none" OnClick="searchInput" CausesValidation="false" />
                 </asp:Panel>
-                <!--Login/Signup dropdown menu -->
-                <nav>
-                    <ul>
-                        <li id="login">
-                            <a id="login-trigger" href="#">Log in <span>▼</span>
-                            </a>
-                            <div id="login-content">
-                                <asp:Panel ID="loginPanel" DefaultButton="submit" runat="server">
-                                    <fieldset id="inputs">
-                                        <asp:TextBox ID="username" runat="server" type="email" placeholder="Your email address" ValidationGroup="emailValidationGroup" causesvalidation="true"></asp:TextBox>
-                                        <asp:TextBox runat="server" ID="password" type="password" placeholder="Password" ValidationGroup="passwordValidationGroup" causesvalidation="true"></asp:TextBox>
-                                        <a href="/forgot">No memory like an elephant?</a>
-                                    </fieldset>
-                                    <fieldset id="actions">
-                                        <asp:Button ID="submit" runat="server" Text="Let's go" OnClick="login" />
-                                        <label id="keep">
-                                            <input type="checkbox" checked="checked">
-                                            Keep me signed in</label>
-                                    </fieldset>
-                                    <asp:Label ID="loginError" runat="server" Text=""></asp:Label>
-                                </asp:Panel>
-                            </div>
-                        </li>
-                        <li id="signup">
-                            <a href="/Register.aspx">Sign up</a>
-                        </li>
-                    </ul>
-                </nav>
+                <!--Login/Signup -->
+                <div id="loginMenu">
+                    <asp:LoginView ID="LoginView1" runat="server">
+                        <AnonymousTemplate>
+                            <ul>
+                                <li id="login">
+                                    <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                                </li>
+                                <li id="signup">
+                                    <a href="/Register.aspx">Sign up</a>
+                                </li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul>
+                                <li id="login">
+                                    <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                                </li>
+                                <li id="signup">
+                                    <a href="/UserProfile.aspx">Profile</a>
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
             </div>
-
-            <!-- Validators -->
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
-                ControlToValidate="username"
-                ValidationGroup="emailValidationGroup"
-                runat="Server">
-            </asp:RequiredFieldValidator>
-
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator2"
-                ControlToValidate="password"
-                ValidationGroup="passwordValidationGroup"
-                runat="Server">
-            </asp:RequiredFieldValidator>
 
             <!-- All content pages will render their page here -->
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

@@ -12,17 +12,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
        
     }
 
-    //on login submit
-    protected void login(object sender, EventArgs e)
-    {
-      System.Diagnostics.Debug.WriteLine("Email: " + username.Text);
-      System.Diagnostics.Debug.WriteLine("Password: " + password.Text);
-      if (username.Text == "" || password.Text == "")
-      {
-          loginError.Text = "Ah ah ah. You didn't say the magic word.";     
-      }
-    }
-
     //on search submit
     public void searchInput(object sender, EventArgs e)
     {

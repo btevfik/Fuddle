@@ -11,6 +11,18 @@ public partial class UserProfile : System.Web.UI.Page
     {
         //get the requested user
         string user = Request.QueryString["user"];
+
+        //if nothing is given then by default display currently logged in users page
+        if (user == null || user == "")
+        {
+            //get current user
+            
+
+            //if no user logged in, redirect to not found
+            Response.Redirect("/Oops.aspx?e=404");
+        }
+
+        //if a user is specified in the url
         //find the user in database
 
         //if found, fill the page
@@ -18,7 +30,7 @@ public partial class UserProfile : System.Web.UI.Page
         
         //if not found direct to not found
         //this is just a test for redirection
-        if (user == "nouser" || user == null)
+        if (user == "nouser")
         {
             Response.Redirect("/Oops.aspx?e=404");
         }
