@@ -12,8 +12,14 @@ public partial class Login : System.Web.UI.Page
         //if user is logged in redirect to default page.
         if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
         {
-            Response.Redirect("/Default.aspx");
+            Response.Redirect("~/Default.aspx");
         }
-        Login1.FailureText = "Ah ah ah! You didn't say the magic word.";
     }
+
+    //after login redirect to default
+    protected void Login1_LoggedIn(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Default.aspx");
+    }
+
 }

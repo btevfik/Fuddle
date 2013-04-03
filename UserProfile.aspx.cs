@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Security;
 
 public partial class UserProfile : System.Web.UI.Page
 {
@@ -12,25 +13,30 @@ public partial class UserProfile : System.Web.UI.Page
         //get the requested user
         string user = Request.QueryString["user"];
 
-        //if nothing is given then by default display currently logged in users page
+        //member user
+        MembershipUser u = null;
+
+        //if no parameter is given retrieve the logged in user
         if (user == null || user == "")
         {
             //get current user
-            
-
-            //if no user logged in, redirect to not found
-            Response.Redirect("/Oops.aspx?e=404");
+            u = Membership.GetUser();
         }
 
-        //if a user is specified in the url
-        //find the user in database
+        //if a user is specified in the url with "user=username"
+        //find the specific user in database
+        else
+        {
+            u = Membership.GetUser(user);
+        }
 
         //if found, fill the page
-        Label1.Text = user;
-        
-        //if not found direct to not found
-        //this is just a test for redirection
-        if (user == "nouser")
+        if (u != null)
+        {
+            Label1.Text = u.Email;
+        }
+        //if not found, direct to 404
+        else
         {
             Response.Redirect("/Oops.aspx?e=404");
         }

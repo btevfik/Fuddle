@@ -23,4 +23,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
       Response.Redirect("/Search.aspx?q=" + query+"&o=img");
     }
 
+    //after logout redirect to default
+    protected void OnLogout(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Default.aspx");
+    }
+
 }

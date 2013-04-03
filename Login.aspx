@@ -9,7 +9,7 @@
     <h1 style="text-align: center">Login</h1>
     <br />
     <div class="loginControl">
-        <asp:Login ID="Login1" runat="server">
+        <asp:Login ID="Login1" runat="server" OnLoggedIn="Login1_LoggedIn" FailureText="Ah ah ah! You didn't say the magic word.">
             <LayoutTemplate>
                 <div id="login-content">
                     <div id="loginPanel" DefaultButton="LoginButton" runat="server">

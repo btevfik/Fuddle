@@ -52,7 +52,7 @@
                         <LoggedInTemplate>
                             <ul>
                                 <li id="login">
-                                    <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                                    <asp:LoginStatus ID="LoginStatus1" OnLoggedOut="OnLogout" runat="server" />
                                 </li>
                                 <li id="signup">
                                     <a href="/UserProfile.aspx">Profile</a>
