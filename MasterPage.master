@@ -42,7 +42,7 @@
                         <AnonymousTemplate>
                             <ul>
                                 <li id="login">
-                                    <asp:LoginStatus ID="LoginStatus1" runat="server" Visible="True" />
+                                    <asp:LoginStatus ID="LoginStatus1" runat="server"/>
                                 </li>
                                 <li id="signup">
                                     <a href="/Register.aspx">Sign up</a>
