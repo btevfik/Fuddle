@@ -18,7 +18,7 @@
                             <asp:RequiredFieldValidator ID="UserNameRequired" CssClass="loginError" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
                             <asp:TextBox ID="Password" placeholder="Password" runat="server" TextMode="Password"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="PasswordRequired" CssClass="loginError" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
-                            <a href="/forgot">No memory like an elephant?</a>
+                            <a href="/Recover.aspx">No memory like an elephant?</a>
                         </fieldset>
                         <fieldset id="actions">
                             <asp:Button ID="LoginButton" runat="server" CssClass="submitButton" CommandName="Login" Text="Let's Go" ValidationGroup="Login1" />

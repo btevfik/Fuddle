@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
+using System.Globalization;
 
 public partial class UserProfile : System.Web.UI.Page
 {
@@ -33,8 +34,12 @@ public partial class UserProfile : System.Web.UI.Page
         //if found, fill the page
         if (u != null)
         {
+            //display username and email
             userLabel.Text = u.UserName;
             emailLabel.Text = u.Email;
+
+            //set the title of the page
+            Page.Header.Title = "Fuddle | " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.UserName.ToString().ToLower()); 
         }
         //if not found, direct to 404
         else
