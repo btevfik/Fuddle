@@ -1,10 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserProfile.aspx.cs" Inherits="UserProfile" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <h1 style="text-align:center">
-    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-    </h1>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div style="text-align: center">
+        <h1>
+            <asp:Label ID="userLabel" runat="server" Text=""></asp:Label>
+        </h1>
+        email: <asp:Label ID="emailLabel" runat="server" Text=""></asp:Label>
+    </div>
 </asp:Content>
 

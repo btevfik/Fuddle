@@ -28,7 +28,7 @@
                 <!--Upload button --> 
                 <asp:LoginView ID="LoginView2" runat="server">
                     <LoggedInTemplate>
-                        <asp:HyperLink ID="uploadButton" CssClass="uploadButton" runat="server" NavigateUrl="~/Upload.aspx">Upload</asp:HyperLink>
+                        <asp:HyperLink ID="uploadButton" CssClass="uploadButton" runat="server" NavigateUrl="/Upload.aspx">Upload</asp:HyperLink>
                     </LoggedInTemplate>
                 </asp:LoginView>
                 <!--Search box-->
@@ -42,7 +42,7 @@
                         <AnonymousTemplate>
                             <ul>
                                 <li id="login">
-                                    <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                                    <asp:LoginStatus ID="LoginStatus1" runat="server" Visible="True" />
                                 </li>
                                 <li id="signup">
                                     <a href="/Register.aspx">Sign up</a>

@@ -12,7 +12,7 @@ public partial class Register : System.Web.UI.Page
         //if user is logged in redirect to default page.
         if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
         {
-            Response.Redirect("/Default.aspx");
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

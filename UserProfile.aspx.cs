@@ -33,7 +33,8 @@ public partial class UserProfile : System.Web.UI.Page
         //if found, fill the page
         if (u != null)
         {
-            Label1.Text = u.Email;
+            userLabel.Text = u.UserName;
+            emailLabel.Text = u.Email;
         }
         //if not found, direct to 404
         else

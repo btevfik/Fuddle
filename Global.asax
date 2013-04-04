@@ -13,7 +13,7 @@
         if ((match != null) && match.Success)
         {
             Context.RewritePath((String.Format("~/UserProfile.aspx?user={0}",
-             match.Groups["username"])));
+             match.Groups["username"])), false);
         }
     }
 
