@@ -11,7 +11,7 @@
         <br />
     </div>
     <div id="register-content">
-        <asp:CreateUserWizard ID="CreateUserWizard1" runat="server" DuplicateUserNameErrorMessage="That user name is taken." InvalidPasswordErrorMessage="Password length minimum: {0}.">
+        <asp:CreateUserWizard ID="CreateUserWizard1" runat="server" OnCreatedUser="CreateUserWizard1_CreatedUser" DuplicateUserNameErrorMessage="That user name is taken." InvalidPasswordErrorMessage="Password length minimum: {0}." ContinueDestinationPageUrl="~/Default.aspx">
             <WizardSteps>
                 <asp:CreateUserWizardStep ID="CreateUserWizardStep1" runat="server">
                     <ContentTemplate>
@@ -47,10 +47,10 @@
                 <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
                     <ContentTemplate>
                         <div style="text-align:center;width:260px">
-                        You are now part of the club.
+                        You are almost there. <br /> An activation link has been sent to your email.
                         </div>
                         <br />
-                        <asp:Button ID="ContinueButton" CssClass="submitButton" runat="server" CausesValidation="False" CommandName="Continue" Text="Awesome" ValidationGroup="CreateUserWizard1" style="margin-left:80px;width:100px"/>
+                        <asp:Button ID="ContinueButton" CssClass="submitButton" runat="server" CausesValidation="False" CommandName="Continue" Text="Cool" ValidationGroup="CreateUserWizard1" style="margin-left:80px;width:100px"/>
                      </ContentTemplate>
                 </asp:CompleteWizardStep>
             </WizardSteps>
