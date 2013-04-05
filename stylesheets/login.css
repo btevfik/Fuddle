@@ -38,6 +38,12 @@ input:focus,textarea:focus {
     text-decoration:none;
 }
 
+#validation a:link,#validation a:visited{
+    color:#0D98BA;
+    font-size:13px;
+    text-decoration:none;
+}
+
 #inputs input {
   background: #f1f1f1;
   padding: 6px 5px;

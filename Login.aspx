@@ -9,10 +9,10 @@
     <h1 style="text-align: center">Login</h1>
     <br />
     <div class="loginControl">
-        <asp:Login ID="Login1" runat="server" OnLoggedIn="Login1_LoggedIn" FailureText="Ah ah ah! You didn't say the magic word.">
+        <asp:Login ID="Login1" runat="server" OnLoggedIn="Login1_LoggedIn"  OnLoginError="Login1_LoginError" FailureText="Ah ah ah! You didn't say the magic word.">
             <LayoutTemplate>
                 <div id="login-content">
-                    <div id="loginPanel" DefaultButton="LoginButton" runat="server">
+                    <div id="loginPanel" defaultbutton="LoginButton" runat="server">
                         <fieldset id="inputs">
                             <asp:TextBox ID="UserName" placeholder="Username" runat="server"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="UserNameRequired" CssClass="loginError" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
@@ -25,8 +25,11 @@
                             <asp:CheckBox ID="RememberMe" runat="server" CssClass="keep" Text="Remember me." />
                         </fieldset>
                         <div class="loginError">
-                        <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
+                            <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
                         </div>
+                    </div>
+                    <div id="validation">
+                        <asp:LinkButton ID="ResetValidation" OnClick="ResetValidation_Click" runat="server" Visible="false">Resend validation link.</asp:LinkButton>
                     </div>
                 </div>
             </LayoutTemplate>
