@@ -32,7 +32,8 @@ public class Activation
         MailMessage mm = new MailMessage();
         mm.Subject = "Verify your account at Fuddle";
         mm.IsBodyHtml = true;
-        string link = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + "/Activate.aspx?ID=" + userId.ToString();
+        string url = HttpContext.Current.Request.Url.Scheme + System.Uri.SchemeDelimiter + HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port);
+        string link = url + "/Activate.aspx?ID=" + userId.ToString();
         mm.Body = "Thanks for registering with Fuddle!<br /><br />Your activation link : <a href='" + link + "'>" + link + "</a>";
         mm.To.Add(user.Email);
         SmtpClient smtp = new SmtpClient();
