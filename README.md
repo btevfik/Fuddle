@@ -3,6 +3,8 @@ Fuddle
 
 **EC512 Project**
 
+Boston University - Spring 2013
+
 >Fuddle is a place where you can easily share your favorite images with the rest of the world.     
 
 **Team Members**
