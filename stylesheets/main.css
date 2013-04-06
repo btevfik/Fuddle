@@ -25,11 +25,27 @@ h1, h2, h3 {
     word-spacing: 10px;
 }
 
-body {
+html, body {
     font-family: PTSansRegular;
-    font-size:18px;
-    margin:0;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body{
     background:url("/resources/noisy-texture.png") repeat;
+}
+
+form {
+  height:100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -55px;
 }
 
 /*For IE9 */
@@ -158,4 +174,27 @@ body {
 }
 .uploadButton:active {
     position: relative;
+}
+
+/*FOOTER*/
+.footer, .push {
+  height: 55px;
+}
+
+.footer {
+  background-color:#0D98BA;
+  text-align:right;
+  background-image:url("/resources/noisy-texture.png");
+}
+
+.footer a:link, .footer a:visited {
+    color:white;
+    text-decoration:none;
+    font-size:12px;
+    line-height:20px;
+    margin-right:10px;
+}
+
+.footer a:hover {
+    color:#d14545;
 }
