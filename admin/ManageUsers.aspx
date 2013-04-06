@@ -4,7 +4,7 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <p><b>Current Users of OpenSkies</b></p>
+    <p><b>Current Users</b></p>
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
     <asp:ObjectDataSource ID="UserDataSource" runat="server" SelectMethod="CustomGetAllUsers" TypeName="WSATTest.GetAllUsers"/>
@@ -52,7 +52,7 @@
 
     <div id="divPopUp" style="display:none; background-color: White; width:540px; height:185px; border: 2px solid black;">
         <asp:Panel runat="Server" ID="panelDragHandle" Height="100%" Width="100%" >
-            <p>Manage an OpenSkies User....</p>
+            <p>Manage a User....</p>
             <table id="Table1" runat="server" style="width:100%;">
                 <tr>
                     <td style="width:65%;">
