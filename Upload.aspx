@@ -8,8 +8,8 @@
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
     
     <!-- Scripts -->
-    <script src="/scripts/uploadPreview.js"></script>
-    <script src="/scripts/uploadPreview_IE.js"></script>
+    <script type="text/javascript" src="/scripts/uploadPreview.js"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div style="text-align:center"><h1>Upload Image</h1>
@@ -68,7 +68,7 @@
     <asp:Label ID="uploadStatus" runat="server"></asp:Label>
     
 
-    <!-- This works for Chrome -->
+    <!-- This works for Chrome/Safari/FF -->
     <div style="text-align:center">
         <asp:Label ID="imgPrevLabel" runat="server" Text="Image Preview: "></asp:Label>
         <br />
@@ -76,7 +76,7 @@
     </div>
 
     <!-- This is needed for compatibility with IE -->
-    <div id="preview_IE" style="FILTER: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)"></div>
+    <div id="preview_IE" style="filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)"></div>
     
     <br /><br /><br />
     <div style="text-align: center">
@@ -90,7 +90,7 @@
         <br />
         <asp:Image ID="Image1" runat="server" />
     </div>
-<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:fuddleConnectionString %>" SelectCommand="SELECT Image_id FROM Image_table WHERE (Image_title = @title)">
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:fuddleConnectionString %>" SelectCommand="SELECT Image_id FROM Image_table WHERE (Image_title = @title)">
     <SelectParameters>
         <asp:ControlParameter ControlID="retrieveFile" Name="title" PropertyName="Text" />
     </SelectParameters>

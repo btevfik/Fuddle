@@ -1,4 +1,4 @@
-﻿function previewImage_IE(input)
+﻿function previewImage(input)
 {
     var newPreview = document.getElementById("preview_IE");
     newPreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = input.value;
