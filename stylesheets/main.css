@@ -169,6 +169,7 @@ form {
 	padding:6px 11px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
+    cursor:pointer;
 }.uploadButton:hover {
 	background-color:#e6e6e6;
 }

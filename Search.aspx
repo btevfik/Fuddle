@@ -36,12 +36,20 @@
     <!--Results-->
     <div id="searchresults" class="search-results"></div>
 
+    <div style="margin:20px auto 0 auto;width:200px">
+       <a id="loadMore" class="uploadButton">Load More</a>
+    </div>
+    <div id="loading" style="text-align:center;margin:0 auto;width:100px">
+    </div>
+
     <!--Searching script -->
     <!--uses SearchService -->
+    <script type="text/javascript" src="/scripts/jquery.waitforimages.min.js"></script>    
     <script type="text/javascript" src="/scripts/jquery.esn.autobrowse.js"></script>
     <script type="text/javascript" src="/scripts/jquery.json-2.2.min.js"></script>
     <script type="text/javascript" src="/scripts/jstorage.js"></script>
     <script type="text/javascript" src="/scripts/search.js"></script>
+ 
     <script type="text/javascript">
 
         //get parameter specified in the url
@@ -55,30 +63,38 @@
 
         $(function () {
 
+            $("#loadMore").click(function () {
+                loadMore("image", parameter);
+            });
+
             //if images clicked
             jQuery('#<%=imagesLink.ClientID%>').click(function () {
+                $('#searchresults').empty();
                 getImages(parameter);
                 jQuery('#<%=imageListItem.ClientID%>').addClass("activated");
                 jQuery('#<%=albumListItem.ClientID%>').removeClass("activated");
                 jQuery('#<%=userListItem.ClientID%>').removeClass("activated");
-        });
+            });
 
             //if albums clicked
             jQuery('#<%=albumsLink.ClientID%>').click(function () {
+                $('#searchresults').empty();
                 getAlbums(parameter);
                 jQuery('#<%=imageListItem.ClientID%>').removeClass("activated");
                 jQuery('#<%=albumListItem.ClientID%>').addClass("activated");
                 jQuery('#<%=userListItem.ClientID%>').removeClass("activated");
-        });
+            });
 
             //if users clicked
             jQuery('#<%=usersLink.ClientID%>').click(function () {
+                $('#searchresults').empty();
                 getUsers(parameter);
                 jQuery('#<%=imageListItem.ClientID%>').removeClass("activated");
                 jQuery('#<%=albumListItem.ClientID%>').removeClass("activated");
                 jQuery('#<%=userListItem.ClientID%>').addClass("activated");
+            });
+
         });
 
-    });
     </script>
 </asp:Content>

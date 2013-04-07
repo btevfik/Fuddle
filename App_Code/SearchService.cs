@@ -101,7 +101,7 @@ public class SearchService : System.Web.Services.WebService {
     //for now just create some dummy images
     private void createImages(){
         Random rnd = new Random();
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 60; i++)
         {
             int width = rnd.Next(400, 600);
             int height = rnd.Next(200, 300);
