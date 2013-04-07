@@ -35,8 +35,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     
     <asp:Label ID="imgTitleLabel" runat="server" Text="Title"></asp:Label>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-
+    &nbsp;&nbsp;&nbsp;
     <asp:TextBox ID="title" runat="server"></asp:TextBox>
     &nbsp;&nbsp;&nbsp;
     <br /><br />
@@ -78,4 +77,22 @@
 
     <!-- This is needed for compatibility with IE -->
     <div id="preview_IE" style="FILTER: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)"></div>
+    
+    <br /><br /><br />
+    <div style="text-align: center">
+        <asp:Label ID="Label1" runat="server" Text="Image title:"></asp:Label>
+        &nbsp;&nbsp;
+        <asp:TextBox ID="retrieveFile" runat="server" Width="184px"></asp:TextBox>
+        <br />
+        <asp:Button ID="retrieve" runat="server" Text="Retrieve Image" OnClick="retrieve_Click" />
+        <br />
+        <asp:Label ID="retrieveStatus" runat="server"></asp:Label>
+        <br />
+        <asp:Image ID="Image1" runat="server" />
+    </div>
+<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:fuddleConnectionString %>" SelectCommand="SELECT Image_id FROM Image_table WHERE (Image_title = @title)">
+    <SelectParameters>
+        <asp:ControlParameter ControlID="retrieveFile" Name="title" PropertyName="Text" />
+    </SelectParameters>
+    </asp:SqlDataSource>
 </asp:Content>
