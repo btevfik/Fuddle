@@ -74,10 +74,7 @@
         <br />
         <img id="image" src="#" alt="Your image" />
     </div>
-
-    <!-- This is needed for compatibility with IE -->
-    <div id="preview_IE" style="filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)"></div>
-    
+        
     <br /><br /><br />
     <div style="text-align: center">
         <asp:Label ID="Label1" runat="server" Text="Image title:"></asp:Label>
