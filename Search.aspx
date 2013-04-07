@@ -29,12 +29,56 @@
             </li>
         </ul>
         <p style="text-align: center">
-            <asp:Label ID="numresult" CssClass="num-result" runat="server" Text=""></asp:Label>
+            <span id="numresult" class="num-result"></span>
         </p>
     </div>
 
     <!--Results-->
-    <asp:Panel ID="searchresults" CssClass="search-results" runat="server">
-        <!--Search Results go into this panel -->
-    </asp:Panel>
+    <div id="searchresults" class="search-results"></div>
+
+    <!--Searching script -->
+    <!--uses SearchService -->
+    <script type="text/javascript" src="/scripts/jquery.esn.autobrowse.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.json-2.2.min.js"></script>
+    <script type="text/javascript" src="/scripts/jstorage.js"></script>
+    <script type="text/javascript" src="/scripts/search.js"></script>
+    <script type="text/javascript">
+
+        //get parameter specified in the url
+        var parameter = getParameterByName("q");
+
+        //on window load, search for images by default
+        $(window).load(function () {
+            getImages(parameter);
+        });
+
+
+        $(function () {
+
+            //if images clicked
+            jQuery('#<%=imagesLink.ClientID%>').click(function () {
+                getImages(parameter);
+                jQuery('#<%=imageListItem.ClientID%>').addClass("activated");
+                jQuery('#<%=albumListItem.ClientID%>').removeClass("activated");
+                jQuery('#<%=userListItem.ClientID%>').removeClass("activated");
+        });
+
+            //if albums clicked
+            jQuery('#<%=albumsLink.ClientID%>').click(function () {
+                getAlbums(parameter);
+                jQuery('#<%=imageListItem.ClientID%>').removeClass("activated");
+                jQuery('#<%=albumListItem.ClientID%>').addClass("activated");
+                jQuery('#<%=userListItem.ClientID%>').removeClass("activated");
+        });
+
+            //if users clicked
+            jQuery('#<%=usersLink.ClientID%>').click(function () {
+                getUsers(parameter);
+                jQuery('#<%=imageListItem.ClientID%>').removeClass("activated");
+                jQuery('#<%=albumListItem.ClientID%>').removeClass("activated");
+                jQuery('#<%=userListItem.ClientID%>').addClass("activated");
+        });
+
+    });
+    </script>
 </asp:Content>
