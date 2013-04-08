@@ -1,10 +1,14 @@
 ﻿var arrayOfImages = new Array();
 var heights = new Array();
 var widths = new Array();
-var end = 20;
+var end = 0;
 var length = 0;
 
 function getImages(parameter) {
+    //reset end
+    end = 25;
+    //reset Load More on getImages call again
+    $("#loadMore").text("Load More");
     //initially don't display load more
     $("#loadMore").hide();
     //display loading gif
@@ -93,7 +97,8 @@ function getParameterByName(name) {
 
 function loadMore(type, parameter)
 {
-    if (end == length) {
+    //if end of results
+    if (end >= length) {
         $("#loadMore").text("No More");
         return;
     }
@@ -101,29 +106,46 @@ function loadMore(type, parameter)
     $("#loadMore").hide();
     //display loading gif
     $("#loading").html("<img src='/resources/loader.gif'/>");
-    preloadImages(arrayOfImages, widths, heights, end, end + 20);
-    end = end + 20;
+    setTimeout(function () {
+        preloadImages(arrayOfImages, widths, heights, end, end + 25);
+        end = end + 25;
+    },1000)
 }
 
 function preloadImages(srcs, widths, heights, start, end) {
+    if (end > length) {
+        end = length;
+    }
     var img;
+    var anchor;
     var imgs = [];
+    var ancs = [];
     var remaining = end;
     for (var i = start; i < end; i++) {
         img = new Image();
+        anchor = document.createElement("a");
         img.onload = function () {
             --remaining;
             if (remaining <= start) {
+                //append images
                 $("#searchresults").append(imgs);
-                runLayout(205);
+                //hide loading gif when images are loaded
                 $("#loading").empty();
+                //show laod more now
                 $("#loadMore").show();
+                //fix layout
+                runLayout(205);
             }
         };
-        img.src = srcs[i];
+        anchor.setAttribute("href", srcs[i]);
+        anchor.setAttribute("target", "_blank");
+        ///use thumbnailed images instead
+        img.src = "http://placekitten.com/100/100"
         img.className = "search-img";
         img.setAttribute("data-width", widths[i]);
         img.setAttribute("data-height", heights[i]);
-        imgs.push(img);
+        anchor.appendChild(img);
+        console.log(anchor);
+        imgs.push(anchor);
     }
 }

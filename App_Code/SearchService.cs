@@ -6,20 +6,24 @@ using System.Web.Services;
 
 public class Image
 {
-    public string id;
-    public string link;
-    public int width;
-    public int height;
+    public string id; //id of the image
+    public string link; //link to src
+    public string thumbLink; //link to thumbnail
+    public int width; //width of the image
+    public int height; //height of the image
 }
 
 public class User
 {
-    public string name;
+    public string name; //username
+    public string avatar; //link to avatar
+    public string link; //link to user profile
 }
 
 public class Album
 {
-    public string name;
+    public string name; //name of the album
+    public string cover; //link to cover
 }
 
 /// <summary>
@@ -101,10 +105,10 @@ public class SearchService : System.Web.Services.WebService {
     //for now just create some dummy images
     private void createImages(){
         Random rnd = new Random();
-        for (int i = 0; i < 60; i++)
+        for (int i = 0; i < 200; i++)
         {
-            int width = rnd.Next(400, 600);
-            int height = rnd.Next(200, 300);
+            int width = rnd.Next(800, 1000);
+            int height = rnd.Next(400, 1200);
             Image newImage = new Image{link="http://placekitten.com/"+width+"/"+height, id="id"+i, width=width, height=height};
             Images.Add(newImage);
         }
