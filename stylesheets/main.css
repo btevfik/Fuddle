@@ -45,7 +45,7 @@ form {
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    margin: 0 auto -55px;
+    margin: 0 auto -40px;
 }
 
 /*For IE9 */
@@ -179,10 +179,12 @@ form {
 
 /*FOOTER*/
 .footer, .push {
-  height: 55px;
+  height: 40px;
 }
 
 .footer {
+  color: white;
+  font-size: 12px;
   background-color:#0D98BA;
   text-align:right;
   background-image:url("/resources/noisy-texture.png");
@@ -193,9 +195,14 @@ form {
     text-decoration:none;
     font-size:12px;
     line-height:20px;
-    margin-right:10px;
 }
 
 .footer a:hover {
     color:#d14545;
+}
+
+.foot {
+    text-align:center;
+    width:300px;
+    margin:0 auto;
 }

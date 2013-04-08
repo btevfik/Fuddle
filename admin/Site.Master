@@ -4,6 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head runat="server">
     <title>Fuddle | Admin Tool</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/resources/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/resources/favicon.ico" type="image/x-icon" />
+    <!-- Stylesheets -->
     <link href="~/stylesheets/admin.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>

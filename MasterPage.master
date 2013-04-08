@@ -71,9 +71,13 @@
 
         <!--Footer -->
         <div class="footer">
-            <a href="http://btevfik.github.com/Fuddle" target="_blank">Contact</a>
+            <div class="foot">
+            <a href="http://btevfik.github.com/Fuddle" target="_blank">About</a>&nbsp;|&nbsp;<a href="mailto:bt@bu.edu">Contact</a>&nbsp;|&nbsp;<a href="/admin">Administration</a>
             <br />
-            <a href="/admin">Administration</a>
+                <div style="font-size:10px">
+                &copy; 2013
+                </div>
+            </div>
         </div>
     </form>
 </body>

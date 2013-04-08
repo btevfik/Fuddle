@@ -38,30 +38,12 @@ function getImages(parameter) {
     });
 };
 
-/*
-function getAlbums(parameter) {
-    $.ajax({
-        type: "POST",
-        url: "SearchService.asmx/GetAlbums",
-        data: "{'query':'" + parameter + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            var albums = response.d;
-            var count = 0;
-            $.each(albums, function (index, album) {
-                $('#searchresults').append('<p>' + album.name + '</p>');
-                count++;
-            });
-            $('#numresult').html(count + " albums found.");
-        },
-        failure: function (msg) {
-            $('#searchresults').text(msg);
-        }
-    });
-}
 
 function getUsers(parameter) {
+    //hide load more for users.
+    $("#loadMore").hide();
+    //display loading gif
+    $("#loading").html("<img src='/resources/loader.gif'/>");
     $.ajax({
         type: "POST",
         url: "SearchService.asmx/GetUsers",
@@ -76,13 +58,15 @@ function getUsers(parameter) {
                 count++;
             });
             $('#numresult').html(count + " users found.");
+            //hide loading gif when images are loaded
+            $("#loading").empty();
         },
         failure: function (msg) {
             $('#searchresults').text(msg);
         }
     });
 }
-*/
+
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");

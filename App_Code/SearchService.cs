@@ -20,12 +20,6 @@ public class User
     public string link; //link to user profile
 }
 
-public class Album
-{
-    public string name; //name of the album
-    public string cover; //link to cover
-}
-
 /// <summary>
 /// SearchService is used to retrieve images, albums and users from the database with a given query
 /// </summary>
@@ -37,8 +31,6 @@ public class SearchService : System.Web.Services.WebService {
 
     //images list
     List<Image> Images = new List<Image>();
-    //albums list
-    List<Album> Albums = new List<Album>();
     //users list
     List<User> Users = new List<User>();
 
@@ -65,24 +57,6 @@ public class SearchService : System.Web.Services.WebService {
         createImages();
         return Images; 
     }
-
-   /// <summary>
-   ///return albums with the given search query
-   /// </summary>
-   /// <param name="qery"></param>
-   /// <returns></returns>
-   [WebMethod]
-   public List<Album> GetAlbums(string query)
-   {
-       if (query == "")
-       {
-           return null;
-       }
-       //just create some albums
-       //we should actually search in database.
-       createAlbums(query);
-       return Albums;
-   }
 
    /// <summary>
    ///return users with the given search query
@@ -113,17 +87,6 @@ public class SearchService : System.Web.Services.WebService {
             Images.Add(newImage);
         }
     }
-
-    //for now just create some dummy albums
-    private void createAlbums(string query)
-    {
-        for (int i = 0; i < 50; i++)
-        {
-            Album newAlbum = new Album{name=query+" Album "+i};
-            Albums.Add(newAlbum);
-        }
-    }
-
 
     //for now just create some dummy images
     private void createUsers(string query)
