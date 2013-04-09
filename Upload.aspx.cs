@@ -28,7 +28,7 @@ public partial class Upload : System.Web.UI.Page
     {
         // Read the file and store its name and extension
         string fileName = uploadFile.PostedFile.FileName;
-        string extension = Path.GetExtension(fileName);
+        string extension = Path.GetExtension(fileName).ToLower();
         string contentType = "";
         int fileSize = uploadFile.PostedFile.ContentLength;        
 
