@@ -15,7 +15,7 @@ function getImages(parameter) {
     $("#loading").html("<img src='/resources/loader.gif'/>");
     $.ajax({
         type: "POST",
-        async:true,
+        async: true,
         url: "SearchService.asmx/GetImages",
         data: "{'query':'" + parameter + "'}",
         contentType: "application/json; charset=utf-8",
@@ -23,14 +23,20 @@ function getImages(parameter) {
         success: function (response) {
             var images = response.d;
             $.each(images, function (index, image) {
-                arrayOfImages[index] = image.link;
+                arrayOfImages[index] = image.id;
                 heights[index] = image.height;
                 widths[index] = image.width;
-                //$("#searchresults").append('<img class="search-img" data-width="' + image.width + '" ' + 'data-height="' + image.height + '" ' + 'src="' + image.link + '"/>');
             });
-            length=arrayOfImages.length;
-            preloadImages(arrayOfImages, widths, heights, 0, end);
+            //number of results
+            length = arrayOfImages.length;
+            //display number of results
             $('#numresult').html(length + " images found.");
+            //if non return
+            if (length === 0) {
+                $("#loading").empty();
+                return;
+            }
+            preloadImages(arrayOfImages, widths, heights, 0, end);
         },
         failure: function (msg) {
             $('#searchresults').text(msg);
@@ -54,7 +60,7 @@ function getUsers(parameter) {
             var users = response.d;
             var count = 0;
             $.each(users, function (index, user) {
-                $('#searchresults').append('<p>' + user.name + '</p>');
+                $('#searchresults').append('<p> <a href="/user/' + user.name + '">' + user.name + '</a></p>');
                 count++;
             });
             $('#numresult').html(count + " users found.");
@@ -79,8 +85,7 @@ function getParameterByName(name) {
         return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function loadMore(type, parameter)
-{
+function loadMore(type) {
     //if end of results
     if (end >= length) {
         $("#loadMore").text("No More");
@@ -93,13 +98,15 @@ function loadMore(type, parameter)
     setTimeout(function () {
         preloadImages(arrayOfImages, widths, heights, end, end + 25);
         end = end + 25;
-    },1000)
+    }, 1000)
 }
 
 function preloadImages(srcs, widths, heights, start, end) {
-    if (end > length) {
+    var hasRun = false;
+    if (end >= length) {
         end = length;
     }
+    console.log(end + " " + length);
     var img;
     var anchor;
     var imgs = [];
@@ -111,25 +118,28 @@ function preloadImages(srcs, widths, heights, start, end) {
         img.onload = function () {
             --remaining;
             if (remaining <= start) {
+                console.log("AAA");
                 //append images
                 $("#searchresults").append(imgs);
                 //hide loading gif when images are loaded
                 $("#loading").empty();
-                //show laod more now
+                //show load more now
                 $("#loadMore").show();
-                //fix layout
-                runLayout(205);
+                if (hasRun == false) {
+                    runLayout(205);
+                    hasRun = true;
+                }
             }
         };
-        anchor.setAttribute("href", srcs[i]);
+        //set link
+        anchor.setAttribute("href", "/ShowImage.ashx?imgid=" + srcs[i]);
         anchor.setAttribute("target", "_blank");
-        ///use thumbnailed images instead
-        img.src = "http://placekitten.com/100/100"
+        //set src
+        img.src = "/ShowImage.ashx?imgid=" + srcs[i];
         img.className = "search-img";
         img.setAttribute("data-width", widths[i]);
         img.setAttribute("data-height", heights[i]);
         anchor.appendChild(img);
-        console.log(anchor);
         imgs.push(anchor);
     }
 }

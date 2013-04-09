@@ -31,9 +31,10 @@
     </div>
 
     <!--Results-->
-    <div id="searchresults" class="search-results"></div>
+    <div id="searchresults" class="search-results">
+    </div>
 
-    <div style="margin: 20px auto 0 auto; width: 200px">
+    <div style="margin: 30px auto 0 auto; width: 200px">
         <a id="loadMore" class="uploadButton">Load More</a>
     </div>
     <div id="loading" style="text-align: center; margin: 0 auto; width: 100px">
@@ -65,12 +66,12 @@
             activateImages();
 
             $("#loadMore").click(function () {
-                loadMore("image", parameter);
+                loadMore("image");
             });
 
             //if images clicked
             jQuery('#<%=imagesLink.ClientID%>').click(function () {
-                $('#searchresults').empty();
+                $("#searchresults").empty();
                 getImages(parameter);
                 activateImages();
             });

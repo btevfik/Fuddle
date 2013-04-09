@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 
 public class Image
 {
-    public string id; //id of the image
-    public string link; //link to src
-    public string thumbLink; //link to thumbnail
+    public int id; //id of img
     public int width; //width of the image
     public int height; //height of the image
 }
@@ -16,8 +17,6 @@ public class Image
 public class User
 {
     public string name; //username
-    public string avatar; //link to avatar
-    public string link; //link to user profile
 }
 
 /// <summary>
@@ -34,6 +33,13 @@ public class SearchService : System.Web.Services.WebService {
     //users list
     List<User> Users = new List<User>();
 
+    //sql connection
+    SqlConnection conn = new SqlConnection();
+    //sql command
+    SqlCommand cmd = new SqlCommand();
+    //data reader
+    SqlDataReader rdr = null;
+
     public SearchService()
     {
         //Uncomment the following line if using designed components 
@@ -48,14 +54,43 @@ public class SearchService : System.Web.Services.WebService {
    [WebMethod]
     public List<Image> GetImages(string query)
     {
+        //clear images list
+        Images.Clear();
+
         if (query == "")
         {
             return null;
+        } 
+
+        //search images in database
+        try
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
+            conn = new SqlConnection(connStr);
+
+            cmd = new SqlCommand("SELECT Image_id FROM [Image_table] WHERE Image_desc like '%" + query + "%' OR Image_title like '%" + query + "%' OR Image_filename like '%" + query + "%'", conn);
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+               //get the id
+               int id = ((int)rdr["Image_id"]);
+               //add to images list 
+               Image newImage = new Image { id = id, width = 100, height = 100 };
+               Images.Add(newImage);
+                
+            }
+
+            if (rdr != null)
+                rdr.Close();
         }
-        //just create some images
-        //we should actually search in database.
-        createImages();
-        return Images; 
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+        //return the json data
+        return Images;
     }
 
    /// <summary>
@@ -66,36 +101,42 @@ public class SearchService : System.Web.Services.WebService {
    [WebMethod]
    public List<User> GetUsers(string query)
    {
+       //clear user list
+       Users.Clear();
+
        if (query == "")
        {
            return null;
        }
-       //just create some users
-       //we should actually search in database.
-       createUsers(query);
+
+       //search users in database
+       try
+       {
+           string connStr = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
+           conn = new SqlConnection(connStr);
+
+           cmd = new SqlCommand("SELECT UserName FROM [aspnet_Users] WHERE UserName like '%" + query + "%'", conn);
+           conn.Open();
+           rdr = cmd.ExecuteReader();
+           while (rdr.Read())
+           {
+               //get the name
+               string name = ((string)rdr["UserName"]);
+               //add to users list 
+               User newUser = new User{name = name};
+               Users.Add(newUser);
+
+           }
+
+           if (rdr != null)
+               rdr.Close();
+       }
+       finally
+       {
+           conn.Close();
+           conn.Dispose();
+       }
+       //return the json data
        return Users;
    }
-
-    //for now just create some dummy images
-    private void createImages(){
-        Random rnd = new Random();
-        for (int i = 0; i < 200; i++)
-        {
-            int width = rnd.Next(800, 1000);
-            int height = rnd.Next(400, 1200);
-            Image newImage = new Image{link="http://placekitten.com/"+width+"/"+height, id="id"+i, width=width, height=height};
-            Images.Add(newImage);
-        }
-    }
-
-    //for now just create some dummy images
-    private void createUsers(string query)
-    {
-        for (int i = 0; i < 50; i++)
-        {
-            User newUser = new User { name = query+" User "+i };
-            Users.Add(newUser);
-        }
-    }
-
 }
