@@ -106,7 +106,6 @@ function preloadImages(srcs, widths, heights, start, end) {
     if (end >= length) {
         end = length;
     }
-    console.log(end + " " + length);
     var img;
     var anchor;
     var imgs = [];
@@ -118,7 +117,6 @@ function preloadImages(srcs, widths, heights, start, end) {
         img.onload = function () {
             --remaining;
             if (remaining <= start) {
-                console.log("AAA");
                 //append images
                 $("#searchresults").append(imgs);
                 //hide loading gif when images are loaded
