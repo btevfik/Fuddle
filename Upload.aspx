@@ -53,4 +53,7 @@
         <div style="width: 370px;margin-left: 30px;text-align: center;">Image Preview</div>
         <img id="image" class="preImg" src="/resources/placeholder.png" alt="Your image" />
     </div>
+
+    <!-- clear floats -->
+    <div style="clear:both;margin-bottom:20px"></div>
 </asp:Content>
