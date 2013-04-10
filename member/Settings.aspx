@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/settings.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+     <div style="text-align: center">
+        <h1>Account Settings</h1>
+    </div>
     <div id="left">
         Change Your Password
         <asp:ChangePassword ID="ChangePassword1" runat="server" ChangePasswordFailureText="Password incorrect or New Password invalid. New Password length minimum: {0}.">
@@ -58,6 +61,7 @@
                      CssClass="error" Display="Static" ErrorMessage="*" />
              </div>
              <asp:Button CssClass="submitButton" ID="ChangeQA" OnClick="ChangeQA_Click" runat="server" Text="Change Q&A" />
+             <br />
              <asp:Label CssClass="error" ID="Msg" runat="server"></asp:Label>
          </div>
 
@@ -69,7 +73,7 @@
         <br />
         <div class="content">
             <div class="inputs">
-         New Email
+         New Email:
     <asp:TextBox ID="NewEmail" runat="server"></asp:TextBox>
                 </div>
         <asp:Button CssClass="submitButton" ID="ChangeEmail" ValidationGroup="EmailChange" runat="server" OnClick="ChangeEmail_Click" Text="Change Email" />
