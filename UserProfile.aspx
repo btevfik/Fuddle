@@ -7,7 +7,6 @@
         <h1>
             <asp:Label ID="userLabel" runat="server" Text=""></asp:Label>
         </h1>
-        email: <asp:Label ID="emailLabel" runat="server" Text=""></asp:Label>
     </div>
 </asp:Content>
 
