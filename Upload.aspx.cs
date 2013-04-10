@@ -30,7 +30,7 @@ public partial class Upload : System.Web.UI.Page
         string fileName = uploadFile.PostedFile.FileName;
         string extension = Path.GetExtension(fileName).ToLower();
         string contentType = "";
-        int fileSize = uploadFile.PostedFile.ContentLength;        
+        int fileSize = uploadFile.PostedFile.ContentLength;
 
         // Error-checking to see if the user has selected a file or not
         if (!uploadFile.HasFile)
@@ -93,15 +93,23 @@ public partial class Upload : System.Web.UI.Page
                 BinaryReader br = new BinaryReader(fs);
                 Byte[] bytes = br.ReadBytes(Convert.ToInt32(fs.Length));
 
+                // Get the image's width and height (in pixels) to store in the database as well
+                System.Drawing.Image tempImg = System.Drawing.Image.FromStream(fs);
+                int fileWidth = tempImg.Width;
+                int fileHeight = tempImg.Height;
+                tempImg.Dispose();  // manual memory cleanup - don't need the image object anymore
+
                 // Insert the image and its description and title into the database
-                string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename)"
-                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename)";
+                string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height)"
+                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight)";
                 SqlCommand cmd = new SqlCommand(insertQuery);
                 cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = title.Text;
                 cmd.Parameters.Add("@newDesc", SqlDbType.VarChar).Value = description.Text;
                 cmd.Parameters.Add("@newContentType", SqlDbType.VarChar).Value = contentType;
                 cmd.Parameters.Add("@newData", SqlDbType.Binary).Value = bytes;
                 cmd.Parameters.Add("@newFilename", SqlDbType.VarChar).Value = fileName;
+                cmd.Parameters.Add("@newWidth", SqlDbType.Int).Value = fileWidth;
+                cmd.Parameters.Add("@newHeight", SqlDbType.Int).Value = fileHeight;
 
                 // Execute the sql command                
                 cmd.Connection = conn;
