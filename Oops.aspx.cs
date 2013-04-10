@@ -19,6 +19,11 @@ public partial class Oops : System.Web.UI.Page
             errImage.ImageUrl = "/resources/shy.jpg";
             errMessage.Text = "This page is being shy.";
         }
+        else if (error == "403")
+        {
+            errImage.ImageUrl = "/resources/notallowed.jpg";
+            errMessage.Text = "You are not welcomed here.";
+        }
         else
         {
             errImage.ImageUrl = "/resources/wrong.jpg";
