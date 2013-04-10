@@ -99,9 +99,33 @@ public partial class Upload : System.Web.UI.Page
                 int fileHeight = tempImg.Height;
                 tempImg.Dispose();  // manual memory cleanup - don't need the image object anymore
 
+                // Generating a thumbnail of the image to use for the search page
+                // The thumbnail will be 25% of the original image's size, unless if
+                // the original image is 100x100 or smaller (basically already thumbnail size)
+                int fileWidthThumb = 0;
+                int fileHeightThumb = 0;
+                if (fileWidth > 100 && fileHeight > 100)
+                {
+                    fileWidthThumb = fileWidth / 4;
+                    fileHeightThumb = fileHeight / 4;
+                }
+                else
+                {
+                    fileWidthThumb = fileWidth;
+                    fileHeightThumb = fileHeight;
+                }
+
+                // Create a new bitmap object to create the actual thumbnail data
+                Bitmap thumbnail = new Bitmap(fileWidthThumb, fileHeightThumb);
+                MemoryStream thumb_ms = new MemoryStream();
+                thumbnail.Save(thumb_ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                BinaryReader br_thumb = new BinaryReader(thumb_ms);
+                Byte[] bytes_thumb = br_thumb.ReadBytes(Convert.ToInt32(thumb_ms.Length));
+
                 // Insert the image and its description and title into the database
-                string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height)"
-                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight)";
+                string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height, "
+                    + "Image_thumbWidth, Image_thumbHeight, Image_thumbnail)"
+                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight, @newThumbWidth, @newThumbHeight, @newThumbnail)";
                 SqlCommand cmd = new SqlCommand(insertQuery);
                 cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = title.Text;
                 cmd.Parameters.Add("@newDesc", SqlDbType.VarChar).Value = description.Text;
@@ -110,17 +134,20 @@ public partial class Upload : System.Web.UI.Page
                 cmd.Parameters.Add("@newFilename", SqlDbType.VarChar).Value = fileName;
                 cmd.Parameters.Add("@newWidth", SqlDbType.Int).Value = fileWidth;
                 cmd.Parameters.Add("@newHeight", SqlDbType.Int).Value = fileHeight;
+                cmd.Parameters.Add("@newThumbWidth", SqlDbType.Int).Value = fileWidthThumb;
+                cmd.Parameters.Add("@newThumbHeight", SqlDbType.Int).Value = fileHeightThumb;
+                cmd.Parameters.Add("@newThumbnail", SqlDbType.Binary).Value = bytes_thumb;
 
                 // Execute the sql command                
                 cmd.Connection = conn;
                 conn.Open();
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();              
 
                 // Let the user know the file was uploaded successfully
                 uploadStatus.ForeColor = Color.Green;
                 uploadStatus.Text = "File uploaded successfully!";
                 title.Text = "";
-                description.Text = "";
+                description.Text = "";                
             }
             catch (Exception ee)
             {
