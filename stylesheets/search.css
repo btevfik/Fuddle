@@ -1,9 +1,16 @@
 ﻿/*SEARCH CONTENT*/
-.search-results img{
+.search-results img {
     box-shadow: 0px 1px 3px #434141;
     margin: 2px 3px 3px 2px;
     outline: 1px solid rgba(0, 0, 0, 0.1);
     outline-offset: -1px;
+    border: none;
+}
+
+.search-results img:hover {
+    transform: translate(0,-5px);
+    -ms-transform: translate(0,-5px); /* IE 9 */
+    -webkit-transform: translate(0,-5px); /* Safari and Chrome */
 }
 
 /*OPTIONS-MENU*/
