@@ -1,4 +1,19 @@
-﻿function previewImage(input) {
+﻿$(document).ready(function(){
+// Check the File API support
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+    // in process
+} else {
+    //remove preview image
+    $("#right-half").css("display", "none");
+    $("#left-half").css({
+        "width" : "300px", 
+        "margin": "0 auto",
+        "float": "none"
+        });
+}
+});
+
+function previewImage(input) {
     var browserName = navigator.appName;
     if (browserName == "Microsoft Internet Explorer") {
         if (input.files && input.files[0]) {
