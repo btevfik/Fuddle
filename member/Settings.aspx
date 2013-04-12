@@ -33,7 +33,7 @@
                 </div>
             </ChangePasswordTemplate>
             <SuccessTemplate>
-                <div id="content">
+                <div class="content">
                     Your password has been changed!
                 </div>
             </SuccessTemplate>
