@@ -121,11 +121,12 @@ public partial class Upload : System.Web.UI.Page
                 }
 
                 // Create a new bitmap object to create the actual thumbnail data
-                Bitmap thumbnail = new Bitmap(fileWidthThumb, fileHeightThumb);
-                MemoryStream thumb_ms = new MemoryStream();
-                thumbnail.Save(thumb_ms, System.Drawing.Imaging.ImageFormat.Bmp);
-                BinaryReader br_thumb = new BinaryReader(thumb_ms);
-                Byte[] bytes_thumb = br_thumb.ReadBytes(Convert.ToInt32(thumb_ms.Length));
+                Bitmap thumbnail_bmp = new Bitmap(fileWidthThumb, fileHeightThumb);
+                System.Drawing.Image thumbnail =
+                    (System.Drawing.Image)thumbnail_bmp.GetThumbnailImage(fileWidthThumb, fileHeightThumb, ()=>false, IntPtr.Zero);
+                MemoryStream ms = new MemoryStream();
+                thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                Byte[] bytes_thumb = ms.ToArray();
 
                 // Insert the image and its description and title into the database
                 string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height, "
@@ -175,7 +176,7 @@ public partial class Upload : System.Web.UI.Page
 
     // Retrieving images from the database
     /* NOT NEEDED FOR THIS PAGE
-    /* CAN BE USED FOR UserPage later.
+    /* CAN BE USED FOR UserPage later. */
     protected void retrieve_Click(object sender, EventArgs e)
     {
         SqlDataReader rdr = null;
@@ -208,7 +209,7 @@ public partial class Upload : System.Web.UI.Page
             else
             {
                 retrieveStatus.Text = "";
-                Image1.ImageUrl = "~/ShowImage.ashx?imgid=" + imgID.ToString();
+                Image1.ImageUrl = "~/ShowThumbnail.ashx?imgid=" + imgID.ToString();
             }
         }
         catch
@@ -220,6 +221,5 @@ public partial class Upload : System.Web.UI.Page
         {
             conn.Dispose();
         }
-    }
-     */
+    }     
 }

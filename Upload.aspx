@@ -56,4 +56,15 @@
 
     <!-- clear floats -->
     <div style="clear:both;margin-bottom:20px"></div>
+
+    <div style="text-align:center">
+        Image title: <asp:TextBox ID="retrieveFile" runat="server"></asp:TextBox>
+        <br />
+        <asp:Button ID="retrieve" runat="server" Text="Retrieve Thumbnail" OnClick="retrieve_Click" />
+        <br /><br />
+        <asp:Image ID="Image1" runat="server" />
+        <br />
+        <asp:Label ID="retrieveStatus" runat="server"></asp:Label>
+
+    </div>
 </asp:Content>
