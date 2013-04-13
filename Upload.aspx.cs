@@ -83,8 +83,8 @@ public partial class Upload : System.Web.UI.Page
             case ".gif":
                 contentType = "image/gif";
                 break;
-            case ".pdf":
-                contentType = "application/pdf";
+            case ".bmp":
+                contentType = "image/bmp";
                 break;
         }
 
@@ -169,7 +169,7 @@ public partial class Upload : System.Web.UI.Page
         else
         {
             uploadStatus.ForeColor = Color.Red;
-            uploadStatus.Text = "Error uploading file. Accepted file formats: .jpg, .jpeg, .png, .gif, .pdf";
+            uploadStatus.Text = "Error uploading file. Accepted file formats: .jpg, .jpeg, .png, .gif, .bmp";
         }
     }
 
