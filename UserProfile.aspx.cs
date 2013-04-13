@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Globalization;
+using System.Web.Services;
 
 public partial class UserProfile : System.Web.UI.Page
 {
@@ -36,15 +37,25 @@ public partial class UserProfile : System.Web.UI.Page
         {
             //display username and email
             userLabel.Text = u.UserName;
-            emailLabel.Text = u.Email;
 
             //set the title of the page
             Page.Header.Title = "Fuddle | " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.UserName.ToString().ToLower()); 
+
+            //Fill in the about me
+            aboutmeLabel.Text = "This is a test string.";
         }
         //if not found, direct to 404
         else
         {
             Response.Redirect("/Oops.aspx?e=404");
         }
+    }
+
+    [WebMethod]
+    public static void SetAboutMe(string stuff)
+    {
+        //TODO:
+        //Need to store back the new string to database
+        string foo = stuff;
     }
 }
