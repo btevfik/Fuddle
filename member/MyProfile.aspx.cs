@@ -24,5 +24,7 @@ public partial class member_MyProfile : System.Web.UI.Page
         string url = HttpContext.Current.Request.Url.Scheme + System.Uri.SchemeDelimiter + HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port);
         publicLink.NavigateUrl = url+ "/user/" + u.UserName;
         publicLink.Text = url+ "/user/" + u.UserName;
+        //set gravatar
+        Gravatar1.Email=u.Email;
     }
 }

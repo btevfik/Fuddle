@@ -42,7 +42,9 @@ public partial class UserProfile : System.Web.UI.Page
 
             //set the title of the page
             Page.Header.Title = "Fuddle | " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.UserName.ToString().ToLower()); 
-
+           
+            //set gravatar
+            Gravatar1.Email = u.Email;
         }
         //if not found, direct to 404
         else
