@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Web.Security;
 
 public partial class Upload : System.Web.UI.Page
 {
@@ -26,6 +27,10 @@ public partial class Upload : System.Web.UI.Page
     // after previewing the image
     protected void uploadButton_Click(object sender, EventArgs e)
     {
+        //Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        Guid id = (Guid)user.ProviderUserKey;
+
         // Read the file and store its name and extension
         string fileName = uploadFile.PostedFile.FileName;
         string extension = Path.GetExtension(fileName).ToLower();
@@ -124,8 +129,8 @@ public partial class Upload : System.Web.UI.Page
 
                 // Insert the image and its description and title into the database
                 string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height, "
-                    + "Image_thumbWidth, Image_thumbHeight, Image_thumbnail)"
-                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight, @newThumbWidth, @newThumbHeight, @newThumbnail)";
+                    + "Image_thumbWidth, Image_thumbHeight, Image_thumbnail, User_Id)"
+                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight, @newThumbWidth, @newThumbHeight, @newThumbnail, @userId)";
                 SqlCommand cmd = new SqlCommand(insertQuery);
                 cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = title.Text;
                 cmd.Parameters.Add("@newDesc", SqlDbType.VarChar).Value = description.Text;
@@ -137,6 +142,7 @@ public partial class Upload : System.Web.UI.Page
                 cmd.Parameters.Add("@newThumbWidth", SqlDbType.Int).Value = fileWidthThumb;
                 cmd.Parameters.Add("@newThumbHeight", SqlDbType.Int).Value = fileHeightThumb;
                 cmd.Parameters.Add("@newThumbnail", SqlDbType.Binary).Value = bytes_thumb;
+                cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
 
                 // Execute the sql command                
                 cmd.Connection = conn;
