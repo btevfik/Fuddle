@@ -53,4 +53,30 @@ public partial class member_Account : System.Web.UI.Page
             Msg1.Text = "Change failed. Please re-enter your values and try again.";
         }
     }
+
+    protected void Close_Account(object sender, EventArgs e)
+    {
+        try
+        {
+            MembershipUser user = Membership.GetUser();
+            Boolean result = Membership.ValidateUser(user.UserName, closePassword.Text);
+
+            if (result)
+            {
+                Membership.DeleteUser(user.UserName);
+                //also need to delete content uploaded by this user
+                //such as u.deleteAllContent() method can be implemented
+                
+                //go to login url
+                FormsAuthentication.SignOut();
+                Response.Redirect(FormsAuthentication.LoginUrl);
+            }
+            else
+                Msg2.Text = "Wrong password. Try again.";
+        }
+        catch (Exception err)
+        {
+            Msg2.Text = "Account deletion failed.";
+        }  
+    }
 }
