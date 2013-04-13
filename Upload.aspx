@@ -1,95 +1,59 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Upload.aspx.cs" Inherits="Upload" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <title>Fuddle | Upload Images</title>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <title>Fuddle | Upload Image</title>
 
     <!-- Required plugins for the preview -->
     <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
-    
+
     <!-- Scripts -->
     <script type="text/javascript" src="/scripts/uploadPreview.js"></script>
 
+    <!-- StyleSheets -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/upload.css" />
+
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div style="text-align:center"><h1>Upload Image</h1>
-        <p>Preliminary upload page where you can select an image, a preview will be shown, and the image will
-            be saved to the database.</p>
-    </div>
-
-    <br /><br /><br />
-
-    <!-- Some formatting spaces -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-    <!-- ASP File Upload control -->
-    <asp:FileUpload ID="uploadFile" runat="server" onchange="previewImage(this)" />
-
-    <br /><br />
-    <!-- Some formatting spaces -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    
-    <asp:Label ID="imgTitleLabel" runat="server" Text="Title"></asp:Label>
-    &nbsp;&nbsp;&nbsp;
-    <asp:TextBox ID="title" runat="server"></asp:TextBox>
-    &nbsp;&nbsp;&nbsp;
-    <br /><br />
-        
-    <!-- Some formatting spaces -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    
-    <asp:Label ID="imgDescLabel" runat="server" Text="Description"></asp:Label>
-    &nbsp;&nbsp;
-    <asp:TextBox ID="description" runat="server" TextMode="MultiLine" Width="229px"></asp:TextBox>
-
-    <br /><br />
-        
-    <!-- Some formatting spaces -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="uploadButton" runat="server" Text="Upload" OnClick="uploadButton_Click" />
-
-    <br /><br />
-        
-    <!-- Some formatting spaces -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Label ID="uploadStatus" runat="server"></asp:Label>
-    
-
-    <!-- This works for Chrome/Safari/FF -->
-    <div style="text-align:center">
-        <asp:Label ID="imgPrevLabel" runat="server" Text="Image Preview: "></asp:Label>
-        <br />
-        <img id="image" src="#" alt="Your image" />
-    </div>
-        
-    <br /><br /><br />
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div style="text-align: center">
-        <asp:Label ID="Label1" runat="server" Text="Image title:"></asp:Label>
-        &nbsp;&nbsp;
-        <asp:TextBox ID="retrieveFile" runat="server" Width="184px"></asp:TextBox>
-        <br />
-        <asp:Button ID="retrieve" runat="server" Text="Retrieve Image" OnClick="retrieve_Click" />
-        <br />
-        <asp:Label ID="retrieveStatus" runat="server"></asp:Label>
-        <br />
-        <asp:Image ID="Image1" runat="server" />
+        <h1>Upload Image</h1>
     </div>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:fuddleConnectionString %>" SelectCommand="SELECT Image_id FROM Image_table WHERE (Image_title = @title)">
-    <SelectParameters>
-        <asp:ControlParameter ControlID="retrieveFile" Name="title" PropertyName="Text" />
-    </SelectParameters>
-    </asp:SqlDataSource>
+
+    <br />
+
+    <div id="left-half">
+        <div id="upload-content">
+            <!-- ASP File Upload control -->
+            <div id="inputs">
+                Select an image
+            <asp:FileUpload ID="uploadFile" Width="240px" runat="server" onchange="previewImage(this)" />
+
+                <br />
+
+                <asp:Label ID="imgTitleLabel" runat="server" Text="Title"></asp:Label>
+                <asp:TextBox ID="title" Width="240px" runat="server"></asp:TextBox>
+
+                <br />
+
+                <asp:Label ID="imgDescLabel" runat="server" Text="Description"></asp:Label>
+                <asp:TextBox ID="description" runat="server" TextMode="MultiLine" Width="240px"></asp:TextBox>
+            </div>
+
+            <br />
+
+            <asp:Button ID="uploadButton" CssClass="submitButton" runat="server" Text="Upload" OnClick="uploadButton_Click" />
+
+            <br />
+
+            <asp:Label ID="uploadStatus" CssClass="uploadError" runat="server"></asp:Label>
+        </div>
+    </div>
+    <div id="right-half">
+        <!-- This works for Chrome/Safari/FF -->
+        <div style="width: 370px;margin-left: 30px;text-align: center;">Image Preview</div>
+        <img id="image" class="preImg" src="/resources/placeholder.png" alt="Your image" />
+    </div>
+
+    <!-- clear floats -->
+    <div style="clear:both;margin-bottom:20px"></div>
 </asp:Content>

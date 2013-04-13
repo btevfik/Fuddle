@@ -21,20 +21,79 @@
             <li runat="server" id="imageListItem">
                 <asp:HyperLink ID="imagesLink" runat="server">Images</asp:HyperLink>
             </li>
-            <li runat="server" id="albumListItem">
-                <asp:HyperLink ID="albumsLink" runat="server">Albums</asp:HyperLink>
-            </li>
             <li runat="server" id="userListItem">
                 <asp:HyperLink ID="usersLink" runat="server">Users</asp:HyperLink>
             </li>
         </ul>
         <p style="text-align: center">
-            <asp:Label ID="numresult" CssClass="num-result" runat="server" Text=""></asp:Label>
+            <span id="numresult" class="num-result"></span>
         </p>
     </div>
 
     <!--Results-->
-    <asp:Panel ID="searchresults" CssClass="search-results" runat="server">
-        <!--Search Results go into this panel -->
-    </asp:Panel>
+    <div id="searchresults" class="search-results">
+    </div>
+
+    <div style="margin: 30px auto 0 auto; width: 200px">
+        <a id="loadMore" class="uploadButton">Load More</a>
+    </div>
+    <div id="loading" style="text-align: center; margin: 0 auto; width: 100px">
+    </div>
+
+    <!--Searching script -->
+    <!--uses SearchService -->
+    <script type="text/javascript" src="/scripts/search.js"></script>
+
+    <script type="text/javascript">
+        $(window).load(function () {
+            //get parameter specified in the url
+            var parameter = getParameterByName("q");
+
+            //if nothing specified return and disable anchors
+            if (parameter === null || parameter === "") {
+                jQuery('#<%=imagesLink.ClientID%>').click(function (e) {
+                    e.preventDefault();
+                });
+                jQuery('#<%=usersLink.ClientID%>').click(function (e) {
+                    e.preventDefault();
+                });
+                $("#loadMore").hide();
+                return;
+            }
+
+            //on window load, search for images by default
+            getImages(parameter);
+            activateImages();
+
+            $("#loadMore").click(function () {
+                loadMore("image");
+            });
+
+            //if images clicked
+            jQuery('#<%=imagesLink.ClientID%>').click(function () {
+                $("#searchresults").empty();
+                getImages(parameter);
+                activateImages();
+            });
+
+            //if users clicked
+            jQuery('#<%=usersLink.ClientID%>').click(function () {
+                $('#searchresults').empty();
+                getUsers(parameter);
+                activateUsers();
+            });
+
+        });
+
+        function activateImages() {
+            jQuery('#<%=imageListItem.ClientID%>').addClass("activated");
+            jQuery('#<%=userListItem.ClientID%>').removeClass("activated");
+        }
+
+        function activateUsers() {
+            jQuery('#<%=imageListItem.ClientID%>').removeClass("activated");
+            jQuery('#<%=userListItem.ClientID%>').addClass("activated");
+        }
+
+    </script>
 </asp:Content>

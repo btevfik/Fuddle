@@ -1,7 +1,5 @@
 ﻿/* from http://blog.vjeux.com/2012/image/image-layout-algorithm-google-plus.html */
 
-$(document).ready(function () {
-
     HEIGHTS = [];
 
     function getheight(images, width) {
@@ -28,7 +26,7 @@ $(document).ready(function () {
         setheight(images, getheight(images, width));
     }
 
-    function run(max_height) {
+    function runLayout(max_height) {
         var size = window.innerWidth - 50;
 
         var n = 0;
@@ -50,7 +48,4 @@ $(document).ready(function () {
         }
     }
 
-    window.addEventListener('resize', function () { run(205); });
-    $(function () { run(205); });
-
-});
+    window.addEventListener('resize', function () { runLayout(205); });

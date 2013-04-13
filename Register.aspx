@@ -36,6 +36,7 @@
                             <asp:RequiredFieldValidator CssClass="registerError" ID="AnswerRequired" runat="server" ControlToValidate="Answer" ErrorMessage="Security answer is required." ToolTip="Security answer is required." ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
                         </fieldset>
                         <div class="registerError">
+                            <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="Email"  Display="Dynamic" ValidationGroup="CreateUserWizard1" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ErrorMessage="E-mail address must be in a valid format."></asp:RegularExpressionValidator>
                             <asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword" Display="Dynamic" ErrorMessage="Passwords don't match." ValidationGroup="CreateUserWizard1"></asp:CompareValidator>
                             <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False"></asp:Literal>
                         </div>

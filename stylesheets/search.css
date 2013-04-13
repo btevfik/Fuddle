@@ -1,19 +1,21 @@
 ﻿/*SEARCH CONTENT*/
-.search-results {
-    border: 1px solid #0D98BA;
-    border-radius: 2px 2px 2px 2px;
-}
-
-.search-results img{
+.search-results img {
     box-shadow: 0px 1px 3px #434141;
     margin: 2px 3px 3px 2px;
     outline: 1px solid rgba(0, 0, 0, 0.1);
     outline-offset: -1px;
+    border: none;
+}
+
+.search-results img:hover {
+    transform: translate(0,-5px);
+    -ms-transform: translate(0,-5px); /* IE 9 */
+    -webkit-transform: translate(0,-5px); /* Safari and Chrome */
 }
 
 /*OPTIONS-MENU*/
 #options-menu {
-    width: 500px;
+    width: 350px;
     height: 40px;
     border: 1px solid rgb(13, 152, 186);
     background: none repeat scroll 0% 0% rgb(238, 238, 238);
@@ -27,6 +29,7 @@
     padding: 0px;
     text-align: center;
     width: 100%;
+    cursor:default;
 }
 
 #options-menu ul li {
@@ -36,6 +39,7 @@
     width: 160px;
     border: 1px solid rgb(204, 204, 204);
     background: none repeat scroll 0% 0% rgb(243, 243, 243);
+    cursor:pointer;
 }
 
 #options-menu ul li a{

@@ -1,8 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserProfile.aspx.cs" Inherits="UserProfile" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server"> 
-    <link href="stylesheets/userprofile.css" rel="stylesheet" type="text/css" /> 
+    
+<%@ Register Assembly="FreshClickmedia.Web" Namespace="FreshClickMedia.Web.UI.WebControls" TagPrefix="fcm" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+	<link href="stylesheets/userprofile.css" rel="stylesheet" type="text/css" /> 
+    <style>
+         .gravatar-img{
+            padding: 5px;
+            background-color: white;
+            box-shadow: 0px 1px 3px #434141;
+        }
+    </style>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class = "centerPage">
         <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -21,6 +32,7 @@
             <!-- User's Avatar -->
             <div class ="avatar">
                 <asp:Image ID="Image1" runat="server" Height="200px" Width="200px" />
+				<fcm:Gravatar ID="Gravatar1" runat="server" Size="200" CssClass="gravatar-img" OutputGravatarSiteLink="false" DefaultImage="http://fuddle.apphb.com/resources/gravatar.jpg" />
             </div>
             <!-- Username -->
             <div class ="username">
@@ -32,6 +44,11 @@
                 <asp:Label ID="aboutmeLabel" runat="server"></asp:Label>
             </div>
         </div>
+    <div style="text-align: center">
+        <h1>
+             
+            <asp:Label ID="userLabel" runat="server" Text=""></asp:Label>
+        </h1>
     </div>
 </asp:Content>
 
