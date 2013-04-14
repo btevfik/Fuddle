@@ -57,10 +57,15 @@ public partial class admin_CreateUser : System.Web.UI.Page
                 }
             }
 
+            //additionally add userID to user_info table
+            Activation.addToUserInfoTable(UserNameText.Text);
+
             UserNameText.Text = "";
             PassText.Text = "";
             PassConfirmText.Text = "";
             EmailText.Text = "";
+            QuestionText.Text = "";
+            AnswerText.Text = "";
 
             foreach (var control in CheckBoxRoles.Controls)
             {
@@ -89,8 +94,6 @@ public partial class admin_CreateUser : System.Web.UI.Page
             PopUpText.Controls.Add(literalControl);
             CreateButton_ModalPopupExtender.Show();
         }
-
-
 
     }
 

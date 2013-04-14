@@ -26,6 +26,8 @@ public partial class Register : System.Web.UI.Page
         user.IsApproved = false;
         Membership.UpdateUser(user);
         //send link
-        Activation.sendLink(user);
+        Activation.sendLink(user.UserName);
+        //additionally add userID to user_info table
+        Activation.addToUserInfoTable(user.UserName);
     }
 }

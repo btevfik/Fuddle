@@ -35,7 +35,7 @@ public partial class Login : System.Web.UI.Page
     //resend activation link
     protected void ResetValidation_Click(object sender, EventArgs e)
     {
-        Activation.sendLink(Membership.GetUser(Login1.UserName));
+        Activation.sendLink(Login1.UserName);
         Login1.FindControl("ResetValidation").Visible = false;
     }
 

@@ -60,7 +60,7 @@ function getUsers(parameter) {
             var users = response.d;
             var count = 0;
             $.each(users, function (index, user) {
-                $('#searchresults').append('<p> <a href="/user/' + user.name + '">' + user.name + '</a></p>');
+                $('#searchresults').append('<div class="user-result"> <a href="/user/' + user.name + '">' + user.name + '</a></div>');
                 count++;
             });
             $('#numresult').html(count + " users found.");

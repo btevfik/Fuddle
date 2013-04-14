@@ -45,7 +45,7 @@ public partial class member_Account : System.Web.UI.Page
             user.IsApproved = false;
             Membership.UpdateUser(user);
             //resend Activation link
-            Activation.sendLink(user);
+            Activation.sendLink(user.UserName);
             Msg1.Text = "Email updated. Activation link sent to your email.";
         }
         catch (Exception err)
@@ -63,10 +63,8 @@ public partial class member_Account : System.Web.UI.Page
 
             if (result)
             {
+                //delete user
                 Membership.DeleteUser(user.UserName);
-                //also need to delete content uploaded by this user
-                //such as u.deleteAllContent() method can be implemented
-                
                 //go to login url
                 FormsAuthentication.SignOut();
                 Response.Redirect(FormsAuthentication.LoginUrl);
