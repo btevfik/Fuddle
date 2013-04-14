@@ -23,6 +23,12 @@ public class ShowImage : IHttpHandler
 
             cmd = new SqlCommand("SELECT Image_data FROM [Image_table] WHERE Image_id = " + context.Request.QueryString["imgID"], conn);
             conn.Open();
+            Object result = cmd.ExecuteScalar();
+            //if nothing found throw exception
+            if (result == null)
+            {
+                throw new Exception();
+            }
             rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
