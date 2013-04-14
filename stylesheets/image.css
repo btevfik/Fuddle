@@ -21,7 +21,7 @@
     max-width:800px;
     padding: 10px;
     background-color:white;
-    box-shadow: 0px 1px 3px #434141;
+    box-shadow: 0px 1px 5px #434141;
 }
 
 /*ADD COMMENTS*/
@@ -51,7 +51,9 @@ textarea:focus {
 
 /*MAIN CONTENT*/
 .content {
-    width:1000px;
+    background-color:rgba(0, 0, 0, 0.05);
+    width:900px;
+    min-height:800px;
     margin:0 auto;
 }
 

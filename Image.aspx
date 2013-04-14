@@ -7,6 +7,15 @@
     <script type="text/javascript" src="/scripts/jquery.autosize.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+    </script>
     <div class="content">
         <div class="outer">
             <div class="inner">
@@ -16,7 +25,8 @@
                 <asp:Image ID="Image1" runat="server" CssClass="image" />
                 <br />
                 <asp:Label ID="imageDescription" runat="server" Text="Description of the image goes here"></asp:Label>
-                <br /><br />
+                <br />
+                <br />
                 <div class="buttons">
                     <asp:Button runat="server" ID="upButton" Text="Up &uarr;" CssClass="uploadButton" />
                     <asp:TextBox runat="server" ID="upCount" Width="10" Text="0" Enabled="false" />
@@ -26,6 +36,8 @@
                     &nbsp;&nbsp;
                     <asp:Button runat="server" ID="cuddleBUtotn" Text="Cuddle &hearts;" CssClass="uploadButton" />
                     <asp:TextBox runat="server" ID="cuddleCount" Width="10" Text="0" Enabled="false" />
+                     &nbsp;&nbsp;
+                    <fb:like send="true" layout="button_count" width="450" show_faces="true"></fb:like>
                 </div>
                 <div class="comments">
                     <asp:LoginView ID="LoginView1" runat="server">
@@ -37,9 +49,11 @@
                             <asp:TextBox ID="AddCommentBox" Rows="1" Columns="60" placeholder="Add a comment..." TextMode="MultiLine" ClientIDMode="Static" runat="server"></asp:TextBox>
                         </LoggedInTemplate>
                     </asp:LoginView>
-                    <br /><br />
-                    <b>Comments</b> 
-                    <br /><br />
+                    <br />
+                    <br />
+                    <b>Comments</b>
+                    <br />
+                    <br />
                 </div>
             </div>
         </div>
