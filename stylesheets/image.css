@@ -1,4 +1,5 @@
-﻿.outer{
+﻿/*CENTER DIV WITHOUT DIV*/
+.outer{
     float: right;
     right: 50%;
     position: relative;
@@ -14,15 +15,62 @@
     clear: both;
 }
 
+/*IMAGE*/
 .image {
-    margin: 30px auto;
+    margin: 10px auto;
     max-width:800px;
     padding: 10px;
     background-color:white;
     box-shadow: 0px 1px 3px #434141;
 }
 
+/*ADD COMMENTS*/
+textarea {	
+    font-size:14px;	
+    font-family: sans-serif;		
+    border:2px solid #0D98BA;			
+}
+
+textarea:focus {
+    border:2px solid #e8c291;    
+}
+
+/*PLACEHOLDER COLOR*/
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:  #888;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:  #888;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:  #888;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:  #888;
+}
+
+/*MAIN CONTENT*/
 .content {
     width:1000px;
     margin:0 auto;
+}
+
+.content a:visited, .content a:link{
+    color: #0D98BA;
+    text-decoration:none;
+}
+
+.content a:hover {
+    color: rgb(151, 186, 195);
+}
+
+/*BUTTONS*/
+.buttons .uploadButton{
+    bottom:0;
+    font-weight:bold;
+    margin:0;
+}
+
+.buttons {
+    margin-bottom:20px;
 }

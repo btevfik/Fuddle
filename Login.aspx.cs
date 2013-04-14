@@ -17,21 +17,6 @@ public partial class Login : System.Web.UI.Page
         }
     }
 
-    //after login redirect to default
-    protected void Login1_LoggedIn(object sender, EventArgs e)
-    {
-        //if admin redirect to admin page.
-        if (Roles.GetRolesForUser(Login1.UserName).Contains("admins"))
-        {
-            Response.Redirect("~/admin/Default.aspx");
-        }
-        //else redirect to main page.
-        else
-        {
-            Response.Redirect("~/Default.aspx");
-        }
-    }
-
     //resend activation link
     protected void ResetValidation_Click(object sender, EventArgs e)
     {
