@@ -60,8 +60,11 @@ function getUsers(parameter) {
             var users = response.d;
             var count = 0;
             $.each(users, function (index, user) {
-                $('#searchresults').append('<div class="user-result"> <a href="/user/' + user.name + '">' + user.name + '</a></div>');
                 count++;
+                $('#user-results').append('<div class="user-result"><a href="/user/' + user.name + '"><img src="/GetAvatar.ashx?user=' + user.name + '"/></a><a href="/user/' + user.name + '">' + user.name + '</a></div>');
+                if (count % 4 == 0) {
+                    $('#user-results').append('<div style="clear: both; margin-bottom: 40px"></div>');
+                }
             });
             $('#numresult').html(count + " users found.");
             //hide loading gif when images are loaded

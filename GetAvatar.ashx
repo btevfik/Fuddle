@@ -19,7 +19,7 @@ public class GetAvatar : IHttpHandler {
         SqlDataReader rdr = null;
         SqlConnection conn = new SqlConnection();
         SqlCommand cmd = new SqlCommand();
-        int use_gravatar = 1;
+        bool use_gravatar = true;
 
         try
         {
@@ -36,11 +36,11 @@ public class GetAvatar : IHttpHandler {
             rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-              use_gravatar = (int)rdr["Use_gravatar"];
+              use_gravatar = (bool)rdr["Use_gravatar"];
             }
 
             //if we want to use gravatar
-            if (use_gravatar == 1)
+            if (use_gravatar == true)
             {
                 //Compute the hashstring 
                 string hash = HashEmailForGravatar(u.Email);
@@ -54,11 +54,10 @@ public class GetAvatar : IHttpHandler {
                 string URL = string.Format("http://www.gravatar.com/avatar/{0}?r=pg&s={1}&d={2}",hash,size,defaultImg);
                 // Make request to gravatar
                 makeAvatarRequest(URL);
-                System.Diagnostics.Debug.Write(URL);
             }
 
             //if we don't want to use gravatar
-            else if (use_gravatar == 0)
+            else if (use_gravatar == false)
             {
                 cmd = new SqlCommand("SELECT User_avatar FROM [User_info] WHERE User_id = @id", conn);
                 cmd.Parameters.Add("@id", SqlDbType.UniqueIdentifier, 16).Value = id;
@@ -76,7 +75,7 @@ public class GetAvatar : IHttpHandler {
         }
         catch (Exception ex)
         {
-            context.Response.Write(ex);
+            context.Response.Write("Error retrieving user avatar!");
         }
         finally
         {

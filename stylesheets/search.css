@@ -12,6 +12,45 @@
     -ms-transform: translate(0,-5px); /* IE 9 */
     -webkit-transform: translate(0,-5px); /* Safari and Chrome */
 }
+#user-results {
+    width:1000px;
+    margin:0 auto;
+}
+
+.user-result img:hover {
+     transform: none;
+    -ms-transform: none; /* IE 9 */
+    -webkit-transform: none; /* Safari and Chrome */
+}
+
+.user-result img{
+    margin-right:10px;
+    padding: 5px;
+    background-color:white;
+    box-shadow: 0px 1px 3px #434141;
+}
+
+.user-result img {
+    border-color:transparent;
+}
+
+.user-result img:hover {
+    border-color:transparent;
+}
+
+.user-result {
+    float:left;
+    width:250px;
+}
+
+.user-result a, .user-result a:visited{
+    color:#0D98BA;
+    text-decoration:none;
+}
+
+.user-result a:hover {
+   color:rgb(151, 186, 195);
+}
 
 /*OPTIONS-MENU*/
 #options-menu {

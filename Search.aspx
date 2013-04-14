@@ -33,12 +33,16 @@
     <!--Results-->
     <div id="searchresults" class="search-results">
     </div>
+    <div id="user-results"></div>
 
     <div style="margin: 30px auto 0 auto; width: 200px">
         <a id="loadMore" class="uploadButton">Load More</a>
     </div>
     <div id="loading" style="text-align: center; margin: 0 auto; width: 100px">
     </div>
+    
+    <!-- clear floats -->
+    <div style="clear: both; margin-bottom: 20px"></div>
 
     <!--Searching script -->
     <!--uses SearchService -->
@@ -72,6 +76,7 @@
             //if images clicked
             jQuery('#<%=imagesLink.ClientID%>').click(function () {
                 $("#searchresults").empty();
+                $("#user-results").empty();
                 getImages(parameter);
                 activateImages();
             });
@@ -79,6 +84,7 @@
             //if users clicked
             jQuery('#<%=usersLink.ClientID%>').click(function () {
                 $('#searchresults').empty();
+                $("#user-results").empty();
                 getUsers(parameter);
                 activateUsers();
             });
