@@ -7,7 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
-public class ShowImage : IHttpHandler {
+public class ShowImage : IHttpHandler
+{
 
     public void ProcessRequest(HttpContext context)
     {
@@ -26,11 +27,18 @@ public class ShowImage : IHttpHandler {
             while (rdr.Read())
             {
                 context.Response.ContentType = "image/jpg";
-                context.Response.BinaryWrite((byte[])rdr["Image_data"]); 
+                context.Response.BinaryWrite((byte[])rdr["Image_data"]);
             }
 
             if (rdr != null)
                 rdr.Close();
+        }
+        //if an error, than display a default img, Fuddlelephant
+        catch
+        {
+            string loc = HttpContext.Current.Server.MapPath("/resources/fuddlelephant.png");
+            context.Response.WriteFile(loc);
+            context.Response.ContentType = "image/png";
         }
         finally
         {
@@ -39,10 +47,11 @@ public class ShowImage : IHttpHandler {
         }
         
     }
- 
-    public bool IsReusable 
+
+    public bool IsReusable
     {
-        get {
+        get
+        {
             return false;
         }
     }

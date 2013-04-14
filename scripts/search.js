@@ -61,7 +61,7 @@ function getUsers(parameter) {
             var count = 0;
             $.each(users, function (index, user) {
                 count++;
-                $('#user-results').append('<div class="user-result"><a href="/user/' + user.name + '"><img src="/GetAvatar.ashx?user=' + user.name + '"/></a><a href="/user/' + user.name + '">' + user.name + '</a></div>');
+                $('#user-results').append('<div class="user-result"><a href="/user/' + user.name + '" target="_blank"><img src="/GetAvatar.ashx?user=' + user.name + '"/></a><a href="/user/' + user.name + '"target="_blank">' + user.name + '</a></div>');
                 if (count % 4 == 0) {
                     $('#user-results').append('<div style="clear: both; margin-bottom: 40px"></div>');
                 }
@@ -133,7 +133,7 @@ function preloadImages(srcs, widths, heights, start, end) {
             }
         };
         //set link
-        anchor.setAttribute("href", "/ShowImage.ashx?imgid=" + srcs[i]);
+        anchor.setAttribute("href", "/Image.aspx?id=" + srcs[i]);
         anchor.setAttribute("target", "_blank");
         //set src
         img.src = "/ShowImage.ashx?imgid=" + srcs[i];

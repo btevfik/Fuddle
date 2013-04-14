@@ -1,0 +1,28 @@
+﻿.outer{
+    float: right;
+    right: 50%;
+    position: relative;
+}
+
+.inner{
+    float: right;
+    right: -50%;
+    position: relative;
+}
+
+.clear {
+    clear: both;
+}
+
+.image {
+    margin: 30px auto;
+    max-width:800px;
+    padding: 10px;
+    background-color:white;
+    box-shadow: 0px 1px 3px #434141;
+}
+
+.content {
+    width:1000px;
+    margin:0 auto;
+}
