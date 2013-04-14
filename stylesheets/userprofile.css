@@ -1,6 +1,6 @@
 ﻿.centerPage {
     margin: 0 auto;
-    width: 1000px;
+    width: 70%;
     position: relative;
     background: #fff;
 }
@@ -30,5 +30,5 @@
     top: -121px;
     left: 300px;
     height: 300px;
-    width: 600px;
+    width: 60%;
 }
