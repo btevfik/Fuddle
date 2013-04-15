@@ -40,20 +40,36 @@ textarea:focus {
   border-top:solid white 1px;
   background: #edeff4;
   padding:5px;
+  display: table;
   max-width:800px;
-  word-wrap: break-word;
+  min-height:50px;
 }
 
-.comment img {
+.comment .pro-image {
+  max-width:50px;
+  width:50px;
+  display: table-cell;
+}
+
+.comment .pro-image img{
   width:40px;
+}
+
+.comm-cont {
+  word-break:break-all;
+  display: table-cell;
+  vertical-align: top;
 }
 
 .commenter 
 {
-    margin-right:10px;
-    display:inline-block;
-    font-weight:bold;
-    font-size:13px;
+  margin-right:10px;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.message {
+    font-size:16px;
 }
 
 /*PLACEHOLDER COLOR*/
@@ -91,6 +107,7 @@ textarea:focus {
 .buttons .uploadButton{
     bottom:0;
     margin:0;
+    height:33px;
 }
 
 .comments .uploadButton {

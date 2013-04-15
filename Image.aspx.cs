@@ -194,7 +194,7 @@ public partial class Image : System.Web.UI.Page
         TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
         //create a comment literal
         Literal myComment = new Literal();
-        myComment.Text = "<div class='comment' style='max-width:"+getWidth(id)+"px'><span class='commenter'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/>&nbsp;<a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span>" + commentBox.Text + "</div>";
+        myComment.Text = "<div class='comment' style='max-width:" + getWidth(id) + "px;min-width:" + getWidth(id) + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont' style='max-width:" + (getWidth(id)-50) + "px'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span></div></div></div>";
         //add to comment panel
         commentPanel.Controls.AddAt(0, myComment);
         // add it to the list
