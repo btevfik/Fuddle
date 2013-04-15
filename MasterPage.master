@@ -56,6 +56,9 @@
                                 <li id="signup">
                                     <a href="/member/MyProfile.aspx">Profile</a>
                                 </li>
+                                <li>
+                                    <asp:Image ID="profileImage" runat="server" />
+                                </li>
                             </ul>
                         </LoggedInTemplate>
                     </asp:LoginView>
@@ -72,10 +75,10 @@
         <!--Footer -->
         <div class="footer">
             <div class="foot">
-            <a href="http://btevfik.github.com/Fuddle" target="_blank">About</a>&nbsp;|&nbsp;<a href="mailto:bt@bu.edu">Contact</a>&nbsp;|&nbsp;<a href="/admin">Administration</a>
-            <br />
-                <div style="font-size:10px">
-                &copy; 2013
+                <a href="http://btevfik.github.com/Fuddle" target="_blank">About</a>&nbsp;|&nbsp;<a href="mailto:bt@bu.edu">Contact</a>&nbsp;|&nbsp;<a href="/admin">Administration</a>
+                <br />
+                <div style="font-size: 10px">
+                    &copy; 2013
                 </div>
             </div>
         </div>

@@ -52,6 +52,13 @@ form {
 .placeholder { color: rgba(0, 0, 0, 0.3); }
 
 /*MAIN HEADER*/
+.profile-img {
+    width:40px;
+    position:relative;
+    bottom:10px;
+    margin-left:10px;
+    border: 1px solid white;
+}
 #header{
     background:url("/resources/noisy-texture.png") repeat;
     position:relative;
