@@ -1,0 +1,93 @@
+﻿.left {
+position:relative;
+left:35%;
+float:left;
+width:50%;
+}
+
+.right {
+position:relative;
+right:0%;
+float:right;
+width:50%;
+}
+
+.radioButton {
+float:left;
+}
+
+.right .uploadButton, .left .uploadButton {
+bottom:0;
+margin-top:0;
+margin-left:40px;
+}
+
+.useLabel {
+line-height:40px;
+}
+
+#imgCrop {
+}
+
+#imgCropped {
+   max-width:200px;
+}
+
+.profile-image {
+    max-width:200px;
+    min-width:200px;
+    width:200px;
+}
+
+.avatarError {
+  margin-bottom:5px;
+  color: #d14545;
+  font-size:13px;
+}
+
+.submitButton {		
+  background-color: #d14545;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e97171), to(#d14545));
+  background-image: -webkit-linear-gradient(top, #e97171, #d14545);
+  background-image: -moz-linear-gradient(top, #e97171, #d14545);
+  background-image: -ms-linear-gradient(top, #e97171, #d14545);
+  background-image: -o-linear-gradient(top, #e97171, #d14545);
+  background-image: linear-gradient(top, #e97171, #d14545);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+  border: 1px solid #7e1515;
+  margin-left: 65px;
+  margin-bottom: 30px;
+  height: 30px;
+  padding: 0;
+  width: 130px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.submitButton:hover,
+.submitButton:focus {		
+  background-color: #e97171;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#d14545), to(#e97171));
+  background-image: -webkit-linear-gradient(top, #d14545, #e97171);
+  background-image: -moz-linear-gradient(top, #d14545, #e97171);
+  background-image: -ms-linear-gradient(top, #d14545, #e97171);
+  background-image: -o-linear-gradient(top, #d14545, #e97171);
+  background-image: linear-gradient(top, #d14545, #e97171);
+}	
+
+.submitButton:active {		
+  outline: none;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+.submitButton::-moz-focus-inner {
+  border: none;
+}

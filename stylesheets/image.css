@@ -56,7 +56,8 @@ textarea:focus {
 }
 
 .comm-cont {
-  word-break:break-all;
+  -ms-word-break: break-all;
+  word-wrap:break-word;
   display: table-cell;
   vertical-align: top;
 }
