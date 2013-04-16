@@ -25,10 +25,15 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         System.Diagnostics.Debug.WriteLine(path);
         user = Membership.GetUser();
         //show images
-        GravatarImage.ImageUrl = "/GetAvatar.ashx?user=" + user.UserName + "&type=g"+"&size=200";
+        GravatarImage.ImageUrl = "/GetAvatar.ashx?user=" + user.UserName + "&type=g" + "&size=200";
         UploadedImage.ImageUrl = "/GetAvatar.ashx?user=" + user.UserName + "&type=u";
+        //create temp folder if not exists
+        string pathToCreate = "/temp/";
+        if (!Directory.Exists(Server.MapPath(pathToCreate)))
+        {
+            Directory.CreateDirectory(Server.MapPath(pathToCreate));
+        }
     }
-
     protected void btnUpload_Click(object sender, EventArgs e)
     {
         Boolean FileOK = false;
@@ -111,12 +116,12 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         //delete content in temp file
         try
         {
-            System.IO.File.Delete(Server.MapPath("/temp/"+ImageName));
+            System.IO.File.Delete(Server.MapPath("/temp/" + ImageName));
         }
 
         catch (System.IO.IOException ex)
         {
-            lblError.Text="Error deleting temporary file: "+ex.Message;
+            lblError.Text = "Error deleting temporary file: " + ex.Message;
             lblError.Visible = true;
         }
     }
