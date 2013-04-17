@@ -13,6 +13,7 @@ using System.Web.Security;
 using System.Data.SqlClient;
 using System.Data;
 
+
 public partial class member_ChangeAvatar : System.Web.UI.Page
 {
     String path = HttpContext.Current.Request.PhysicalApplicationPath + "temp\\";
@@ -63,7 +64,19 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         {
             try
             {
-                Upload.PostedFile.SaveAs(path + Session["WorkingImage"]);
+                Stream fs = Upload.PostedFile.InputStream;
+                // Get the image's width
+                System.Drawing.Image tempImg = System.Drawing.Image.FromStream(fs);
+                int fileWidth = tempImg.Width;
+                tempImg.Dispose();  // manual memory cleanup - don't need the image object anymore
+                if (fileWidth > 800)
+                {
+                    resizeImageAndSave(800);
+                }
+                else
+                {
+                    Upload.PostedFile.SaveAs(path + Session["WorkingImage"]);
+                }
                 FileSaved = true;
             }
             catch (Exception ex)
@@ -74,6 +87,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
                 lblError.Visible = true;
 
                 FileSaved = false;
+
+                lightbox.Style.Add("display", "block");
             }
         }
 
@@ -82,13 +97,19 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
             lblError.Text = "Cannot accept files of this type.";
 
             lblError.Visible = true;
+
+            lightbox.Style.Add("display", "block");
         }
 
         if (FileSaved)
         {
             pnlCrop.Visible = true;
 
+            lblError.Visible = false;
+
             imgCrop.ImageUrl = "/temp/" + Session["WorkingImage"].ToString();
+
+            lightbox.Style.Add("display", "none");
         }
     }
 
@@ -121,8 +142,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
 
         catch (System.IO.IOException ex)
         {
-            lblError.Text = "Error deleting temporary file: " + ex.Message;
-            lblError.Visible = true;
+            lblError2.Text = "Error deleting temporary file: " + ex.Message;
+            lblError2.Visible = true;
         }
     }
 
@@ -197,11 +218,12 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         }
         catch (Exception ee)
         {
-            lblError.Text = "Error uploading file." + ee;
-            lblError.Visible = true;
+            lblError2.Text = "Error uploading file." + ee;
+            lblError2.Visible = true;
         }
         finally
         {
+            lblError.Visible = true;
             conn.Close();
             conn.Dispose();
         }
@@ -227,8 +249,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         }
         catch (Exception ee)
         {
-            lblError.Text = "Error changing picture type." + ee;
-            lblError.Visible = true;
+            lblError2.Text = "Error changing picture type." + ee;
+            lblError2.Visible = true;
         }
         finally
         {
@@ -257,13 +279,74 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         }
         catch (Exception ee)
         {
-            lblError.Text = "Error changing picture type." + ee;
-            lblError.Visible = true;
+            lblError2.Text = "Error changing picture type." + ee;
+            lblError2.Visible = true;
         }
         finally
         {
             conn.Close();
             conn.Dispose();
         }
+    }
+
+    protected void cancelBut_Click(object sender, EventArgs e)
+    {
+        string ImageName = Session["WorkingImage"].ToString();
+
+        //delete content in temp file
+        try
+        {
+            System.IO.File.Delete(Server.MapPath("/temp/" + ImageName));
+        }
+
+        catch (System.IO.IOException ex)
+        {
+            lblError2.Text = "Error deleting temporary file: " + ex.Message;
+            lblError2.Visible = true;
+        }
+
+        Response.Redirect("/member/ChangeAvatar.aspx");
+    }
+
+    protected void resizeImageAndSave(int thumbnailSize)
+    {
+        // Create a bitmap of the content of the fileUpload control in memory
+        SD.Bitmap originalBMP = new SD.Bitmap(Upload.FileContent);
+
+        int newWidth, newHeight;
+
+        if (originalBMP.Width > originalBMP.Height)
+        {
+
+            newWidth = thumbnailSize;
+
+            newHeight = originalBMP.Height * thumbnailSize / originalBMP.Width;
+
+        }
+
+        else
+        {
+            newWidth = originalBMP.Width * thumbnailSize / originalBMP.Height;
+
+            newHeight = thumbnailSize;
+        }
+
+        // Create a new bitmap which will hold the previous resized bitmap
+        SD.Bitmap newBMP = new SD.Bitmap(originalBMP, newWidth, newHeight);
+        // Create a graphic based on the new bitmap
+        SD.Graphics oGraphics = SD.Graphics.FromImage(newBMP);
+
+        // Set the properties for the new graphic file
+        oGraphics.SmoothingMode = SmoothingMode.AntiAlias; oGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+        // Draw the new graphic based on the resized bitmap
+        oGraphics.DrawImage(originalBMP, 0, 0, newWidth, newHeight);
+
+        // Save the new graphic file to the server
+        newBMP.Save(path + Session["WorkingImage"]);
+
+        // Once finished with the bitmap objects, we deallocate them.
+        originalBMP.Dispose();
+        newBMP.Dispose();
+        oGraphics.Dispose();
     }
 }

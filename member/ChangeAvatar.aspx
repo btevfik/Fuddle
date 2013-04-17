@@ -5,9 +5,11 @@
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/updateavatar.css" />
     <link href="/stylesheets/jquery.Jcrop.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
     <!--Scripts -->
     <script type="text/javascript" src="/scripts/jquery.Jcrop.js"></script>
     <script src="/scripts/jquery.screwdefaultbuttonsV2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
 
@@ -21,7 +23,23 @@
                 onSelect: storeCoords,
                 aspectRatio: 1,
                 maxSize: [600, 600],
-                minSize: [80, 80]
+                minSize: [80, 80],
+                setSelect: [100, 100, 80, 80]
+            });
+
+            $('.lightbox_trigger').click(function (e) {
+                e.preventDefault();
+                //get lightbox
+                var lightbox = $("#lightbox");
+                lightbox.css("display", "block");
+            });
+
+            $("#content").draggable();
+
+            $('#lightbox').click(function (e) {
+                if ($(e.target).is("#content") || $(e.target).is("#Upload") || $(e.target).is("#uploadButton")) return;
+                //must use live, as the lightbox element is inserted into the DOM       
+                $('#lightbox').css("display", "none");
             });
 
         });
@@ -32,6 +50,7 @@
             jQuery('#W').val(c.w);
             jQuery('#H').val(c.h);
         };
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -54,31 +73,47 @@
         <asp:RadioButton AutoPostBack="true" CssClass="radioButton" ID="PickUpload" ViewStateMode="Enabled" OnCheckedChanged="PickUpload_CheckedChanged" GroupName="PickChoice" runat="server" />
         <div style="clear: both"></div>
         <br />
-        <asp:FileUpload ID="Upload" runat="server" />
-        <br /><br />
-        <asp:Button CssClass="uploadButton" ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Upload" />
-        <br />
-        <asp:Label ID="lblError" CssClass="avatarError" runat="server" Visible="false" />
+        <button class="uploadButton lightbox_trigger">Upload a new picture</button>
+        <asp:Panel ID="lightbox" ClientIDMode="Static" Style="display: none" runat="server">
+            <div id="content" draggable="true">
+                <asp:FileUpload ID="Upload" ClientIDMode="Static" runat="server" />
+                <br />
+                <br />
+                <asp:Button CssClass="uploadButton" ClientIDMode="Static" ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Add picture" />
+                <br />
+                <asp:Label ID="lblError" CssClass="avatarError" runat="server" Visible="false" />
+            </div>
+        </asp:Panel>
     </div>
 
     <div style="clear: both"></div>
 
-    <asp:Panel ID="pnlCrop" runat="server" Visible="false">
+    <asp:Panel ID="pnlCrop" ClientIDMode="Static" runat="server" Visible="false">
+        <div class="outer">
+            <div class="inner">
+                <asp:Image ID="imgCrop" ClientIDMode="Static" runat="server" />
 
-        <asp:Image ID="imgCrop" ClientIDMode="Static" runat="server" />
+                <br />
 
-        <br />
+                <asp:HiddenField ID="X" ClientIDMode="Static" runat="server" />
 
-        <asp:HiddenField ID="X" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="Y" ClientIDMode="Static" runat="server" />
 
-        <asp:HiddenField ID="Y" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="W" ClientIDMode="Static" runat="server" />
 
-        <asp:HiddenField ID="W" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="H" ClientIDMode="Static" runat="server" />
 
-        <asp:HiddenField ID="H" ClientIDMode="Static" runat="server" />
 
-        <asp:Button ID="btnCrop" CssClass="submitButton" runat="server" Text="Crop and Save" OnClick="btnCrop_Click" />
-
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div id="cropPanelButtons">
+            <asp:Button ID="btnCrop" CssClass="submitButton" runat="server" Text="Crop and Save" OnClick="btnCrop_Click" />
+            &nbsp;
+            <asp:Button ID="cancelBut" CssClass="submitButton" runat="server" Text="Cancel" OnClick="cancelBut_Click" />
+            <asp:Label ID="lblError2" CssClass="avatarError" runat="server" Visible="false" />
+        </div>
     </asp:Panel>
+
 </asp:Content>
 
