@@ -106,10 +106,10 @@ public partial class Upload : System.Web.UI.Page
 
                 // Generating a thumbnail of the image to use for the search page
                 // The thumbnail will be 25% of the original image's size, unless if
-                // the original image is 100x100 or smaller (basically already thumbnail size)
+                // the original image is 200x200 or smaller (basically already thumbnail size)
                 int fileWidthThumb = 0;
                 int fileHeightThumb = 0;
-                if (fileWidth > 100 && fileHeight > 100)
+                if (fileWidth > 200 && fileHeight > 200)
                 {
                     fileWidthThumb = fileWidth / 4;
                     fileHeightThumb = fileHeight / 4;
@@ -120,12 +120,12 @@ public partial class Upload : System.Web.UI.Page
                     fileHeightThumb = fileHeight;
                 }
 
-                // Create a new bitmap object to create the actual thumbnail data
-                Bitmap thumbnail_bmp = new Bitmap(fileWidthThumb, fileHeightThumb);
+                // Create a new image object to create the actual thumbnail data
+                System.Drawing.Image img = System.Drawing.Image.FromStream(fs);
                 System.Drawing.Image thumbnail =
-                    (System.Drawing.Image)thumbnail_bmp.GetThumbnailImage(fileWidthThumb, fileHeightThumb, ()=>false, IntPtr.Zero);
+                    (System.Drawing.Image)img.GetThumbnailImage(fileWidthThumb, fileHeightThumb, ()=>false, IntPtr.Zero);
                 MemoryStream ms = new MemoryStream();
-                thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 Byte[] bytes_thumb = ms.ToArray();
 
                 // Insert the image and its description and title into the database
