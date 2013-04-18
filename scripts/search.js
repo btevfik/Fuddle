@@ -136,7 +136,7 @@ function preloadImages(srcs, widths, heights, start, end) {
         anchor.setAttribute("href", "/Image.aspx?id=" + srcs[i]);
         anchor.setAttribute("target", "_blank");
         //set src
-        img.src = "/ShowImage.ashx?imgid=" + srcs[i];
+        img.src = "/ShowThumbnail.ashx?imgid=" + srcs[i];
         img.className = "search-img";
         img.setAttribute("data-width", widths[i]);
         img.setAttribute("data-height", heights[i]);

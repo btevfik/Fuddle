@@ -68,15 +68,19 @@ public class SearchService : System.Web.Services.WebService {
             string connStr = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
             conn = new SqlConnection(connStr);
 
-            cmd = new SqlCommand("SELECT Image_id FROM [Image_table] WHERE Image_desc like '%" + query + "%' OR Image_title like '%" + query + "%' OR Image_filename like '%" + query + "%'", conn);
+            cmd = new SqlCommand("SELECT Image_id,Image_thumbHeight,Image_thumbWidth FROM [Image_table] WHERE Image_desc like '%" + query + "%' OR Image_title like '%" + query + "%' OR Image_filename like '%" + query + "%'", conn);
             conn.Open();
             rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
                //get the id
                int id = ((int)rdr["Image_id"]);
+                //get the height
+               int width = ((int)rdr["Image_thumbWidth"]);
+                //get the width
+               int height = ((int)rdr["Image_thumbHeight"]);
                //add to images list 
-               Image newImage = new Image { id = id, width = 100, height = 100 };
+               Image newImage = new Image { id = id, width = width, height = height };
                Images.Add(newImage);
                 
             }
