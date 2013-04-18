@@ -121,12 +121,19 @@ public partial class Upload : System.Web.UI.Page
                 }
 
                 // Create a new image object to create the actual thumbnail data
-                System.Drawing.Image img = System.Drawing.Image.FromStream(fs);
-                System.Drawing.Image thumbnail =
-                    (System.Drawing.Image)img.GetThumbnailImage(fileWidthThumb, fileHeightThumb, ()=>false, IntPtr.Zero);
+                System.Drawing.Image img = System.Drawing.Image.FromStream(fs);                
+                Bitmap tempBmp = new Bitmap(img, fileWidthThumb, fileHeightThumb);
+                Graphics g = Graphics.FromImage(tempBmp);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.DrawImage(img, 0, 0, tempBmp.Width, tempBmp.Height);                
                 MemoryStream ms = new MemoryStream();
-                thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                tempBmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 Byte[] bytes_thumb = ms.ToArray();
+
+                img.Dispose();
+                tempBmp.Dispose();
+                g.Dispose();
 
                 // Insert the image and its description and title into the database
                 string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height, "
