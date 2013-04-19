@@ -100,19 +100,29 @@ public partial class Upload : System.Web.UI.Page
 
                 // Get the image's width and height (in pixels) to store in the database as well
                 System.Drawing.Image tempImg = System.Drawing.Image.FromStream(fs);
-                int fileWidth = tempImg.Width;
-                int fileHeight = tempImg.Height;
+                double fileWidth = tempImg.Width;
+                double fileHeight = tempImg.Height;
                 tempImg.Dispose();  // manual memory cleanup - don't need the image object anymore
 
                 // Generating a thumbnail of the image to use for the search page
                 // The thumbnail will be 25% of the original image's size, unless if
                 // the original image is 200x200 or smaller (basically already thumbnail size)
-                int fileWidthThumb = 0;
-                int fileHeightThumb = 0;
+                double fileWidthThumb = 0;
+                double fileHeightThumb = 0;
                 if (fileWidth > 200 && fileHeight > 200)
                 {
                     fileWidthThumb = fileWidth / 4;
                     fileHeightThumb = fileHeight / 4;
+
+                    // Store the aspect ratio of the image
+                    double aspectRatio = fileWidthThumb / fileHeightThumb;
+
+                    // Setting lower bound of 200px for thumbnail's height
+                    if (fileHeightThumb < 200)
+                    {
+                        fileHeightThumb = 200;
+                        fileWidthThumb = fileHeightThumb * aspectRatio;  // preserve the image's aspect ratio
+                    }
                 }
                 else
                 {
@@ -122,7 +132,7 @@ public partial class Upload : System.Web.UI.Page
 
                 // Create a new image object to create the actual thumbnail data
                 System.Drawing.Image img = System.Drawing.Image.FromStream(fs);                
-                Bitmap tempBmp = new Bitmap(img, fileWidthThumb, fileHeightThumb);
+                Bitmap tempBmp = new Bitmap(img, (int)fileWidthThumb, (int)fileHeightThumb);
                 Graphics g = Graphics.FromImage(tempBmp);
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
