@@ -1,4 +1,4 @@
-﻿/*CENTER DIV WITHOUT DIV*/
+﻿/*CENTER DIV WITHOUT WIDTH*/
 .outer{
     float: right;
     right: 50%;
@@ -89,7 +89,7 @@ textarea:focus {
 
 /*MAIN CONTENT*/
 .content {
-    background-color:rgba(0, 0, 0, 0.05);
+    background-color:rgba(0, 0, 0, 0.1);
     width:900px;
     min-height:800px;
     margin:0 auto;

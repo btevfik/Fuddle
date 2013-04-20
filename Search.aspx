@@ -5,7 +5,7 @@
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/search.css" />
     <!-- Scripts -->
-    <script src="scripts/search-layout.js"></script>
+    <script src="/scripts/search-layout.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <!--Header -->
