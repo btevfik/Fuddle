@@ -7,10 +7,29 @@
     border: none;
 }
 
-.search-results img:hover {
-    transform: translate(0,-5px);
-    -ms-transform: translate(0,-5px); /* IE 9 */
-    -webkit-transform: translate(0,-5px); /* Safari and Chrome */
+.search-results figure {
+    position:relative;
+    float:left;
+    margin:0;
+}
+
+.search-results figcaption {
+    padding:5px;
+    margin: 2px 3px 3px 2px;
+    font-size:12px;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    position:absolute;
+    display:none;
+    background-color:rgba(0, 0, 0, 0.70);
+    color:white;
+    text-decoration:none;
+    overflow:hidden;
+}
+
+.search-results img:hover ~ figcaption{
+    display:block;
 }
 #user-results {
     width:1000px;

@@ -111,12 +111,16 @@ function preloadImages(srcs, widths, heights, start, end) {
     }
     var img;
     var anchor;
+    var figure;
+    var caption;
     var imgs = [];
     var ancs = [];
     var remaining = end;
     for (var i = start; i < end; i++) {
         img = new Image();
         anchor = document.createElement("a");
+        figure = document.createElement("figure");
+        caption = document.createElement("figcaption");
         img.onload = function () {
             --remaining;
             if (remaining <= start) {
@@ -132,6 +136,10 @@ function preloadImages(srcs, widths, heights, start, end) {
                 }
             }
         };
+        //set figure and caption
+        caption.innerHTML = "test caption"; //we can add the title here.
+        figure.appendChild(img);
+        figure.appendChild(caption);
         //set link
         anchor.setAttribute("href", "/Image.aspx?id=" + srcs[i]);
         anchor.setAttribute("target", "_blank");
@@ -140,7 +148,7 @@ function preloadImages(srcs, widths, heights, start, end) {
         img.className = "search-img";
         img.setAttribute("data-width", widths[i]);
         img.setAttribute("data-height", heights[i]);
-        anchor.appendChild(img);
+        anchor.appendChild(figure);
         imgs.push(anchor);
     }
 }
