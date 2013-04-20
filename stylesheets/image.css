@@ -120,3 +120,16 @@ textarea:focus {
 .buttons {
     margin-bottom:20px;
 }
+
+a.deleteButton{
+    background-image:url("/resources/x-mark.png");
+    background-size:18px 18px;
+    background-repeat:no-repeat;
+    background-position:left center;
+    float:right;
+    font-size:15px;
+
+}
+a.deleteButton:hover{
+    background-image:url("/resources/x-mark-hover.png");
+}
