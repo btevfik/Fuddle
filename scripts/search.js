@@ -3,10 +3,11 @@ var heights = new Array();
 var widths = new Array();
 var end = 0;
 var length = 0;
+var loadnumber = 10;
 
 function getImages(parameter) {
     //reset end
-    end = 10;
+    end = loadnumber;
     //reset Load More on getImages call again
     $("#loadMore").text("Load More");
     //initially don't display load more
@@ -99,13 +100,12 @@ function loadMore(type) {
     //display loading gif
     $("#loading").html("<img src='/resources/loader.gif'/>");
     setTimeout(function () {
-        preloadImages(arrayOfImages, widths, heights, end, end + 10);
-        end = end + 10;
+        preloadImages(arrayOfImages, widths, heights, end, end + loadnumber);
+        end = end + loadnumber;
     }, 1000)
 }
 
 function preloadImages(srcs, widths, heights, start, end) {
-    var hasRun = false;
     if (end >= length) {
         end = length;
     }
@@ -123,17 +123,17 @@ function preloadImages(srcs, widths, heights, start, end) {
         caption = document.createElement("figcaption");
         img.onload = function () {
             --remaining;
-            if (remaining <= start) {
-                //append images
-                $("#searchresults").append(imgs);
-                //hide loading gif when images are loaded
-                $("#loading").empty();
-                //show load more now
-                $("#loadMore").show();
-                if (hasRun == false) {
+            if (remaining == start) {
+                    //append images
+                    $("#searchresults").append(imgs);
+                    //append images
+                    $("#searchresults").append(imgs);
+                    //hide loading gif when images are loaded
+                    $("#loading").empty();
+                    //show load more now
+                    $("#loadMore").show();
+                    //fix the layout
                     runLayout(205);
-                    hasRun = true;
-                }
             }
         };
         //set figure and caption

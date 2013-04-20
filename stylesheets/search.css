@@ -9,7 +9,7 @@
 
 .search-results figure {
     position:relative;
-    float:left;
+    display:inline-block;
     margin:0;
 }
 

@@ -35,9 +35,6 @@
     </div>
     <div id="user-results"></div>
 
-     <!-- clear floats -->
-    <div style="clear: both; margin-bottom: 20px"></div>
-
     <div style="margin: 30px auto 0 auto; width: 200px">
         <a id="loadMore" class="uploadButton">Load More</a>
     </div>
