@@ -6,7 +6,7 @@ var length = 0;
 
 function getImages(parameter) {
     //reset end
-    end = 25;
+    end = 10;
     //reset Load More on getImages call again
     $("#loadMore").text("Load More");
     //initially don't display load more
@@ -99,8 +99,8 @@ function loadMore(type) {
     //display loading gif
     $("#loading").html("<img src='/resources/loader.gif'/>");
     setTimeout(function () {
-        preloadImages(arrayOfImages, widths, heights, end, end + 25);
-        end = end + 25;
+        preloadImages(arrayOfImages, widths, heights, end, end + 10);
+        end = end + 10;
     }, 1000)
 }
 
