@@ -193,7 +193,7 @@ public partial class Upload : System.Web.UI.Page
 
     // Retrieving images from the database
     /* NOT NEEDED FOR THIS PAGE
-    /* CAN BE USED FOR UserPage later. */
+    /* CAN BE USED FOR UserPage later.
     protected void retrieve_Click(object sender, EventArgs e)
     {
         SqlDataReader rdr = null;
@@ -238,5 +238,5 @@ public partial class Upload : System.Web.UI.Page
         {
             conn.Dispose();
         }
-    }     
+    }   */  
 }
