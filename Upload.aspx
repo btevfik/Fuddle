@@ -57,14 +57,15 @@
     <!-- clear floats -->
     <div style="clear:both;margin-bottom:20px"></div>
 
+    <!-- commenting this section out as it was only used for testing
     <div style="text-align:center">
         Image title: <asp:TextBox ID="retrieveFile" runat="server"></asp:TextBox>
         <br />
-        <asp:Button ID="retrieve" runat="server" Text="Retrieve Thumbnail" OnClick="retrieve_Click" />
+        <asp:Button ID="retrieve" runat="server" Text="Retrieve Thumbnail" />
         <br /><br />
         <asp:Image ID="Image1" runat="server" />
         <br />
         <asp:Label ID="retrieveStatus" runat="server"></asp:Label>
+    </div> -->
 
-    </div>
 </asp:Content>
