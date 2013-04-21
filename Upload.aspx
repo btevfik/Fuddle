@@ -9,6 +9,7 @@
 
     <!-- Scripts -->
     <script type="text/javascript" src="/scripts/uploadPreview.js"></script>
+    <script type="text/javascript" src="/scripts/progress.js"></script>
 
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/upload.css" />
@@ -41,10 +42,12 @@
 
             <br />
 
-            <asp:Button ID="uploadButton" CssClass="submitButton" runat="server" Text="Upload" OnClick="uploadButton_Click" />
+            <asp:Button ID="uploadButton" CssClass="submitButton" runat="server" Text="Upload" OnClick="uploadButton_Click" OnClientClick="loadProgress()" />
 
-            <br />
-
+            <div id="progress" style="visibility:hidden; text-align:center">
+                <img id ="progressImg" src="/resources/loader.gif" alt="Loading..." style="padding-left:5px; padding-top:5px;" />
+            </div>
+            
             <asp:Label ID="uploadStatus" CssClass="uploadError" runat="server"></asp:Label>
         </div>
     </div>
