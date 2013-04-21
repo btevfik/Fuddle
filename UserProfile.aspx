@@ -59,5 +59,16 @@
         <!-- clear floats -->
         <div style="clear: both; margin-bottom: 20px"></div>
     </div>
+
+     <script type="text/javascript">
+         $(window).load(function () {
+             $("#loadMore").hide();
+             return;
+         });
+
+        $("#loadMore").click(function () {
+            loadMore("image");
+        });
+    </script>
 </asp:Content>
 
