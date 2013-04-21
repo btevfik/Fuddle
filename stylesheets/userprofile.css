@@ -1,34 +1,99 @@
 ﻿.centerPage {
     margin: 0 auto;
-    width: 70%;
+    top: 10px;
+    width: 800px;
     position: relative;
-    background: #fff;
+    /*background: #fff;*/
 }
 
+/* User Biography*/
 .userBio {
     background: #0094ff;
-    height: 400px;
+    height: 300px;
+    border: 1px solid rgb(13, 152, 186);
 }
 
 .avatar {
-    top: 50px;
-    left: 50px;
+    bottom: -75px;
+    left: 25px;
     position: relative;
     height: 200px;
     width: 200px;
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0px 1px 3px #434141;
 }
+
 
 .username {
     position: relative;
-    top: -150px;
-    left: 300px;
+    top: -110px;
+    left: 253px;
     width: 150px;
 }
 
 .aboutme {
     position: relative;
-    top: -121px;
-    left: 300px;
-    height: 300px;
-    width: 60%;
+    bottom: 125px;
+    left: 285px;
+    height: 100px;
+    width: 475px;
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0px 1px 3px #434141;
+}
+
+
+/*Albums-Image-Tabs*/
+#albums-image-tabs {
+    width: auto;
+    height: 40px;
+    border: 1px solid rgb(13, 152, 186);
+    background: none repeat scroll 0% 0% rgb(238, 238, 238);
+    border-radius: 2px 2px 2px 2px;
+    padding: 4px;
+    margin: 20px auto 40px auto;
+}
+
+#albums-image-tabs ul {
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+    width: 100%;
+    cursor:default;
+}
+
+#albums-image-tabs ul li {
+    height: 30px;
+    list-style: none outside none;
+    display: inline-block;
+    width: 160px;
+    border: 1px solid rgb(204, 204, 204);
+    background: none repeat scroll 0% 0% rgb(243, 243, 243);
+    cursor:pointer;
+}
+
+#albums-image-tabs ul li a{
+    color: black;
+    text-decoration: none;
+    line-height: 30px;
+    width:100%;
+    display: inline-block;
+}
+
+#albums-image-tabs ul li:hover, li:active{
+     background: white;
+}
+
+.activated a {
+     background: white;
+     color: #0D98BA !important;
+}
+
+#albums-image-tabs ul li:hover, li:active a{
+     color: #0D98BA;
+}
+
+.num-result {
+    color: #d14545;
 }
