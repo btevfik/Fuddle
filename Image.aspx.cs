@@ -12,30 +12,35 @@ using System.Web.Services;
 
 public partial class Image : System.Web.UI.Page
 {
-    //if of image
-    string id;
+    //id of image
+    int id;
     //current user
     MembershipUser u;
-    //comments in the session
-    List<Literal> persistControls = new List<Literal>();
+    //width of the image
+    int width;
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
         //get the requested img
-        id = Request.QueryString["id"];
+        string reqId = Request.QueryString["id"];
+        if (reqId != null && reqId != "")
+        {
+            id = Int32.Parse(reqId);
+        }
         //set img
         string url = "/ShowImage.ashx?imgid=" + id;
         Image1.ImageUrl = url;
+
+        //width of image
+        width = FuddleImage.getWidth(id);
+        
         //set width of comment box
         if (Page.User.Identity.IsAuthenticated)
         {
             TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
-            commentBox.Width = getWidth(id); //later something like.. FuddleImage.getWidth(id);
+            commentBox.Width = width;
         }
-        //set widths of counts
-        upCount.Width = upCount.Text.Length * 8;
-        downCount.Width = downCount.Text.Length * 8;
-        cuddleCount.Width = cuddleCount.Text.Length * 8;
 
         //set the voting counts
         /*
@@ -44,35 +49,26 @@ public partial class Image : System.Web.UI.Page
          cuddleCount.Text = FuddleImage.getCuddleCount(id);
          */
 
+        //set widths of counts
+        upCount.Width = upCount.Text.Length * 8;
+        downCount.Width = downCount.Text.Length * 8;
+        cuddleCount.Width = cuddleCount.Text.Length * 8;
+
          //set the title of the page
-        /*
-            Page.Header.Title = "Fuddle | " + FuddleImage.getTitle(id);
-         */
+        Page.Header.Title = "Fuddle | " + FuddleImage.getTitle(id);
 
         //set title and description of image
-        /*
         imageTitle.Text = FuddleImage.getTitle(id);
-        imageDescription.Text = FuddleImage.getDesc(id);
-         */
+        imageDescription.Text = FuddleImage.getDescription(id);
 
         //load comments from database
         loadComments();
 
-        //load session comments (we wont need when database is implemented)
-        // if you already have some literal populated
-        if (Session["persistControls"] != null)
-        {
-            // pull them out of the session
-            persistControls = (List<Literal>)Session["persistControls"];
-            foreach (Literal ltrls in persistControls)
-                commentPanel.Controls.AddAt(0, ltrls); // and push them back into the page
-        }
-
         //for simulating button click from javascript when enter is pressed
         ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(this.commentButton);
 
-        /*Show deletebutton if logged inuser is the one who uploaded this picture
-        uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
+        //Show deletebutton if logged inuser is the one who uploaded this picture
+        string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
         u = Membership.GetUser();
         if( u !=null){
             if (uploadedUser == u.UserName)
@@ -80,51 +76,6 @@ public partial class Image : System.Web.UI.Page
                 deleteButton.Visible = true;
             }
         }
-        */
-    }
-
-
-    //can be moved to a separete image class for reuse
-    protected int getWidth(string id)
-    {
-        SqlDataReader rdr = null;
-        SqlConnection conn = new SqlConnection();
-        SqlCommand cmd = new SqlCommand();
-        int width = 300;
-        try
-        {
-            string connStr = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
-            conn = new SqlConnection(connStr);
-
-            cmd = new SqlCommand("SELECT Image_width FROM [Image_table] WHERE Image_id = @id", conn);
-            if (id == null)
-            {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = DBNull.Value;
-            }
-            else
-            {
-                cmd.Parameters.Add("@id", SqlDbType.Int, 16).Value = id;
-            }
-            conn.Open();
-            rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                width = (int)rdr["Image_width"];
-                if (width > 800)
-                {
-                    width = 800;
-                }
-            }
-
-            if (rdr != null)
-                rdr.Close();
-        }
-        finally
-        {
-            conn.Close();
-            conn.Dispose();
-        }
-        return width + 10;
     }
 
     //upvoting this image
@@ -202,40 +153,100 @@ public partial class Image : System.Web.UI.Page
         u = Membership.GetUser();
         //get comment box
         TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
-        //create a comment literal
+        
+        //create a comment literal        
         Literal myComment = new Literal();
-        myComment.Text = "<div class='comment' style='max-width:" + getWidth(id) + "px;min-width:" + getWidth(id) + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont' style='max-width:" + (getWidth(id)-50) + "px'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span></div></div>";
-        //add to comment panel
+        myComment.Text = "<div class='comment' style='max-width:" + width + "px;min-width:" + width + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont' style='max-width:" + (width - 50) + "px'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span><span class='date'> just now <span></div></div>";        
+        //add to comment panel        
         commentPanel.Controls.AddAt(0, myComment);
-        // add it to the list
-        persistControls.Add(myComment);
-        // put it in the session
-        Session["persistControls"] = persistControls;
-        //clear comment box
-        commentBox.Text = "";
 
         //add comment to database
-        /*
-        bool result = FuddleImage.comment(id, commentBox.Text);
+        bool result = FuddleImage.addComment(commentBox.Text,id);
+
+        //there is an error adding comment
         if(result == false){
-            error.Text = "Error commenting."
+            error.Text = "Error commenting.";
         }
-        //when comments are added to database remove from session.
+        //when comments are added clear the commentbox
         else{
-             persistControls.Clear();    
+            //clear comment box
+            commentBox.Text = "";  
          }
-         */
     }
 
+    //load all the comments for this image
     protected void loadComments()
     {
-        //FuddleImage.getComments(id);  //this should return all the comments for that image
+        List <Comment_Info> comments = FuddleImage.getComments(id);  //this should return all the comments for that image
         //load comments below
+        foreach (Comment_Info comment in comments)
+        {
+            Literal myComment = new Literal();
+            myComment.Text = "<div class='comment' style='max-width:" + width + "px;min-width:" + width + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont' style='max-width:" + width + "px'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "<span></div></div>";
+            //add to comment panel
+            commentPanel.Controls.AddAt(0, myComment);
+        }
     }
 
+    //delete button is clicked
     protected void delete_Click(object sender, EventArgs e)
     {
         //delete this image
-        //FuddleImage.delete(id);
+        FuddleImage.deleteImage(id);
+    }
+
+    protected string findTimeDiff(DateTime then)
+    {
+        var ts = new TimeSpan(DateTime.UtcNow.Ticks - then.Ticks);
+        double delta = Math.Abs(ts.TotalSeconds);
+        
+        const int SECOND = 1;
+        const int MINUTE = 60 * SECOND;
+        const int HOUR = 60 * MINUTE;
+        const int DAY = 24 * HOUR;
+        const int MONTH = 30 * DAY;
+
+        if (delta < 0)
+        {
+            return "not yet";
+        }
+        if (delta < 1 * MINUTE)
+        {
+            return ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
+        }
+        if (delta < 2 * MINUTE)
+        {
+            return "a minute ago";
+        }
+        if (delta < 45 * MINUTE)
+        {
+            return ts.Minutes + " minutes ago";
+        }
+        if (delta < 90 * MINUTE)
+        {
+            return "an hour ago";
+        }
+        if (delta < 24 * HOUR)
+        {
+            return ts.Hours + " hours ago";
+        }
+        if (delta < 48 * HOUR)
+        {
+            return "yesterday";
+        }
+        if (delta < 30 * DAY)
+        {
+            return ts.Days + " days ago";
+        }
+        if (delta < 12 * MONTH)
+        {
+            int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
+            return months <= 1 ? "one month ago" : months + " months ago";
+        }
+        else
+        {
+            int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
+            return years <= 1 ? "one year ago" : years + " years ago";
+        }
     }
 }

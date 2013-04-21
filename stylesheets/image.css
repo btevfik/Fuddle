@@ -133,3 +133,11 @@ a.deleteButton{
 a.deleteButton:hover{
     background-image:url("/resources/x-mark-hover.png");
 }
+
+/*DATE*/
+.date {
+    float:right;
+    font-size:12px;
+    font-style:italic;
+    color:#5e5e5e;
+}
