@@ -71,6 +71,16 @@ public partial class Image : System.Web.UI.Page
         //for simulating button click from javascript when enter is pressed
         ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(this.commentButton);
 
+        /*Show deletebutton if logged inuser is the one who uploaded this picture
+        uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
+        u = Membership.GetUser();
+        if( u !=null){
+            if (uploadedUser == u.UserName)
+            {
+                deleteButton.Visible = true;
+            }
+        }
+        */
     }
 
 
@@ -221,5 +231,11 @@ public partial class Image : System.Web.UI.Page
     {
         //FuddleImage.getComments(id);  //this should return all the comments for that image
         //load comments below
+    }
+
+    protected void delete_Click(object sender, EventArgs e)
+    {
+        //delete this image
+        //FuddleImage.delete(id);
     }
 }

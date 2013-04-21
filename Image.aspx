@@ -28,6 +28,7 @@
                 <asp:Image ID="Image1" runat="server" CssClass="image" />
                 <br />
                 <asp:Label ID="imageDescription" runat="server" Text="Description of the image goes here"></asp:Label>
+                <asp:LinkButton ID="deleteButton" CssClass="deleteButton" Visible="true" OnClick="delete_Click" OnClientClick="if (!confirm('Are you sure you want to delete this image?'))"  runat="server">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete</asp:LinkButton>
                 <br />
                 <br />
                 <!--SCRIPT MANAGER FOR UPDATE PANEL -->
