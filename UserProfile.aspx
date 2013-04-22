@@ -1,14 +1,28 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserProfile.aspx.cs" Inherits="UserProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserProfile.aspx.cs" Inherits="UserProfile"%>
 
     
-<%@ Register Assembly="FreshClickmedia.Web" Namespace="FreshClickMedia.Web.UI.WebControls" TagPrefix="fcm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="/stylesheets/userprofile.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <script type="text/javascript">
+        var xPos, yPos;
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_beginRequest(BeginRequestHandler);
+        prm.add_endRequest(EndRequestHandler);
+        function BeginRequestHandler(sender, args) {
+            xPos = $get('scrollDiv').scrollLeft;
+            yPos = $get('scrollDiv').scrollTop;
+        }
+        function EndRequestHandler(sender, args) {
+            $get('scrollDiv').scrollLeft = xPos;
+            $get('scrollDiv').scrollTop = yPos;
+        }
+    </script>
     <div class = "centerPage"> 
         <!-- User Biography -->
         <div class="userBio">
@@ -30,24 +44,22 @@
 
         <!-- Albums / Images Tab -->
         <div id="albums-image-tabs">
+            <ul>
+                <li runat="server" id="imageListItem">
+                    <asp:LinkButton ID="albumLink" runat="server" OnClick="albumLink_Click">Albums</asp:LinkButton>
+                </li>
+                <li runat="server" id="userListItem">
+                    <asp:LinkButton ID="cuddleLink" runat="server" OnClick="cuddleLink_Click">Cuddles</asp:LinkButton>
+                </li>
+            </ul>
+        </div>
+        <div class ="imgtab">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
-                    <ul>
-                        <li runat="server" id="imageListItem">
-                            <asp:LinkButton ID="albumLink" runat="server" OnClick="albumLink_Click">Albums</asp:LinkButton>
-                        </li>
-                        <li runat="server" id="userListItem">
-                            <asp:LinkButton ID="cuddleLink" runat="server" OnClick="cuddleLink_Click">Cuddles</asp:LinkButton>
-                        </li>
-                        <div class ="imgtab">
-                            <asp:Table ID="Table1" runat="server"></asp:Table>
-                        </div>
-                    </ul>
-
+                        <asp:Table ID="Table1" runat="server"></asp:Table>
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
-
 
 
         <!--Recent Uploads-->

@@ -94,15 +94,21 @@
      color: #0D98BA;
 }
 
+.imgtab {
+    position:relative;
+    width: 700px;
+    margin: 10px auto 10px auto;
+}
+
 .imgtab table {
-    position: relative;
-    margin: 20px auto 10px auto;
     max-width: 700px;
     min-width: 125px;
+    margin: auto;
 }
 
 .imgtab img {
     width: 125px;
+    height: 125px;
 }
 
 /*Uploads*/
@@ -118,4 +124,5 @@
 
 .uploads .uploadButton {
     margin-top:20px;
+    margin-left:0px;
 }
