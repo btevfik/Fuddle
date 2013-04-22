@@ -24,7 +24,10 @@
         <!--SCRIPT MANAGER FOR UPDATE PANEL -->
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
-        <asp:UpdatePanel ID="updatepanel1" runat="server">
+        <asp:UpdatePanel ID="updatepanel1" UpdateMode="Conditional" runat="server">
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="commentButton"/>
+            </Triggers>
             <ContentTemplate>
                 <div class="outer">
                     <div class="inner">
