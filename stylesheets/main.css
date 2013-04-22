@@ -65,6 +65,8 @@ form {
     background-color:#f3f3f3;
     box-shadow:0px 1px 5px #888;
     height:60px;
+    z-index:1;
+    min-width:900px;
 }
 /*LOGO*/
 #logo {
@@ -196,6 +198,7 @@ form {
   background-color:#0D98BA;
   text-align:right;
   background-image:url("/resources/noisy-texture.png");
+  min-width:900px;
 }
 
 .footer a:link, .footer a:visited {

@@ -61,6 +61,9 @@ public partial class Image : System.Web.UI.Page
         imageTitle.Text = FuddleImage.getTitle(id);
         imageDescription.Text = FuddleImage.getDescription(id);
 
+        //set the user who uploded img
+        imageUser.Text = "by " + FuddleImage.getUser(id);
+
         //load comments from database
         loadComments();
 
@@ -97,7 +100,7 @@ public partial class Image : System.Web.UI.Page
         }
         catch
         {
-            error.Text = "You are not logged in.";
+            error.Text = "Please login.";
         }
     }
 
@@ -182,7 +185,7 @@ public partial class Image : System.Web.UI.Page
         foreach (Comment_Info comment in comments)
         {
             Literal myComment = new Literal();
-            myComment.Text = "<div class='comment' style='max-width:" + width + "px;min-width:" + width + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont' style='max-width:" + width + "px'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "<span></div></div>";
+            myComment.Text = "<div class='comment' style='max-width:" + width + "px;min-width:" + width + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont' style='max-width:" + (width-50) + "px'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "<span></div></div>";
             //add to comment panel
             commentPanel.Controls.AddAt(0, myComment);
         }

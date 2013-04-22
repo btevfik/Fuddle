@@ -23,13 +23,13 @@
         <div class="outer">
             <div class="inner">
                 <br />
-                <asp:Label ID="imageTitle" runat="server" Text="Title of the image goes here"></asp:Label>
+                <asp:Label ID="imageTitle" CssClass="img-title" runat="server" Text="Title of the image goes here"></asp:Label>
+                <asp:Label ID="imageUser" CssClass="img-user" runat="server" Text="Label"></asp:Label>
                 <br />
                 <asp:Image ID="Image1" runat="server" CssClass="image" />
                 <br />
-                <asp:Label ID="imageDescription" runat="server" Text="Description of the image goes here"></asp:Label>
+                <asp:Label ID="imageDescription" CssClass="img-desc" runat="server" Text="Description of the image goes here"></asp:Label>
                 <asp:LinkButton ID="deleteButton" CssClass="deleteButton" Visible="false" OnClick="delete_Click" OnClientClick="if (!confirm('Are you sure you want to delete this image?')) return false;"  runat="server">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete</asp:LinkButton>
-                <br />
                 <br />
                 <!--SCRIPT MANAGER FOR UPDATE PANEL -->
                 <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -54,7 +54,8 @@
                             <asp:LoginView ID="LoginView1" runat="server">
                                 <AnonymousTemplate>
                                     <asp:LoginStatus ID="LoginStatus1" runat="server" />
-                                    to leave a comment.
+                                    to leave a comment. Don't have an account?
+                                    <a href="Register.aspx">Sign up.</a>
                                 </AnonymousTemplate>
                                 <LoggedInTemplate>
                                     <asp:TextBox ID="AddCommentBox" Rows="1" Columns="60" placeholder="Add a comment..." TextMode="MultiLine" ClientIDMode="Static" runat="server"></asp:TextBox>

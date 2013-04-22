@@ -8,7 +8,7 @@ using System.Configuration;
 using System.Web.Security;
 
 /// <summary>
-/// Summary description for ImageFunctions
+/// this class is used for CRUD image
 /// </summary>
 
 //comment class that holds info about an image
