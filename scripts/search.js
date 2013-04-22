@@ -1,6 +1,7 @@
 ﻿var arrayOfImages = new Array();
 var heights = new Array();
 var widths = new Array();
+var titles = new Array();
 var end = 0;
 var length = 0;
 var loadnumber = 10;
@@ -27,6 +28,7 @@ function getImages(parameter) {
                 arrayOfImages[index] = image.id;
                 heights[index] = image.height;
                 widths[index] = image.width;
+                titles[index] = image.title;
             });
             //number of results
             length = arrayOfImages.length;
@@ -37,7 +39,7 @@ function getImages(parameter) {
                 $("#loading").empty();
                 return;
             }
-            preloadImages(arrayOfImages, widths, heights, 0, end);
+            preloadImages(arrayOfImages, widths, heights, titles, 0, end);
         },
         failure: function (msg) {
             $('#searchresults').text(msg);
@@ -105,7 +107,7 @@ function loadMore(type) {
     }, 1000)
 }
 
-function preloadImages(srcs, widths, heights, start, end) {
+function preloadImages(srcs, widths, heights, titles, start, end) {
     if (end >= length) {
         end = length;
     }
@@ -137,7 +139,7 @@ function preloadImages(srcs, widths, heights, start, end) {
             }
         };
         //set figure and caption
-        caption.innerHTML = "test caption"; //we can add the title here.
+        caption.innerHTML = titles[i];
         figure.appendChild(img);
         figure.appendChild(caption);
         //set link

@@ -62,7 +62,7 @@ public partial class Image : System.Web.UI.Page
         imageDescription.Text = FuddleImage.getDescription(id);
 
         //set the user who uploded img
-        imageUser.Text = "by " + FuddleImage.getUser(id);
+        imageUser.Text = "by <b><a href='/user/" + FuddleImage.getUser(id)+"' target='_blank'>" + FuddleImage.getUser(id) + "</a></b>";
 
         //load comments from database
         loadComments();
@@ -123,7 +123,7 @@ public partial class Image : System.Web.UI.Page
         }
         catch
         {
-            error.Text = "You are not logged in.";
+            error.Text = "Please login.";
         }
     }
 
@@ -146,7 +146,7 @@ public partial class Image : System.Web.UI.Page
         }
         catch
         {
-            error.Text = "You are not logged in.";
+            error.Text = "Please login.";
         }
     }
 
