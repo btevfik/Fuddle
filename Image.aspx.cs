@@ -16,8 +16,6 @@ public partial class Image : System.Web.UI.Page
     int id;
     //current user
     MembershipUser u;
-    //width of the image
-    int width;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -30,19 +28,6 @@ public partial class Image : System.Web.UI.Page
         //set img
         string url = "/ShowImage.ashx?imgid=" + id;
         Image1.ImageUrl = url;
-
-        //width of image
-        width = FuddleImage.getWidth(id);
-        
-        //set width of comment box
-        if (Page.User.Identity.IsAuthenticated)
-        {
-            TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
-            commentBox.Width = width;
-        }
-
-        //set width of description
-        imageDescription.Width = width;
 
         //set the voting counts
         /*
@@ -161,7 +146,7 @@ public partial class Image : System.Web.UI.Page
         
         //create a comment literal        
         Literal myComment = new Literal();
-        myComment.Text = "<div class='comment' style='max-width:" + width + "px;min-width:" + width + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont' style='max-width:" + (width - 50) + "px'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span><span class='date'> just now <span></div></div>";        
+        myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span><span class='date'> just now <span></div></div>";        
         //add to comment panel        
         commentPanel.Controls.AddAt(0, myComment);
 
@@ -199,7 +184,7 @@ public partial class Image : System.Web.UI.Page
         foreach (Comment_Info comment in comments)
         {
             Literal myComment = new Literal();
-            myComment.Text = "<div class='comment' style='max-width:" + width + "px;min-width:" + width + "px'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont' style='max-width:" + (width-50) + "px'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "<span></div></div>";
+            myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "<span></div></div>";
             //add to comment panel
             commentPanel.Controls.AddAt(0, myComment);
         }
@@ -210,8 +195,8 @@ public partial class Image : System.Web.UI.Page
     {
         //delete this image
         FuddleImage.deleteImage(id);
-        //redirect to user page
-        Response.Redirect("/user/" + u.UserName);
+        //redirect to member page
+        Response.Redirect("/member/MyProfile.aspx");
     }
 
     protected string findTimeDiff(DateTime then)

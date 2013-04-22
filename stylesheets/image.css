@@ -28,8 +28,10 @@
   -ms-word-break: break-all;
   word-wrap:break-word;
   display:block !important;
-  max-width:800px;
+  max-width:510px;
   font-size:16px;
+  width:510px;
+  margin:0 auto;
 }
 
 .img-title {
@@ -65,6 +67,20 @@ textarea:focus {
   display: table;
   max-width:800px;
   min-height:50px;
+  width:510px;
+  max-width:510px;
+  min-width:510px;
+}
+
+.comments{
+  width:510px;
+  max-width:510px;
+  margin:0 auto;
+}
+
+.comment-box {
+  width:510px;
+  max-width:510px;
 }
 
 .comment .pro-image {
@@ -82,6 +98,9 @@ textarea:focus {
   word-wrap:break-word;
   display: table-cell;
   vertical-align: top;
+  width:460px;
+  max-width:460px;
+  min-width:460px;
 }
 
 .commenter 
@@ -140,7 +159,18 @@ textarea:focus {
 }
 
 .buttons {
+    width:515px;
+    margin-left:auto;
+    margin-right:auto;
     margin-bottom:20px;
+}
+
+.deleteButton {
+    background: white;
+    padding: 3px;
+    border-radius: 4px;
+    display: block;
+    width: 65px;
 }
 
 a.deleteButton{
@@ -148,7 +178,6 @@ a.deleteButton{
     background-size:18px 18px;
     background-repeat:no-repeat;
     background-position:left center;
-    float:right;
     font-size:15px;
 
 }
