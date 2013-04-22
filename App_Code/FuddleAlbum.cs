@@ -8,7 +8,7 @@ using System.Configuration;
 using System.Web.Security;
 
 /// <summary>
-/// Summary description for AlbumFunctions
+/// this class is used for CRUD album
 /// </summary>
 public class FuddleAlbum
 {

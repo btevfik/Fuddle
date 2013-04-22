@@ -24,6 +24,28 @@
     box-shadow: 0px 1px 5px #434141;
 }
 
+.img-desc {
+  -ms-word-break: break-all;
+  word-wrap:break-word;
+  display:block;
+  max-width:800px;
+  font-size:16px;
+}
+
+.img-title {
+   font-size:22px;
+  -ms-word-break: break-all;
+  word-wrap:break-word;
+  display:block;
+  max-width:800px;
+  font-weight:bold;
+}
+
+.img-user {
+    font-size:14px;
+    font-style:italic;
+}
+
 /*ADD COMMENTS*/
 textarea {	
     font-size:14px;	
