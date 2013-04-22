@@ -27,6 +27,7 @@ input:focus,textarea:focus {
   -webkit-border-radius: 3px 0 3px 3px;
   border-radius: 3px 0 3px 3px;
   width:260px;
+  min-height:264px;
 }
 
 #inputs a:link,#inputs a:visited{
@@ -115,6 +116,8 @@ input:focus,textarea:focus {
   color: #d14545;
   font-size:13px;
   display:block;
+  position:relative;
+  top:10px;
 }
 
 /*PREVIEW*/

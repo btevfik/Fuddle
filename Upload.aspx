@@ -44,11 +44,11 @@
 
             <asp:Button ID="uploadButton" CssClass="submitButton" runat="server" Text="Upload" OnClick="uploadButton_Click" OnClientClick="loadProgress()" />
 
-            <div id="progress" style="visibility:hidden; text-align:center">
+            <div id="progress" style="display:none; text-align:center">
                 <img id ="progressImg" src="/resources/loader.gif" alt="Loading..." style="padding-left:5px; padding-top:5px;" />
             </div>
             
-            <asp:Label ID="uploadStatus" CssClass="uploadError" runat="server"></asp:Label>
+            <asp:Label ID="uploadStatus" Visible="false" CssClass="uploadError" ClientIDMode="Static" runat="server"></asp:Label>
         </div>
     </div>
     <div id="right-half">

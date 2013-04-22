@@ -44,6 +44,7 @@ public partial class Upload : System.Web.UI.Page
         {
             uploadStatus.ForeColor = Color.Red;
             uploadStatus.Text = "Error. No file selected for upload!";
+            uploadStatus.Visible = true;
             return;
         }
 
@@ -53,12 +54,14 @@ public partial class Upload : System.Web.UI.Page
         {
             uploadStatus.ForeColor = Color.Red;
             uploadStatus.Text = "Error. Please give the image a title!";
+            uploadStatus.Visible = true;
             return;
         }
         else if (description.Text == "")
         {
             uploadStatus.ForeColor = Color.Red;
             uploadStatus.Text = "Error. Please give a description for the image!";
+            uploadStatus.Visible = true;
             return;
         }
         // Putting a limit of 48 characters for title
@@ -66,6 +69,7 @@ public partial class Upload : System.Web.UI.Page
         {
             uploadStatus.ForeColor = Color.Red;
             uploadStatus.Text = "Error. Title exceeds 48 characters!";
+            uploadStatus.Visible = true;
             return;
         }
 
@@ -74,6 +78,7 @@ public partial class Upload : System.Web.UI.Page
         {
             uploadStatus.ForeColor = Color.Red;
             uploadStatus.Text = "Error uploading file. File size exceeded 1 MB!";
+            uploadStatus.Visible = true;
             return;
         }
 
@@ -180,12 +185,14 @@ public partial class Upload : System.Web.UI.Page
                 uploadStatus.ForeColor = Color.Green;
                 uploadStatus.Text = "File uploaded successfully!";
                 title.Text = "";
-                description.Text = "";                
+                description.Text = "";
+                uploadStatus.Visible = true;
             }
             catch (Exception ee)
             {
                 uploadStatus.ForeColor = Color.Red;
                 uploadStatus.Text = "Error uploading file." + ee;
+                uploadStatus.Visible = true;
             }
             finally
             {
@@ -197,6 +204,7 @@ public partial class Upload : System.Web.UI.Page
         {
             uploadStatus.ForeColor = Color.Red;
             uploadStatus.Text = "Error uploading file. Accepted file formats: .jpg, .jpeg, .png, .gif, .bmp";
+            uploadStatus.Visible = true;
         }
     }
 }
