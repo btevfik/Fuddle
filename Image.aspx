@@ -65,7 +65,9 @@
                             <br />
                             <br />
                             <b>Comments</b>
-                            <asp:Panel ID="commentPanel" runat="server"></asp:Panel>
+                            <asp:Panel ID="commentPanel" runat="server">
+                                <asp:Panel ID="nocomment" style='font-size:16px;margin-top:10px;' runat="server">No comments yet.</asp:Panel>
+                            </asp:Panel>
                             <br />
                         </div>
                     </ContentTemplate>
