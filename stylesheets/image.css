@@ -25,13 +25,13 @@
 }
 
 .img-desc {
-  -ms-word-break: break-all;
-  word-wrap:break-word;
-  display:block !important;
-  max-width:510px;
-  font-size:16px;
-  width:510px;
-  margin:0 auto;
+    -ms-word-break: break-all;
+    word-wrap: break-word;
+    display: block !important;
+    max-width: 510px;
+    font-size: 16px;
+    width: 510px;
+    margin: 0 auto;
 }
 
 .img-title {
@@ -49,13 +49,13 @@
 }
 
 /*ADD COMMENTS*/
-textarea {	
+.updateBox, textarea {	
     font-size:14px;	
     font-family: sans-serif;		
     border:2px solid #0D98BA;			
 }
 
-textarea:focus {
+.updateBox:focus, textarea:focus {
     border:2px solid #e8c291;    
 }
 
@@ -159,30 +159,70 @@ textarea:focus {
 }
 
 .buttons {
-    width:515px;
+    width:520px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:20px;
 }
 
-.deleteButton {
+.buttonGroup {
+    display:block;
+}
+
+.updateButton {
     background: white;
     padding: 3px;
-    border-radius: 4px;
-    display: block;
-    width: 65px;
+    min-width: 50px;
+    float:left;
+    margin-right:5px;
 }
 
-a.deleteButton{
-    background-image:url("/resources/x-mark.png");
-    background-size:18px 18px;
-    background-repeat:no-repeat;
-    background-position:left center;
-    font-size:15px;
-
+a.updateButton {
+   text-align:center;
+   font-size:14px;
+   color:white !important;
 }
-a.deleteButton:hover{
-    background-image:url("/resources/x-mark-hover.png");
+
+.submitButton {		
+  background-color: #d14545;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e97171), to(#d14545));
+  background-image: -webkit-linear-gradient(top, #e97171, #d14545);
+  background-image: -moz-linear-gradient(top, #e97171, #d14545);
+  background-image: -ms-linear-gradient(top, #e97171, #d14545);
+  background-image: -o-linear-gradient(top, #e97171, #d14545);
+  background-image: linear-gradient(top, #e97171, #d14545);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+  border: 1px solid #7e1515;
+  cursor: pointer;
+  color: #fff;
+}
+
+.submitButton:hover,
+.submitButton:focus {		
+  background-color: #e97171;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#d14545), to(#e97171));
+  background-image: -webkit-linear-gradient(top, #d14545, #e97171);
+  background-image: -moz-linear-gradient(top, #d14545, #e97171);
+  background-image: -ms-linear-gradient(top, #d14545, #e97171);
+  background-image: -o-linear-gradient(top, #d14545, #e97171);
+  background-image: linear-gradient(top, #d14545, #e97171);
+}	
+
+.submitButton:active {		
+  outline: none;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+.submitButton::-moz-focus-inner {
+  border: none;
 }
 
 /*DATE*/

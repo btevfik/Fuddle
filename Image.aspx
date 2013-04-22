@@ -21,79 +21,86 @@
 
     <div class="content">
         <br />
-        <div class="outer">
-            <div class="inner">
-                <asp:Label ID="imageTitle" CssClass="img-title" runat="server" Text="Title of the image goes here"></asp:Label>
-                <asp:Label ID="imageUser" CssClass="img-user" runat="server" Text="Label"></asp:Label>
-                <br />
-                <div class="img-container"><asp:Image ID="Image1" runat="server" CssClass="image" />
-                <asp:LinkButton ID="deleteButton" CssClass="deleteButton" Visible="false" OnClick="delete_Click" OnClientClick="if (!confirm('Are you sure you want to delete this image?')) return false;" runat="server">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete</asp:LinkButton>
+        <!--SCRIPT MANAGER FOR UPDATE PANEL -->
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <asp:UpdatePanel ID="updatepanel1" runat="server">
+            <ContentTemplate>
+                <div class="outer">
+                    <div class="inner">
+                        <asp:Label ID="imageTitle" CssClass="img-title" runat="server" Text="Title of the image goes here"></asp:Label>
+                        <asp:TextBox ID="updateTitle" ClientIDMode="Static" CssClass="img-title updateBox" Visible="false" runat="server"></asp:TextBox>
+                        <asp:Label ID="imageUser" CssClass="img-user" runat="server" Text="Label"></asp:Label>
+                        <br />
+                        <div class="img-container">
+                            <asp:Image ID="Image1" runat="server" CssClass="image" />
+                            <div class="buttonGroup">
+                                <asp:LinkButton ID="deleteButton" CssClass="updateButton  submitButton" Visible="false" OnClick="delete_Click" OnClientClick="if (!confirm('Are you sure you want to delete this image?')) return false;" runat="server">Delete</asp:LinkButton>
+                                <asp:LinkButton ID="updateButton" CssClass="updateButton  submitButton" Visible="false" OnClick="updateButton_Click" runat="server">Update Info</asp:LinkButton>
+                                <asp:LinkButton ID="saveButton" CssClass="updateButton  submitButton" Visible="false" OnClick="saveButton_Click" runat="server">Save</asp:LinkButton>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-    </div>
-        <div class="clear"></div>
-    <asp:Label ID="imageDescription" CssClass="img-desc" runat="server" Text="Description of the image goes here"></asp:Label>
-    <br />
-    <!--SCRIPT MANAGER FOR UPDATE PANEL -->
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-    </asp:ScriptManager>
-    <asp:UpdatePanel ID="updatepanel1" runat="server">
-        <ContentTemplate>
-            <div class="buttons">
-                <asp:Button runat="server" ID="upButton" OnClick="upButton_Click" Text="Up &uarr;" CssClass="uploadButton" />
-                <asp:TextBox runat="server" ID="upCount" Width="10" Text="0" Enabled="false" />
-                &nbsp;&nbsp;
+                <div class="clear"></div>
+                <asp:Label ID="imageDescription" CssClass="img-desc" runat="server" Text="Description of the image goes here"></asp:Label>
+                <asp:TextBox ID="updateDesc"  ClientIDMode="Static" CssClass="img-desc" TextMode="MultiLine" Visible="false" runat="server"></asp:TextBox>
+                <br />
+                <div class="buttons">
+                    <asp:Button runat="server" ID="upButton" OnClick="upButton_Click" Text="Up &uarr;" CssClass="uploadButton" />
+                    <asp:TextBox runat="server" ID="upCount" Width="10" Text="0" Enabled="false" />
+                    &nbsp;&nbsp;
                     <asp:Button runat="server" ID="downButton" OnClick="downButton_Click" Text="Down &darr;" CssClass="uploadButton" />
-                <asp:TextBox runat="server" ID="downCount" Width="10" Text="0" Enabled="false" />
-                &nbsp;&nbsp;
+                    <asp:TextBox runat="server" ID="downCount" Width="10" Text="0" Enabled="false" />
+                    &nbsp;&nbsp;
                     <asp:Button runat="server" ID="cuddleButton" OnClick="cuddleButton_Click" Text="Cuddle &hearts;" CssClass="uploadButton" />
-                <asp:TextBox runat="server" ID="cuddleCount" Width="10" Text="0" Enabled="false" />
-                &nbsp;&nbsp;
+                    <asp:TextBox runat="server" ID="cuddleCount" Width="10" Text="0" Enabled="false" />
+                    &nbsp;&nbsp;
                     <fb:like send="true" layout="button_count" width="0" show_faces="true"></fb:like>
-                <!-- AddThis Button BEGIN -->
-                <div style="display: inline-block" class="addthis_toolbox addthis_default_style addthis_16x16_style">
-                    <a style="font-size: 13px; top: 4px; color: #3B5998; position: relative" class="addthis_button_email">Email</a>
+                    <!-- AddThis Button BEGIN -->
+                    <div style="display: inline-block" class="addthis_toolbox addthis_default_style addthis_16x16_style">
+                        <a style="font-size: 13px; top: 4px; color: #3B5998; position: relative" class="addthis_button_email">Email</a>
+                    </div>
+                    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+                    <!-- AddThis Button END -->
+                    <br />
+                    <asp:Label ID="error" runat="server" Style="color: red" Text=""></asp:Label>
                 </div>
-                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
-                <!-- AddThis Button END -->
-                <br />
-                <asp:Label ID="error" runat="server" Style="color: red" Text=""></asp:Label>
-            </div>
-            <div class="comments">
-                <asp:LoginView ID="LoginView1" runat="server">
-                    <AnonymousTemplate>
-                        <asp:LoginStatus ID="LoginStatus1" runat="server" />
-                        to leave a comment. Don't have an account?
+                <div class="comments">
+                    <asp:LoginView ID="LoginView1" runat="server">
+                        <AnonymousTemplate>
+                            <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                            to leave a comment. Don't have an account?
                                     <a href="Register.aspx">Sign up.</a>
-                    </AnonymousTemplate>
-                    <LoggedInTemplate>
-                        <asp:TextBox ID="AddCommentBox" CssClass="comment-box" Rows="1" Columns="60" placeholder="Add a comment..." TextMode="MultiLine" ClientIDMode="Static" runat="server"></asp:TextBox>
-                    </LoggedInTemplate>
-                </asp:LoginView>
-                <asp:Button ID="commentButton" CssClass="uploadButton" runat="server" OnClick="commentButton_Click" Style="display: none;" Text="Comment"></asp:Button>
-                <br />
-                <br />
-                <b>Comments</b>
-                <asp:Panel ID="commentPanel" runat="server">
-                    <asp:Panel ID="nocomment" Style='font-size: 16px; margin-top: 10px;' runat="server">No comments yet.</asp:Panel>
-                </asp:Panel>
-                <br />
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <asp:TextBox ID="AddCommentBox" CssClass="comment-box" Rows="1" Columns="60" placeholder="Add a comment..." TextMode="MultiLine" ClientIDMode="Static" runat="server"></asp:TextBox>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                    <asp:Button ID="commentButton" CssClass="uploadButton" runat="server" OnClick="commentButton_Click" Style="display: none;" Text="Comment"></asp:Button>
+                    <br />
+                    <br />
+                    <b>Comments</b>
+                    <asp:Panel ID="commentPanel" runat="server">
+                        <asp:Panel ID="nocomment" Style='font-size: 16px; margin-top: 10px;' runat="server">No comments yet.</asp:Panel>
+                    </asp:Panel>
+                    <br />
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
 
-    <!-- COMMENT ON ENTER KEY PRESSED-->
+    <!-- ENTER KEY PRESSED-->
     <script>
         function pageLoad() {
             $("#AddCommentBox").keypress(function (e) {
                 var code = (e.keyCode ? e.keyCode : e.which);
                 if (code == 13) { //Enter keycode
-                    var comment = $('#AddCommentBox').val();
                     //simulate the button click
                     __doPostBack("<%=commentButton.UniqueID %>", "");
                 }
             });
+            //autosize textarea
             $('textarea').autosize();
         }
     </script>

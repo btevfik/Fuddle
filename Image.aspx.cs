@@ -64,6 +64,7 @@ public partial class Image : System.Web.UI.Page
             if (uploadedUser == u.UserName)
             {
                 deleteButton.Visible = true;
+                updateButton.Visible = true;
             }
         }
     }
@@ -251,6 +252,53 @@ public partial class Image : System.Web.UI.Page
         {
             int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
             return years <= 1 ? "one year ago" : years + " years ago";
+        }
+    }
+
+    protected void updateButton_Click(object sender, EventArgs e)
+    {
+        //change desc to textbox
+        updateDesc.Text = imageDescription.Text;
+        updateDesc.Visible = true;
+        imageDescription.Visible = false;
+
+        //change title to textbox
+        updateTitle.Text = imageTitle.Text;
+        updateTitle.Visible = true;
+        imageTitle.Visible = false;
+
+        //show save button
+        saveButton.Visible = true;
+        //hide update button
+        updateButton.Visible = false;
+    }
+
+    protected void saveButton_Click(object sender, EventArgs e)
+    {
+        try
+        {  
+            //get new info
+            string newTitle = updateTitle.Text;
+            string newDesc = updateDesc.Text;
+            //if empty throw exception
+            if (newTitle == "" || newDesc == "") throw new Exception();
+            //update to info
+            FuddleImage.updateTitle(newTitle, id);
+            FuddleImage.updateDescription(newDesc, id);
+            //disable save button, and textboxes
+            saveButton.Visible = false;
+            updateTitle.Visible = false;
+            updateDesc.Visible = false;
+            //copy over text
+            imageTitle.Text = updateTitle.Text;
+            imageDescription.Text = updateDesc.Text;
+            //make labels visible
+            imageDescription.Visible = true;
+            imageTitle.Visible = true;
+        }
+        catch
+        {
+            error.Text = "Error updating image info.";
         }
     }
 }
