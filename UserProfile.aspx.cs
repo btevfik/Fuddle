@@ -14,69 +14,81 @@ using System.Globalization;
 //WHERE HE CAN EDIT HIS PROFILE
 public partial class UserProfile : System.Web.UI.Page
 {
-    private int upload_index;
-    private List<SSImage> images;
+    protected int upload_index
+    {
+        get { return (int)Session["upload_index"]; }
+        set { Session["upload_index"] = value; }
+    }
+    protected List<SSImage> images
+    {
+        get { return (List<SSImage>)Session["images"]; }
+        set { Session["images"] = value; }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //get the requested user
-        string user = Request.QueryString["user"];
-
-        //member user
-        MembershipUser u = null;
-
-        //if no parameter is given redirect to 404
-        if (user == null || user == "")
+        if (!IsPostBack)
         {
-            Response.Redirect("/Oops.aspx?e=404");
-        }
+            //get the requested user
+            string user = Request.QueryString["user"];
 
-        //if a user is specified in the url with "user=username"
-        //find the specific user in database
-        else
-        {
-            u = Membership.GetUser(user);
-        }
+            //member user
+            MembershipUser u = null;
 
-        //if found, fill the page
-        if (u != null)
-        {
-            //display username
-            userLabel.Text = u.UserName;
-
-            //set the title of the page
-            Page.Header.Title = "Fuddle | " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.UserName.ToString().ToLower());
- 
-            //set gravatar
-            AvatarImage.ImageUrl = "getavatar.ashx?user="+u.UserName+"&size=200";
-
-            //get user uploads
-            SearchService ss = new SearchService();
-            this.images = ss.GetUserUploads(user);
-            //Displays user uploads
-            for (upload_index = 0; upload_index < 5; upload_index++)
+            //if no parameter is given redirect to 404
+            if (user == null || user == "")
             {
-                try
+                Response.Redirect("/Oops.aspx?e=404");
+            }
+
+            //if a user is specified in the url with "user=username"
+            //find the specific user in database
+            else
+            {
+                u = Membership.GetUser(user);
+            }
+
+            //if found, fill the page
+            if (u != null)
+            {
+                //display username
+                userLabel.Text = u.UserName;
+
+                //set the title of the page
+                Page.Header.Title = "Fuddle | " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(u.UserName.ToString().ToLower());
+
+                //set gravatar
+                AvatarImage.ImageUrl = "getavatar.ashx?user=" + u.UserName + "&size=200";
+
+                //get user uploads
+                SearchService ss = new SearchService();
+                this.images = ss.GetUserUploads(user);
+                upload_index = 5;
+                //Displays user uploads
+                for (int i = 0; i < upload_index; i++)
                 {
-                    SSImage img = images[upload_index];
-                    HyperLink imglink = new HyperLink();
-                    imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                    imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
-                    imglink.CssClass = "imgupload";
-                    Control contentpanel = RecentUpload.ContentTemplateContainer;
-                    contentpanel.Controls.AddAt(contentpanel.Controls.Count - 2, imglink);
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    loaduploads.Visible = false;
-                    break;
+                    try
+                    {
+                        SSImage img = images[i];
+                        HyperLink imglink = new HyperLink();
+                        imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
+                        imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                        imglink.CssClass = "imgupload";
+                        Control contentpanel = RecentUpload.ContentTemplateContainer;
+                        contentpanel.Controls.AddAt(contentpanel.Controls.Count - 2, imglink);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        loaduploads.Visible = false;
+                        break;
+                    }
                 }
             }
-        }
-        //if not found, direct to 404
-        else
-        {
-            Response.Redirect("/Oops.aspx?e=404");
+            //if not found, direct to 404
+            else
+            {
+                Response.Redirect("/Oops.aspx?e=404");
+            }
         }
     }
 
@@ -84,11 +96,12 @@ public partial class UserProfile : System.Web.UI.Page
     protected void loaduploads_Click(object sender, EventArgs e)
     {
         //Displays User Uploads
-        for (int i = 0; i < 5; i++, upload_index++)
+        upload_index += 5;
+        for (int i = 0; i < upload_index; i++)
         {
             try
             {
-                SSImage img = images[upload_index];
+                SSImage img = images[i];
                 HyperLink imglink = new HyperLink();
                 imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
                 imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
