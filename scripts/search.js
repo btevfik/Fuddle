@@ -102,7 +102,7 @@ function loadMore(type) {
     //display loading gif
     $("#loading").html("<img src='/resources/loader.gif'/>");
     setTimeout(function () {
-        preloadImages(arrayOfImages, widths, heights, end, end + loadnumber);
+        preloadImages(arrayOfImages, widths, heights, titles, end, end + loadnumber);
         end = end + loadnumber;
     }, 1000)
 }
