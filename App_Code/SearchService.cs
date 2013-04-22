@@ -84,7 +84,7 @@ public class SearchService : System.Web.Services.WebService {
                //get the title 
                string title = ((string)rdr["Image_title"]);
                //add to images list
-               Image newImage = new Image { id = id, width = width, height = height, title=title };
+               SSImage newImage = new SSImage { id = id, width = width, height = height, title=title };
                Images.Add(newImage);
                 
             }
