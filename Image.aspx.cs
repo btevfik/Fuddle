@@ -182,6 +182,14 @@ public partial class Image : System.Web.UI.Page
     protected void loadComments()
     {
         List <Comment_Info> comments = FuddleImage.getComments(id);  //this should return all the comments for that image
+        //display no comments if non found
+        if (comments.Count == 0)
+        {
+            Literal noComment = new Literal();
+            noComment.Text = "<div style='font-size:16px;margin-top:10px;'>No comments yet.</div>";
+            commentPanel.Controls.Add(noComment);
+            return;
+        }
         //load comments below
         foreach (Comment_Info comment in comments)
         {
