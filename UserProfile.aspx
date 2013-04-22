@@ -56,7 +56,8 @@
         <div class ="imgtab">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
-                        <asp:Table ID="Table1" runat="server"></asp:Table>
+                    <asp:Table ID="Table1" runat="server"></asp:Table>
+                    <asp:Button CssClass="uploadButton" ID="loadrows" runat="server" Text="Load More" OnClick="loadrows_Click"/>
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
