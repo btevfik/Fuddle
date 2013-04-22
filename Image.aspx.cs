@@ -35,11 +35,12 @@ public partial class Image : System.Web.UI.Page
         //width of image
         width = FuddleImage.getWidth(id);
         
-        //set width of comment box
+        //set width of comment box and description
         if (Page.User.Identity.IsAuthenticated)
         {
             TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
             commentBox.Width = width;
+            imageDescription.Width = width;
         }
 
         //set the voting counts
@@ -196,6 +197,8 @@ public partial class Image : System.Web.UI.Page
     {
         //delete this image
         FuddleImage.deleteImage(id);
+        //redirect to user page
+        Response.Redirect("/user/" + u.UserName);
     }
 
     protected string findTimeDiff(DateTime then)
