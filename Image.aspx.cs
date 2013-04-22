@@ -34,13 +34,15 @@ public partial class Image : System.Web.UI.Page
         //width of image
         width = FuddleImage.getWidth(id);
         
-        //set width of comment box and description
+        //set width of comment box
         if (Page.User.Identity.IsAuthenticated)
         {
             TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
             commentBox.Width = width;
-            imageDescription.Width = width;
         }
+
+        //set width of description
+        imageDescription.Width = width;
 
         //set the voting counts
         /*
