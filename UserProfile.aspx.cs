@@ -145,7 +145,7 @@ public partial class UserProfile : System.Web.UI.Page
                 imglink.CssClass = "imgtab";
                 TableCell c = new TableCell();
                 c.Controls.Add(imglink);
-                row1.Cells.Add(c);
+                row2.Cells.Add(c);
             }
             catch (ArgumentOutOfRangeException)
             {
