@@ -29,7 +29,7 @@
                 <asp:Image ID="Image1" runat="server" CssClass="image" />
                 <br />
                 <asp:Label ID="imageDescription" CssClass="img-desc" runat="server" Text="Description of the image goes here"></asp:Label>
-                <asp:LinkButton ID="deleteButton" CssClass="deleteButton" Visible="false" OnClick="delete_Click" OnClientClick="if (!confirm('Are you sure you want to delete this image?')) return false;"  runat="server">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete</asp:LinkButton>
+                <asp:LinkButton ID="deleteButton" CssClass="deleteButton" Visible="false" OnClick="delete_Click" OnClientClick="if (!confirm('Are you sure you want to delete this image?')) return false;" runat="server">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete</asp:LinkButton>
                 <br />
                 <!--SCRIPT MANAGER FOR UPDATE PANEL -->
                 <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -47,6 +47,12 @@
                             <asp:TextBox runat="server" ID="cuddleCount" Width="10" Text="0" Enabled="false" />
                             &nbsp;&nbsp;
                     <fb:like send="true" layout="button_count" width="0" show_faces="true"></fb:like>
+                            <!-- AddThis Button BEGIN -->
+                            <div style="display:inline-block" class="addthis_toolbox addthis_default_style addthis_16x16_style">
+                                <a style="font-size:13px;top:4px;color:#3B5998;position:relative" class="addthis_button_email">Email</a>
+                            </div>
+                            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+                            <!-- AddThis Button END -->
                             <br />
                             <asp:Label ID="error" runat="server" Style="color: red" Text=""></asp:Label>
                         </div>
@@ -66,7 +72,7 @@
                             <br />
                             <b>Comments</b>
                             <asp:Panel ID="commentPanel" runat="server">
-                                <asp:Panel ID="nocomment" style='font-size:16px;margin-top:10px;' runat="server">No comments yet.</asp:Panel>
+                                <asp:Panel ID="nocomment" Style='font-size: 16px; margin-top: 10px;' runat="server">No comments yet.</asp:Panel>
                             </asp:Panel>
                             <br />
                         </div>
