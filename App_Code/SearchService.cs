@@ -6,12 +6,13 @@ using System.Web.Services;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web.Security;
 
-public class Image
+public class SSImage
 {
     public int id; //id of img
-    public int width; //width of the image thumbnail
-    public int height; //height of the image thumbnail
+    public int width; //width of the SSImage
+    public int height; //height of the SSImage
     public string title; //title of the img
 }
 
@@ -30,7 +31,7 @@ public class User
 public class SearchService : System.Web.Services.WebService {
 
     //images list
-    List<Image> Images = new List<Image>();
+    List<SSImage> Images = new List<SSImage>();
     //users list
     List<User> Users = new List<User>();
 
@@ -53,7 +54,7 @@ public class SearchService : System.Web.Services.WebService {
     /// <param name="query"></param>
     /// <returns></returns>
    [WebMethod]
-    public List<Image> GetImages(string query)
+    public List<SSImage> GetImages(string query)
     {
         //clear images list
         Images.Clear();
@@ -76,9 +77,9 @@ public class SearchService : System.Web.Services.WebService {
             {
                //get the id
                int id = ((int)rdr["Image_id"]);
-                //get the height of thumb
-               int width = ((int)rdr["Image_thumbWidth"]);
                 //get the width of thumb
+               int width = ((int)rdr["Image_thumbWidth"]);
+                //get the height of thumb
                int height = ((int)rdr["Image_thumbHeight"]);
                //get the title 
                string title = ((string)rdr["Image_title"]);
@@ -146,4 +147,53 @@ public class SearchService : System.Web.Services.WebService {
        //return the json data
        return Users;
    }
+
+    public List<SSImage> GetUserUploads(string query)
+    {
+        //clear images list
+        Images.Clear();
+
+        if (query == "")
+        {
+            return null;
+        }
+
+        //search images in database
+        try
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
+            conn = new SqlConnection(connStr);
+            MembershipUser u = Membership.GetUser(query);
+            Guid user_id = (Guid)u.ProviderUserKey;
+            cmd = new SqlCommand("SELECT Image_id,Image_width,Image_height FROM [Image_table] WHERE User_Id = @user_id ORDER BY Image_id DESC", conn);
+            cmd.Parameters.Add("@user_id", SqlDbType.UniqueIdentifier).Value = user_id;
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                //get the id
+                int id = ((int)rdr["Image_id"]);
+                //get the height
+                int width = ((int)rdr["Image_width"]);
+                //get the width
+                int height = ((int)rdr["Image_height"]);
+                //add to images list 
+                SSImage newImage = new SSImage { id = id, width = width, height = height };
+                Images.Add(newImage);
+
+            }
+
+            if (rdr != null)
+                rdr.Close();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+        //return the json data
+        return Images;
+    }
+
+
 }

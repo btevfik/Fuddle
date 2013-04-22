@@ -1,52 +1,51 @@
 ﻿.centerPage {
     margin: 0 auto;
-    top: 10px;
     width: 800px;
     position: relative;
-    /*background: #fff;*/
+    background-color:rgba(0, 0, 0, 0.1);
+    top:1px;
 }
 
 /* User Biography*/
 .userBio {
-    background: #0094ff;
+    z-index:-9999;
     height: 300px;
-    border: 1px solid rgb(13, 152, 186);
+    background-color:rgb(25, 175, 212);
+    background-image:url("/resources/noisy-texture.png");
 }
 
-.avatar {
-    bottom: -75px;
+.avatar img{
+    top: 50px;
     left: 25px;
     position: relative;
-    height: 200px;
-    width: 200px;
+    width:200px;
+    height:200px;
     padding: 5px;
     background-color: white;
     box-shadow: 0px 1px 3px #434141;
 }
 
-
 .username {
     position: relative;
-    top: -110px;
-    left: 253px;
+    top: -200px;
+    left: 265px;
     width: 150px;
 }
 
 .aboutme {
     position: relative;
-    bottom: 125px;
-    left: 285px;
+    top: -200px;
+    left: 265px;
     height: 100px;
-    width: 475px;
+    width: 500px;
     padding: 5px;
-    background-color: white;
-    box-shadow: 0px 1px 3px #434141;
+    background-color: #FFF;
 }
 
 
 /*Albums-Image-Tabs*/
 #albums-image-tabs {
-    width: auto;
+    width: 350px;
     height: 40px;
     border: 1px solid rgb(13, 152, 186);
     background: none repeat scroll 0% 0% rgb(238, 238, 238);
@@ -58,7 +57,7 @@
 #albums-image-tabs ul {
     margin: 0px;
     padding: 0px;
-    text-align: left;
+    text-align: center;
     width: 100%;
     cursor:default;
 }
@@ -96,4 +95,23 @@
 
 .num-result {
     color: #d14545;
+}
+
+
+
+.imgtab img {
+    width: 125px;
+}
+
+/*Uploads*/
+.uploads {
+    text-align: center;
+}
+
+.imgupload img {
+    max-width: 700px;
+}
+
+.uploads .uploadButton {
+    margin-top:20px;
 }

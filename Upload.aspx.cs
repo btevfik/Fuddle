@@ -36,6 +36,8 @@ public partial class Upload : System.Web.UI.Page
         string extension = Path.GetExtension(fileName).ToLower();
         string contentType = "";
         int fileSize = uploadFile.PostedFile.ContentLength;
+        int titleLength = title.Text.Length;
+        int descLength = description.Text.Length;
 
         // Error-checking to see if the user has selected a file or not
         if (!uploadFile.HasFile)
@@ -56,7 +58,14 @@ public partial class Upload : System.Web.UI.Page
         else if (description.Text == "")
         {
             uploadStatus.ForeColor = Color.Red;
-            uploadStatus.Text = "Error. Please give a description for the image.";
+            uploadStatus.Text = "Error. Please give a description for the image!";
+            return;
+        }
+        // Putting a limit of 48 characters for title
+        else if (titleLength > 48)
+        {
+            uploadStatus.ForeColor = Color.Red;
+            uploadStatus.Text = "Error. Title exceeds 48 characters!";
             return;
         }
 
