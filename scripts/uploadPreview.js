@@ -14,9 +14,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 });
 
 function previewImage(input) {
-
     $("#uploadStatus").css("display", "none");
-    console.log("AAA");
     var browserName = navigator.appName;
     if (browserName == "Microsoft Internet Explorer") {
         if (input.files && input.files[0]) {
