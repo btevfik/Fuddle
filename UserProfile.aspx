@@ -39,8 +39,9 @@
                         <li runat="server" id="userListItem">
                             <asp:LinkButton ID="cuddleLink" runat="server" OnClick="cuddleLink_Click">Cuddles</asp:LinkButton>
                         </li>
-
-                        <asp:Table ID="Table1" runat="server"></asp:Table>
+                        <div class ="imgtab">
+                            <asp:Table ID="Table1" runat="server"></asp:Table>
+                        </div>
                     </ul>
 
                 </ContentTemplate>
