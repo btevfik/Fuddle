@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserProfile.aspx.cs" Inherits="UserProfile"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="UserProfile.aspx.cs" Inherits="UserProfile" MaintainScrollPositionOnPostback="True" %>
 
     
 
@@ -9,20 +9,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
-    <script type="text/javascript">
-        var xPos, yPos;
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        prm.add_beginRequest(BeginRequestHandler);
-        prm.add_endRequest(EndRequestHandler);
-        function BeginRequestHandler(sender, args) {
-            xPos = $get('scrollDiv').scrollLeft;
-            yPos = $get('scrollDiv').scrollTop;
-        }
-        function EndRequestHandler(sender, args) {
-            $get('scrollDiv').scrollLeft = xPos;
-            $get('scrollDiv').scrollTop = yPos;
-        }
-    </script>
     <div class = "centerPage"> 
         <!-- User Biography -->
         <div class="userBio">
@@ -43,19 +29,24 @@
         </div>
 
         <!-- Albums / Images Tab -->
-        <div id="albums-image-tabs">
-            <ul>
-                <li runat="server" id="imageListItem">
-                    <asp:LinkButton ID="albumLink" runat="server" OnClick="albumLink_Click">Albums</asp:LinkButton>
-                </li>
-                <li runat="server" id="userListItem">
-                    <asp:LinkButton ID="cuddleLink" runat="server" OnClick="cuddleLink_Click">Cuddles</asp:LinkButton>
-                </li>
-            </ul>
-        </div>
         <div class ="imgtab">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="loadrows"/>
+                    <asp:AsyncPostBackTrigger ControlID="cuddleLink" />
+                    <asp:AsyncPostBackTrigger ControlID="albumLink" />
+                </Triggers>
                 <ContentTemplate>
+                    <div id="albums-image-tabs">
+                        <ul>
+                            <li runat="server" id="imageListItem">
+                                <asp:LinkButton ID="albumLink" runat="server" OnClick="albumLink_Click">Albums</asp:LinkButton>
+                            </li>
+                            <li runat="server" id="userListItem">
+                                <asp:LinkButton ID="cuddleLink" runat="server" OnClick="cuddleLink_Click">Cuddles</asp:LinkButton>
+                            </li>
+                        </ul>
+                    </div>
                     <asp:Table ID="Table1" runat="server"></asp:Table>
                     <asp:Button CssClass="uploadButton" ID="loadrows" runat="server" Text="Load More" OnClick="loadrows_Click"/>
                 </ContentTemplate>
@@ -66,7 +57,10 @@
         <!--Recent Uploads-->
         <div class="uploads">
             <h2>Uploads</h2>
-            <asp:UpdatePanel ID="RecentUpload" runat="server">
+            <asp:UpdatePanel ID="RecentUpload" runat="server" UpdateMode="Conditional">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="loaduploads"/>
+                </Triggers>
                 <ContentTemplate>
                     <asp:Button CssClass="uploadButton" ID="loaduploads" runat="server" Text="Load More" OnClick="loaduploads_Click" />
                 </ContentTemplate>
