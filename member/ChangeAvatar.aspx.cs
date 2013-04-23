@@ -8,18 +8,15 @@ using System.IO;
 using SD = System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using System.Configuration;
 using System.Web.Security;
-using System.Data.SqlClient;
-using System.Data;
-
 
 public partial class member_ChangeAvatar : System.Web.UI.Page
 {
     String path = HttpContext.Current.Request.PhysicalApplicationPath + "temp\\";
-    protected string connString = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
     //Grabs the logged in user
     MembershipUser user;
+    //user service
+    FuddleUser fUser;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -34,6 +31,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         {
             Directory.CreateDirectory(Server.MapPath(pathToCreate));
         }
+        //fuddle user with logged in username
+        fUser = new FuddleUser(user.UserName);
     }
     protected void btnUpload_Click(object sender, EventArgs e)
     {
@@ -198,94 +197,37 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
     //save cropped image to user_info table and set do not use gravatar
     public void uploadToDatabase(byte[] croppedImage)
     {
-        //user id.
-        Guid id = (Guid)user.ProviderUserKey;
-        //connection
-        SqlConnection conn = new SqlConnection(connString);
-        try
-        {
-            // Insert the image into the database
-            string insertQuery = "UPDATE [User_info] SET User_avatar = @newData, Use_gravatar = @useGravatar WHERE User_id = @userId";
-            SqlCommand cmd = new SqlCommand(insertQuery);
-            cmd.Parameters.Add("@newData", SqlDbType.Binary).Value = croppedImage;
-            cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
-            cmd.Parameters.Add("@useGravatar", SqlDbType.Bit).Value = 0;
+        bool result = fUser.changeUploadedAvatar(croppedImage);
 
-            // Execute the sql command                
-            cmd.Connection = conn;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-        catch (Exception ee)
+        if (result == true)
         {
-            lblError2.Text = "Error uploading file." + ee;
+            lblError2.Text = "Error uploading file.";
             lblError2.Visible = true;
         }
-        finally
+        else
         {
             lblError.Visible = true;
-            conn.Close();
-            conn.Dispose();
         }
     }
 
     protected void PickGravatar_CheckedChanged(object sender, EventArgs e)
     {
-        //user id.
-        Guid id = (Guid)user.ProviderUserKey;
-        //connection
-        SqlConnection conn = new SqlConnection(connString);
-        try
-        {
-            // Insert the image into the database
-            string insertQuery = "UPDATE [User_info] SET Use_gravatar = 1 WHERE User_id = @userId";
-            SqlCommand cmd = new SqlCommand(insertQuery);
-            cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
+        bool result = fUser.setAvatarType("gravatar");
 
-            // Execute the sql command                
-            cmd.Connection = conn;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-        catch (Exception ee)
-        {
-            lblError2.Text = "Error changing picture type." + ee;
+        if(result == false){
+            lblError2.Text = "Error changing picture type.";
             lblError2.Visible = true;
-        }
-        finally
-        {
-            conn.Close();
-            conn.Dispose();
         }
     }
 
     protected void PickUpload_CheckedChanged(object sender, EventArgs e)
     {
-        //user id.
-        Guid id = (Guid)user.ProviderUserKey;
-        //connection
-        SqlConnection conn = new SqlConnection(connString);
-        try
-        {
-            // Insert the image into the database
-            string insertQuery = "UPDATE [User_info] SET Use_gravatar = 0 WHERE User_id = @userId";
-            SqlCommand cmd = new SqlCommand(insertQuery);
-            cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
+        bool result = fUser.setAvatarType("upload");
 
-            // Execute the sql command                
-            cmd.Connection = conn;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-        catch (Exception ee)
+        if (result == false)
         {
-            lblError2.Text = "Error changing picture type." + ee;
+            lblError2.Text = "Error changing picture type.";
             lblError2.Visible = true;
-        }
-        finally
-        {
-            conn.Close();
-            conn.Dispose();
         }
     }
 

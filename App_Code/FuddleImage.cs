@@ -11,7 +11,7 @@ using System.Web.Security;
 /// this class is used for CRUD image
 /// </summary>
 
-//comment class that holds info about an image
+//comment class that holds info about a comment
 public class Comment_Info
 {
     public string username;
