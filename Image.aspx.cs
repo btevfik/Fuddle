@@ -55,8 +55,8 @@ public partial class Image : System.Web.UI.Page
         //load comments from database
         loadComments();
 
-        //for simulating button click from javascript when enter is pressed
-        ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(this.commentButton);
+        //add this button (email) script
+        ScriptManager.RegisterClientScriptInclude(this, UpdatePanel1.GetType(), "Test", "http://s7.addthis.com/js/300/addthis_widget.js#pubid=undefined");
 
         //Show deletebutton if logged inuser is the one who uploaded this picture
         string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
@@ -90,6 +90,7 @@ public partial class Image : System.Web.UI.Page
         catch
         {
             error.Text = "Please login.";
+            lightbox.Visible = true;
         }
     }
 
@@ -113,6 +114,7 @@ public partial class Image : System.Web.UI.Page
         catch
         {
             error.Text = "Please login.";
+            lightbox.Visible = true;
         }
     }
 
@@ -136,15 +138,27 @@ public partial class Image : System.Web.UI.Page
         catch
         {
             error.Text = "Please login.";
+            lightbox.Visible = true;
         }
     }
 
     //adding a comment for this image 
+    //errors don't display due to the fact that jquery keypress registers twice if commentbutton async trigger added both on updatepanel5 and 6.
+    //panelsUpdated[i].id === "UpdatePanel5" needs to be checked for panel 6 to get the error working
+    //this will cause twice register though.
     protected void commentButton_Click(object sender, EventArgs e)
     {
         u = Membership.GetUser();
         //get comment box
         TextBox commentBox = LoginView1.FindControl("AddCommentBox") as TextBox;
+
+        //if nothing is entered in commentbox
+        if (commentBox.Text.Length <= 0)
+        {
+            error.Text = "Please enter a comment.";
+            lightbox.Visible = true;
+            return;
+        }
         
         //create a comment literal        
         Literal myComment = new Literal();
@@ -158,6 +172,7 @@ public partial class Image : System.Web.UI.Page
         //there is an error adding comment
         if(result == false){
             error.Text = "Error commenting.";
+            lightbox.Visible = true;
         }
         //when comments are added clear the commentbox
         else{
@@ -195,10 +210,19 @@ public partial class Image : System.Web.UI.Page
     //delete button is clicked
     protected void delete_Click(object sender, EventArgs e)
     {
+        try{
         //delete this image
         FuddleImage.deleteImage(id);
-        //redirect to member page
-        Response.Redirect("/member/MyProfile.aspx");
+        //display deleted message
+        error.Text = "Image deleted.";
+        lightbox.Visible = true;
+        Session["deleted"] = true;
+        }
+        catch{
+             error.Text = "Error on deletion.";
+             lightbox.Visible = true;
+             Session["deleted"] = false;
+        }
     }
 
     protected string findTimeDiff(DateTime then)
@@ -272,6 +296,9 @@ public partial class Image : System.Web.UI.Page
         saveButton.Visible = true;
         //hide update button
         updateButton.Visible = false;
+
+        //clear error
+        error.Text = "";
     }
 
     protected void saveButton_Click(object sender, EventArgs e)
@@ -299,7 +326,24 @@ public partial class Image : System.Web.UI.Page
         }
         catch
         {
+            //disable save button, and textboxes
+            saveButton.Visible = false;
+            updateTitle.Visible = false;
+            updateDesc.Visible = false;
+            //make labels visible
+            imageDescription.Visible = true;
+            imageTitle.Visible = true;
             error.Text = "Error updating image info.";
+            lightbox.Visible = true;
+        }
+    }
+
+    protected void closeError_Click(object sender, EventArgs e)
+    {
+        lightbox.Visible = false;
+        bool test = (bool)Session["deleted"];
+        if(test == true){
+            Response.Redirect("/member/MyProfile.aspx");
         }
     }
 }
