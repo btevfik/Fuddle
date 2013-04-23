@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="MyProfile.aspx.cs" Inherits="member_MyProfile" %>
 
-<%@ Register Assembly="FreshClickmedia.Web" Namespace="FreshClickMedia.Web.UI.WebControls" TagPrefix="fcm" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <title>Fuddle | My Profile</title>
     <style>
@@ -15,7 +13,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div style="text-align: center">
         <h1>
-            <fcm:Gravatar ID="Gravatar1" runat="server" CssClass="gravatar-img" OutputGravatarSiteLink="true" DefaultImage="http://fuddle.apphb.com/resources/gravatar.jpg" />
             <asp:Label ID="userLabel" runat="server" Text=""></asp:Label>
         </h1>
 

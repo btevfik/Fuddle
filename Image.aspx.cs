@@ -341,9 +341,18 @@ public partial class Image : System.Web.UI.Page
     protected void closeError_Click(object sender, EventArgs e)
     {
         lightbox.Visible = false;
-        bool test = (bool)Session["deleted"];
-        if(test == true){
-            Response.Redirect("/member/MyProfile.aspx");
+        try
+        {
+            bool test = (bool)Session["deleted"];
+            if (test == true)
+            {
+                Session.Remove("deleted");
+                Response.Redirect("/member/MyProfile.aspx");
+            }
+        }
+        catch
+        {
+            //who cares?
         }
     }
 }
