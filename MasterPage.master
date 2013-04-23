@@ -27,7 +27,7 @@
                 <!--Upload button -->
                 <asp:LoginView ID="LoginView2" runat="server">
                     <LoggedInTemplate>
-                        <asp:HyperLink ID="uploadButton" CssClass="uploadButton" runat="server" NavigateUrl="/Upload.aspx">Upload</asp:HyperLink>
+                        <asp:HyperLink ID="uploadButton" CssClass="uploadButton" runat="server" NavigateUrl="/member/Upload.aspx">Upload</asp:HyperLink>
                     </LoggedInTemplate>
                 </asp:LoginView>
                 <!--Search box-->

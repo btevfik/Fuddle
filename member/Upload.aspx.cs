@@ -16,11 +16,7 @@ public partial class Upload : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if user is not logged in redirect to login page.
-        if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-        {
-            Response.Redirect("/Login.aspx");
-        }
+
     }
 
     // User clicks this button to save the image in the database
