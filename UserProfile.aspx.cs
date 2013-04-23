@@ -14,11 +14,18 @@ using System.Globalization;
 //WHERE HE CAN EDIT HIS PROFILE
 public partial class UserProfile : System.Web.UI.Page
 {
+    protected int cuddle_index
+    {
+        get { return (int)Session["cuddle_index"]; }
+        set { Session["cuddle_index"] = value; }
+    }
+
     protected int upload_index
     {
         get { return (int)Session["upload_index"]; }
         set { Session["upload_index"] = value; }
     }
+
     protected List<SSImage> images
     {
         get { return (List<SSImage>)Session["images"]; }
@@ -83,6 +90,44 @@ public partial class UserProfile : System.Web.UI.Page
                         break;
                     }
                 }
+                //Display Album
+                cuddle_index = 2;
+                for (int k = 0; k < cuddle_index; k++)
+                {
+                    TableRow row1 = new TableRow();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        try
+                        {
+                            SSImage img = images[i + k * 5];
+                            HyperLink imglink = new HyperLink();
+                            imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
+                            imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                            imglink.CssClass = "imgtab";
+                            TableCell c = new TableCell();
+                            c.Controls.Add(imglink);
+                            row1.Cells.Add(c);
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            break;
+                        }
+                    }
+                    if (row1.Cells.Count > 0)
+                    {
+                        Table1.Rows.Add(row1);
+                    }
+                }
+                if (cuddle_index * 5 < images.Count)
+                {
+                    loadrows.Visible = true;
+                }
+                else
+                {
+                    loadrows.Visible = false;
+                }
+                cuddle_index += 2;
+
             }
             //if not found, direct to 404
             else
@@ -122,52 +167,79 @@ public partial class UserProfile : System.Web.UI.Page
     }
     protected void cuddleLink_Click(object sender, EventArgs e)
     {
-        TableRow row1 = new TableRow();
-        TableRow row2 = new TableRow();
-        int i;
-        for (i = 0; i < 5; i++)
+        cuddle_index = 2;
+        for (int k = 0; k < cuddle_index; k++)
         {
-            try
+            TableRow row1 = new TableRow();
+            for (int i = 0; i < 5; i++)
             {
-                SSImage img = images[i];
-                HyperLink imglink = new HyperLink();
-                imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
-                imglink.CssClass = "imgtab";
-                TableCell c = new TableCell();
-                c.Controls.Add(imglink);
-                row1.Cells.Add(c);
+                try
+                {
+                    SSImage img = images[i + k * 5];
+                    HyperLink imglink = new HyperLink();
+                    imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
+                    imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                    imglink.CssClass = "imgtab";
+                    TableCell c = new TableCell();
+                    c.Controls.Add(imglink);
+                    row1.Cells.Add(c);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    break;
+                }
             }
-            catch (ArgumentOutOfRangeException)
+            if (row1.Cells.Count > 0)
             {
-                break;
-            }
-        }
-        if (row1.Cells.Count > 0)
-        {
-            Table1.Rows.Add(row1);
-        }
-        for (; i < 10; i++)
-        {
-            try
-            {
-                SSImage img = images[i];
-                HyperLink imglink = new HyperLink();
-                imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
-                imglink.CssClass = "imgtab";
-                TableCell c = new TableCell();
-                c.Controls.Add(imglink);
-                row2.Cells.Add(c);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                break;
+                Table1.Rows.Add(row1);
             }
         }
-        if (row2.Cells.Count > 0)
+        if (cuddle_index * 5 < images.Count)
         {
-            Table1.Rows.Add(row2);
+            loadrows.Visible = true;
         }
+        else
+        {
+            loadrows.Visible = false;
+        }
+        cuddle_index += 2;
+    }
+    protected void loadrows_Click(object sender, EventArgs e)
+    {
+        for (int k = 0; k < cuddle_index; k++)
+        {
+            TableRow row1 = new TableRow();
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    SSImage img = images[i + k * 5];
+                    HyperLink imglink = new HyperLink();
+                    imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
+                    imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                    imglink.CssClass = "imgtab";
+                    TableCell c = new TableCell();
+                    c.Controls.Add(imglink);
+                    row1.Cells.Add(c);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    break;
+                }
+            }
+            if (row1.Cells.Count > 0)
+            {
+                Table1.Rows.Add(row1);
+            }
+        }
+        if (cuddle_index * 5 < images.Count)
+        {
+            loadrows.Visible = true;
+        }
+        else
+        {
+            loadrows.Visible = false;
+        }
+        cuddle_index += 2;
     }
 }

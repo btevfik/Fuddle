@@ -98,17 +98,25 @@
     position:relative;
     width: 700px;
     margin: 10px auto 10px auto;
+    text-align: center;
 }
 
 .imgtab table {
     max-width: 700px;
     min-width: 125px;
     margin: auto;
+    background-color:rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
 .imgtab img {
     width: 125px;
     height: 125px;
+}
+
+.imgtab .uploadButton {
+    margin-top: 20px;
+    margin-left: 0px;
 }
 
 /*Uploads*/

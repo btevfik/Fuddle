@@ -19,12 +19,25 @@ function previewImage(input) {
     if (browserName == "Microsoft Internet Explorer") {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
+            var ext = input.value.split('.').pop(); // get the file's extension
+            var extStr = ext.toString();
+            ext = extStr.toLowerCase();
 
-            reader.onload = function (e) {
-                $('#image')
-                    .attr('src', e.target.result)
+            if (ext == "jpg" || ext == "jpeg" || ext == "png" || ext == "gif" || ext == "bmp") {
+                reader.onload = function (e) {
+                    $('#image')
+                        .attr('src', e.target.result)
+                        .width(350)
+                };
+            }
+            // if the file is not an image, show the non_image png
+            else {
+                reader.onload = function (e) {
+                    $('#image')
+                    .attr('src', "/resources/non_image.png")
                     .width(350)
-            };
+                };
+            }
 
             reader.readAsDataURL(input.files[0]);
         }
@@ -32,13 +45,26 @@ function previewImage(input) {
     else {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
+            var ext = input.value.split('.').pop(); // get the file's extension
+            var extStr = ext.toString();
+            ext = extStr.toLowerCase();
 
-            reader.onload = function (e) {
-                $('#image')
-                    .attr('src', e.target.result)
-                    .width(input.file.width)
-                    .height(input.file.height)
-            };
+            if (ext == "jpg" || ext == "jpeg" || ext == "png" || ext == "gif" || ext == "bmp") {
+                reader.onload = function (e) {
+                    $('#image')
+                        .attr('src', e.target.result)
+                        .width(input.file.width)
+                        .height(input.file.height)
+                };
+            }
+            // if the file is not an image, show the non_image png
+            else {
+                reader.onload = function (e) {
+                    $('#image')
+                    .attr('src', "/resources/non_image.png")
+                    .width(350)
+                };
+            }
 
             reader.readAsDataURL(input.files[0]);
         }
