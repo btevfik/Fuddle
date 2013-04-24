@@ -33,6 +33,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         }
         //fuddle user with logged in username
         fUser = new FuddleUser(user.UserName);
+        //add onload event to cropimg
+        imgCrop.Attributes["onload"] = "loadJCrop()";
     }
     protected void btnUpload_Click(object sender, EventArgs e)
     {
@@ -43,7 +45,7 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         if (Upload.HasFile)
         {
 
-            Session["WorkingImage"] = Upload.FileName;
+            Session["WorkingImage"] = Path.GetFileName(Upload.FileName); 
 
             String FileExtension = Path.GetExtension(Session["WorkingImage"].ToString()).ToLower();
 
@@ -103,6 +105,7 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
             imgCrop.ImageUrl = "/temp/" + Session["WorkingImage"].ToString();
 
             lightbox.Style.Add("display", "none");
+
         }
     }
 

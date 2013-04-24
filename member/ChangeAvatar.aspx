@@ -13,18 +13,10 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
 
-            $('input:radio').screwDefaultButtons({
+            $('.radioButton').screwDefaultButtons({
                 image: 'url("/resources/checkboxSmall.jpg")',
                 width: 43,
                 height: 43
-            });
-
-            jQuery('#imgCrop').Jcrop({
-                onSelect: storeCoords,
-                aspectRatio: 1,
-                maxSize: [600, 600],
-                minSize: [80, 80],
-                setSelect: [100, 100, 80, 80]
             });
 
             $('.lightbox_trigger').click(function (e) {
@@ -40,19 +32,27 @@
 
             $('#lightbox').click(function (e) {
                 if ($(e.target).is("#content") || $(e.target).is("#Upload") || $(e.target).is("#uploadButton")) return;
-                //must use live, as the lightbox element is inserted into the DOM       
                 $('#lightbox').css("display", "none");
             });
-
         });
 
-        function storeCoords(c) {
-            jQuery('#X').val(c.x);
-            jQuery('#Y').val(c.y);
-            jQuery('#W').val(c.w);
-            jQuery('#H').val(c.h);
-        };
+       function loadJCrop() {
+            $('#imgCrop').Jcrop({
+                onChange: storeCoords,
+                onSelect: storeCoords,
+                aspectRatio: 1,
+                maxSize: [400, 400],
+                minSize: [80, 80],
+                setSelect: [100, 100, 80, 80]
+            });
+        }
 
+        function storeCoords(c) {
+            $('#X').val(c.x);
+            $('#Y').val(c.y);
+            $('#W').val(c.w);
+            $('#H').val(c.h);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -83,7 +83,7 @@
                 <br />
                 <asp:Button CssClass="uploadButton" ClientIDMode="Static" ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Add picture" />
                 <br />
-                <asp:Label ID="lblError" ClientIDMode="Static" CssClass="avatarError" runat="server"/>
+                <asp:Label ID="lblError" ClientIDMode="Static" CssClass="avatarError" runat="server" />
             </div>
         </asp:Panel>
     </div>
@@ -97,20 +97,20 @@
 
                 <br />
 
-                <asp:HiddenField ID="X" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="X" ClientIDMode="Static" Value="0" runat="server" />
 
-                <asp:HiddenField ID="Y" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="Y" ClientIDMode="Static" Value="0" runat="server" />
 
-                <asp:HiddenField ID="W" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="W" ClientIDMode="Static" Value="80" runat="server" />
 
-                <asp:HiddenField ID="H" ClientIDMode="Static" runat="server" />
+                <asp:HiddenField ID="H" ClientIDMode="Static" Value="80" runat="server" />
 
 
             </div>
         </div>
 
         <div style="clear: both"></div>
-        
+
         <div id="cropPanelButtons">
             <asp:Button ID="btnCrop" CssClass="submitButton" runat="server" Text="Crop and Save" OnClick="btnCrop_Click" />
             &nbsp;
