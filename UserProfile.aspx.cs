@@ -67,6 +67,12 @@ public partial class UserProfile : System.Web.UI.Page
                 //set gravatar
                 AvatarImage.ImageUrl = "getavatar.ashx?user=" + u.UserName + "&size=200";
 
+                //set user bio
+                FuddleUser account = new FuddleUser(u.UserName);
+                string bio = account.getBio();
+                //if (!bio.Equals(""))
+                    aboutmeLabel.Text = bio;
+
                 //get user uploads
                 SearchService ss = new SearchService();
                 this.images = ss.GetUserUploads(user);
@@ -104,7 +110,7 @@ public partial class UserProfile : System.Web.UI.Page
                             HyperLink imglink = new HyperLink();
                             imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
                             imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
-                            imglink.Text = img.title;
+                            imglink.ToolTip = img.title;
                             imglink.CssClass = "imgtab";
                             TableCell c = new TableCell();
                             c.Controls.Add(imglink);
@@ -152,6 +158,7 @@ public partial class UserProfile : System.Web.UI.Page
                 HyperLink imglink = new HyperLink();
                 imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
                 imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                imglink.ToolTip = img.title;
                 imglink.CssClass = "imgupload";
                 Control contentpanel = RecentUpload.ContentTemplateContainer;
                 contentpanel.Controls.AddAt(contentpanel.Controls.Count - 2, imglink);
@@ -181,6 +188,7 @@ public partial class UserProfile : System.Web.UI.Page
                     HyperLink imglink = new HyperLink();
                     imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
                     imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
+                    imglink.ToolTip = img.title;
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
@@ -219,6 +227,7 @@ public partial class UserProfile : System.Web.UI.Page
                     HyperLink imglink = new HyperLink();
                     imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
                     imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
+                    imglink.ToolTip = img.title;
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);

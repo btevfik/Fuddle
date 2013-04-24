@@ -133,7 +133,7 @@ public class FuddleUser
             // change the bio message
             string insertQuery = "UPDATE [User_info] SET User_bio = @newBio WHERE User_id = @userId";
             SqlCommand cmd = new SqlCommand(insertQuery);
-            cmd.Parameters.Add("@newData", SqlDbType.VarChar).Value = bioMessage;
+            cmd.Parameters.Add("@newBio", SqlDbType.VarChar).Value = bioMessage;
             cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
 
             // Execute the sql command                
@@ -173,22 +173,28 @@ public class FuddleUser
             // Execute the sql command                
             cmd.Connection = conn;
             conn.Open();
-            cmd.ExecuteNonQuery();
+            rdr = cmd.ExecuteReader();
 
             // Retreive image title
             while (rdr.Read())
             {
-                bio = (string)rdr["User_bio"];
+                if (System.DBNull.Value.Equals(rdr["User_bio"]))
+                    bio = "";
+                else
+                    bio = (string)rdr["User_bio"];
             }
-
             if (rdr != null)
             {
                 rdr.Close();
             }
         }
-        catch (Exception ee)
+        catch (IndexOutOfRangeException)
         {
             //something right?
+            return "";
+        }
+        catch (Exception)
+        {
             return "N/A";
         }
         finally

@@ -10,10 +10,10 @@ using System.Web.Security;
 /// <summary>
 /// this class is used for CRUD album
 /// </summary>
-public class AlbumFunctions
+public class FuddleAlbum
 {
     static string connString = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
-    public AlbumFunctions()
+    public FuddleAlbum()
     {
         //
         // TODO: Add constructor logic here
