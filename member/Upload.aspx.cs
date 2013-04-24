@@ -102,6 +102,8 @@ public partial class Upload : System.Web.UI.Page
         if (contentType != "")
         {
             SqlConnection conn = new SqlConnection(connString);
+            SqlConnection conn2 = new SqlConnection(connString);
+
             try
             {
                 Stream fs = uploadFile.PostedFile.InputStream;
@@ -158,7 +160,7 @@ public partial class Upload : System.Web.UI.Page
                 // Insert the image and its description and title into the database
                 string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height, "
                     + "Image_thumbWidth, Image_thumbHeight, Image_thumbnail, User_Id)"
-                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight, @newThumbWidth, @newThumbHeight, @newThumbnail, @userId)";
+                    + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight, @newThumbWidth, @newThumbHeight, @newThumbnail, @userId); SELECT SCOPE_IDENTITY()";
                 SqlCommand cmd = new SqlCommand(insertQuery);
                 cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = title.Text;
                 cmd.Parameters.Add("@newDesc", SqlDbType.VarChar).Value = description.Text;
@@ -175,7 +177,17 @@ public partial class Upload : System.Web.UI.Page
                 // Execute the sql command                
                 cmd.Connection = conn;
                 conn.Open();
-                cmd.ExecuteNonQuery();              
+                //cmd.ExecuteNonQuery();
+           
+                // Get the Image_id of the image just uploaded                
+                int image_id = Convert.ToInt32(cmd.ExecuteScalar());
+                SqlCommand vote_cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote) VALUES (@newImageid, @newUpVote, @newDownVote)", conn2);
+                vote_cmd.Parameters.Add("@newImageid", SqlDbType.Int).Value = image_id;
+                vote_cmd.Parameters.Add("@newUpVote", SqlDbType.Int).Value = 0;
+                vote_cmd.Parameters.Add("@newDownVote", SqlDbType.Int).Value = 0;
+
+                conn2.Open();
+                vote_cmd.ExecuteNonQuery();
 
                 // Let the user know the file was uploaded successfully
                 uploadStatus.ForeColor = Color.Green;
@@ -194,6 +206,9 @@ public partial class Upload : System.Web.UI.Page
             {
                 conn.Close();
                 conn.Dispose();
+
+                conn2.Close();
+                conn2.Dispose();
             }
         }
         else

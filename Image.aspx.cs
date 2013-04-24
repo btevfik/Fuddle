@@ -30,12 +30,11 @@ public partial class Image : System.Web.UI.Page
         string url = "/ShowImage.ashx?imgid=" + id;
         Image1.ImageUrl = url;
 
-        //set the voting counts
-        /*
-         upCount.Text  = FuddleImage.getUpCount(id);
-         downCount.Text = FuddleImage.getDownCount(id);
-         cuddleCount.Text = FuddleImage.getCuddleCount(id);
-         */
+        //set the voting counts        
+        upCount.Text = FuddleVote.getUpCount(id).ToString();
+        downCount.Text = FuddleVote.getDownCount(id).ToString();
+         //cuddleCount.Text = FuddleImage.getCuddleCount(id);
+         
 
         //set widths of counts
         upCount.Width = upCount.Text.Length * 8;
@@ -82,10 +81,10 @@ public partial class Image : System.Web.UI.Page
             if(result == false){
                 error.Text = "Error voting."
             }
-            else{
-             */
-            upCount.Text = Int32.Parse(upCount.Text) + 1 + "";
-            // }
+            else{*/
+
+            upCount.Text = FuddleVote.addToUpCount(id).ToString() + " ";
+             //}
         }
         catch
         {
@@ -108,7 +107,7 @@ public partial class Image : System.Web.UI.Page
             }
             else{
              */
-             downCount.Text = Int32.Parse(downCount.Text) - 1 + ""; 
+            downCount.Text = FuddleVote.addToDownCount(id).ToString() + " ";
              // }
         }
         catch
