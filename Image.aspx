@@ -96,7 +96,7 @@
             <fb:like send="true" layout="button_count" width="0" show_faces="true"></fb:like>
             <!-- AddThis Button BEGIN -->
             <div style="display: inline-block" id="addThis" class="addthis_toolbox addthis_default_style addthis_16x16_style">
-                <a style="font-size: 13px; top: 4px; color: #3B5998; position: relative" class="addthis_button_email">Email</a>
+                <a style="font-size: 13px; color: #3B5998; position: relative" class="addthis_button_email">Email</a>
             </div>
             <!-- AddThis Button END -->
             <br />
