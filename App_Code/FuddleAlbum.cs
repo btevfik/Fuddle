@@ -10,15 +10,15 @@ using System.Web.Security;
 /// <summary>
 /// this class is used for CRUD album
 /// </summary>
-public class FuddleAlbum
+public class AlbumFunctions
 {
     static string connString = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
-	public FuddleAlbum()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public AlbumFunctions()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
 
     static void createAlbum(string title)
     {
@@ -47,7 +47,7 @@ public class FuddleAlbum
         }
     }
 
-    static void addImage(string title, string description, string contentType, Byte[] bytes, string fileName, double fileWidth, double fileHeight, double fileWidthThumb, double fileHeightThumb, Byte[] bytes_thumb, int album_id)
+    static void addImage(int album_id, string album_title, int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
 
@@ -56,23 +56,14 @@ public class FuddleAlbum
         Guid id = (Guid)user.ProviderUserKey;
         try
         {
-            // Insert the image and its description and title into the database
-            string insertQuery = "INSERT INTO [Image_table] (Image_title, Image_desc, Image_content_type, Image_data, Image_filename, Image_width, Image_height, "
-                + "Image_thumbWidth, Image_thumbHeight, Image_thumbnail, User_Id, Album_id)"
-                + "values (@newTitle, @newDesc, @newContentType, @newData, @newFilename, @newWidth, @newHeight, @newThumbWidth, @newThumbHeight, @newThumbnail, @userId, @albumId)";
+            // Insert the image into the album table
+            string insertQuery = "INSERT INTO [Album_table] ( User_Id, Album_id, Image_id, Album_title)"
+                + "values ( @userId, @albumId, @imageId, @albumTitle)";
             SqlCommand cmd = new SqlCommand(insertQuery);
-            cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = title;
-            cmd.Parameters.Add("@newDesc", SqlDbType.VarChar).Value = description;
-            cmd.Parameters.Add("@newContentType", SqlDbType.VarChar).Value = contentType;
-            cmd.Parameters.Add("@newData", SqlDbType.Binary).Value = bytes;
-            cmd.Parameters.Add("@newFilename", SqlDbType.VarChar).Value = fileName;
-            cmd.Parameters.Add("@newWidth", SqlDbType.Int).Value = fileWidth;
-            cmd.Parameters.Add("@newHeight", SqlDbType.Int).Value = fileHeight;
-            cmd.Parameters.Add("@newThumbWidth", SqlDbType.Int).Value = fileWidthThumb;
-            cmd.Parameters.Add("@newThumbHeight", SqlDbType.Int).Value = fileHeightThumb;
-            cmd.Parameters.Add("@newThumbnail", SqlDbType.Binary).Value = bytes_thumb;
-            cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
+            cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = album_title;
+            cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = image_id;
             cmd.Parameters.Add("@albumId", SqlDbType.Int).Value = album_id;
+            cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
 
             // Execute the sql command                
             cmd.Connection = conn;
@@ -105,7 +96,7 @@ public class FuddleAlbum
             conn.Dispose();
         }
     }
-    
+
     static string getTitle(int album_id)
     {
         SqlDataReader rdr = null;
@@ -139,20 +130,20 @@ public class FuddleAlbum
         }
         return album_title;
     }
-    
+
     static List<int> getImages(int album_id) //returns a list of Image Ids in the album
     {
         SqlDataReader rdr = null;
         SqlConnection conn = new SqlConnection();
         SqlCommand cmd = new SqlCommand();
-        
+
         List<int> images = new List<int>();
         int imgID = -1;
 
         try
         {
             conn = new SqlConnection(connString);
-            cmd = new SqlCommand("SELECT Image_id FROM [Image_table] WHERE Album_id = '" + album_id.ToString() + "'", conn);
+            cmd = new SqlCommand("SELECT Image_id FROM [Album_table] WHERE Album_id = '" + album_id.ToString() + "'", conn);
             conn.Open();
             rdr = cmd.ExecuteReader();
 
@@ -175,5 +166,101 @@ public class FuddleAlbum
         }
         return images;
     }
-    
+
+    // Must use this method to delete all the specified user's albums when deleting the user 
+    static void deleteAllUsersAlbums(Guid id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete all the albums of the user
+            SqlCommand cmd = new SqlCommand("Delete FROM [Album_table] WHERE User_id = '" + id.ToString() + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    static void deleteAlbum(int album_id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete the album 
+            SqlCommand cmd = new SqlCommand("Delete FROM [Album_table] WHERE Album_id = '" + album_id.ToString() + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    static void deleteImage(int image_id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete the image 
+            SqlCommand cmd = new SqlCommand("Delete FROM [Album_table] WHERE Image_id = '" + image_id.ToString() + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    static List<int> getAllAlbums(Guid id)
+    {
+        SqlDataReader rdr = null;
+        SqlConnection conn = new SqlConnection();
+        SqlCommand cmd = new SqlCommand();
+
+        List<int> user_albums = new List<int>();
+        int albumID = -1;
+
+        try
+        {
+            conn = new SqlConnection(connString);
+            cmd = new SqlCommand("SELECT DISTINCT Album_id FROM [Album_table] WHERE User_id = '" + id.ToString() + "'", conn);
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+
+            // Add the album id to the list
+            while (rdr.Read())
+            {
+                albumID = (int)rdr["Album_id"];
+                user_albums.Add(albumID);
+            }
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+        return user_albums;
+    }
 }
