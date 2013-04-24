@@ -165,7 +165,7 @@ public class SearchService : System.Web.Services.WebService {
             conn = new SqlConnection(connStr);
             MembershipUser u = Membership.GetUser(query);
             Guid user_id = (Guid)u.ProviderUserKey;
-            cmd = new SqlCommand("SELECT Image_id,Image_width,Image_height FROM [Image_table] WHERE User_Id = @user_id ORDER BY Image_id DESC", conn);
+            cmd = new SqlCommand("SELECT Image_id,Image_width,Image_height,Image_title FROM [Image_table] WHERE User_Id = @user_id ORDER BY Image_id DESC", conn);
             cmd.Parameters.Add("@user_id", SqlDbType.UniqueIdentifier).Value = user_id;
             conn.Open();
             rdr = cmd.ExecuteReader();
@@ -177,8 +177,10 @@ public class SearchService : System.Web.Services.WebService {
                 int width = ((int)rdr["Image_width"]);
                 //get the width
                 int height = ((int)rdr["Image_height"]);
+                //get the title 
+                string title = ((string)rdr["Image_title"]);
                 //add to images list 
-                SSImage newImage = new SSImage { id = id, width = width, height = height };
+                SSImage newImage = new SSImage { id = id, width = width, height = height, title = title };
                 Images.Add(newImage);
 
             }

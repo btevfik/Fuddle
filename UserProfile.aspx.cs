@@ -80,6 +80,7 @@ public partial class UserProfile : System.Web.UI.Page
                         HyperLink imglink = new HyperLink();
                         imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
                         imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                        imglink.ToolTip = img.title;
                         imglink.CssClass = "imgupload";
                         Control contentpanel = RecentUpload.ContentTemplateContainer;
                         contentpanel.Controls.AddAt(contentpanel.Controls.Count - 2, imglink);
@@ -102,7 +103,8 @@ public partial class UserProfile : System.Web.UI.Page
                             SSImage img = images[i + k * 5];
                             HyperLink imglink = new HyperLink();
                             imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                            imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                            imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
+                            imglink.Text = img.title;
                             imglink.CssClass = "imgtab";
                             TableCell c = new TableCell();
                             c.Controls.Add(imglink);
@@ -178,7 +180,7 @@ public partial class UserProfile : System.Web.UI.Page
                     SSImage img = images[i + k * 5];
                     HyperLink imglink = new HyperLink();
                     imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                    imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
@@ -216,7 +218,7 @@ public partial class UserProfile : System.Web.UI.Page
                     SSImage img = images[i + k * 5];
                     HyperLink imglink = new HyperLink();
                     imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                    imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
+                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
