@@ -13,7 +13,7 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
 
-            $('.radioButton').screwDefaultButtons({
+            $('.radios input:radio').screwDefaultButtons({
                 image: 'url("/resources/checkboxSmall.jpg")',
                 width: 43,
                 height: 43
@@ -63,7 +63,9 @@
         <asp:Image CssClass="profile-image" ID="GravatarImage" runat="server" />
         <br />
         <span class="useLabel">Use Gravatar</span>
+        <span class="radios">
         <asp:RadioButton AutoPostBack="true" CssClass="radioButton" ID="PickGravatar" ViewStateMode="Enabled" OnCheckedChanged="PickGravatar_CheckedChanged" GroupName="PickChoice" runat="server" />
+        </span>
         <div style="clear: both"></div>
         <br />
         <asp:HyperLink runat="server" CssClass="uploadButton" NavigateUrl="http://gravatar.com" Target="_blank">Get your gravatar</asp:HyperLink>
@@ -72,7 +74,9 @@
         <asp:Image CssClass="profile-image" ID="UploadedImage" runat="server" />
         <br />
         <span class="useLabel">Use Uploaded Picture</span>
+        <span class="radios">
         <asp:RadioButton AutoPostBack="true" CssClass="radioButton" ID="PickUpload" ViewStateMode="Enabled" OnCheckedChanged="PickUpload_CheckedChanged" GroupName="PickChoice" runat="server" />
+        </span>
         <div style="clear: both"></div>
         <br />
         <button class="uploadButton lightbox_trigger">Upload a new picture</button>
