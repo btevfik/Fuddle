@@ -147,8 +147,9 @@ public partial class member_MyProfile : System.Web.UI.Page
     protected void loaduploads_Click(object sender, EventArgs e)
     {
         //Displays User Uploads
+        int start = RecentUpload.ContentTemplateContainer.Controls.Count - 3;
         upload_index += 5;
-        for (int i = 0; i < upload_index; i++)
+        for (int i = start; i < upload_index; i++)
         {
             try
             {
@@ -174,6 +175,7 @@ public partial class member_MyProfile : System.Web.UI.Page
     }
     protected void cuddleLink_Click(object sender, EventArgs e)
     {
+        Table1.Rows.Clear();
         cuddle_index = 2;
         for (int k = 0; k < cuddle_index; k++)
         {
