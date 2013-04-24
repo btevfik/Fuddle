@@ -31,6 +31,11 @@
 .search-results img:hover ~ figcaption{
     display:block;
 }
+
+.search-results figcaption:hover {
+    display:block;
+}
+
 #user-results {
     width:1000px;
     margin:0 auto;
