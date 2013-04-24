@@ -159,10 +159,11 @@
 }
 
 .buttons {
-    width:530px;
+    width:550px;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:20px;
+    padding-left:20px;
 }
 
 .buttonGroup {
