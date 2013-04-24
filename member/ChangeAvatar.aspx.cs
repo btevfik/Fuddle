@@ -81,9 +81,7 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
             catch (Exception ex)
             {
 
-                lblError.Text = "File could not be uploaded." + ex.Message.ToString();
-
-                lblError.Visible = true;
+                lblError.Text = "File could not be uploaded to temp folder.";
 
                 FileSaved = false;
 
@@ -95,16 +93,12 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         {
             lblError.Text = "Cannot accept files of this type.";
 
-            lblError.Visible = true;
-
             lightbox.Style.Add("display", "block");
         }
 
         if (FileSaved)
         {
             pnlCrop.Visible = true;
-
-            lblError.Visible = false;
 
             imgCrop.ImageUrl = "/temp/" + Session["WorkingImage"].ToString();
 
@@ -141,8 +135,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
 
         catch (System.IO.IOException ex)
         {
-            lblError2.Text = "Error deleting temporary file: " + ex.Message;
-            lblError2.Visible = true;
+            lblError.Text = "Error deleting temporary file.";
+            lightbox.Style.Add("display", "block");
         }
     }
 
@@ -199,14 +193,10 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
     {
         bool result = fUser.changeUploadedAvatar(croppedImage);
 
-        if (result == true)
+        if (result == false)
         {
-            lblError2.Text = "Error uploading file.";
-            lblError2.Visible = true;
-        }
-        else
-        {
-            lblError.Visible = true;
+            lblError.Text = "Error uploading a new avatar.";
+            lightbox.Style.Add("display", "block");
         }
     }
 
@@ -215,8 +205,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
         bool result = fUser.setAvatarType("gravatar");
 
         if(result == false){
-            lblError2.Text = "Error changing picture type.";
-            lblError2.Visible = true;
+            lblError.Text = "Error changing picture type.";
+            lightbox.Style.Add("display", "block");
         }
     }
 
@@ -226,8 +216,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
 
         if (result == false)
         {
-            lblError2.Text = "Error changing picture type.";
-            lblError2.Visible = true;
+            lblError.Text = "Error changing picture type.";
+            lightbox.Style.Add("display", "block");
         }
     }
 
@@ -243,8 +233,8 @@ public partial class member_ChangeAvatar : System.Web.UI.Page
 
         catch (System.IO.IOException ex)
         {
-            lblError2.Text = "Error deleting temporary file: " + ex.Message;
-            lblError2.Visible = true;
+            lblError.Text = "Error deleting temporary file.";
+            lightbox.Style.Add("display", "block");
         }
 
         Response.Redirect("/member/ChangeAvatar.aspx");

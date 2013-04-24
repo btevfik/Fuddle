@@ -29,6 +29,8 @@
 
             $('.lightbox_trigger').click(function (e) {
                 e.preventDefault();
+                //clear any previous errors
+                $("#lblError").html("");
                 //get lightbox
                 var lightbox = $("#lightbox");
                 lightbox.css("display", "block");
@@ -81,7 +83,7 @@
                 <br />
                 <asp:Button CssClass="uploadButton" ClientIDMode="Static" ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Add picture" />
                 <br />
-                <asp:Label ID="lblError" CssClass="avatarError" runat="server" Visible="false" />
+                <asp:Label ID="lblError" ClientIDMode="Static" CssClass="avatarError" runat="server"/>
             </div>
         </asp:Panel>
     </div>
@@ -106,14 +108,17 @@
 
             </div>
         </div>
+
         <div style="clear: both"></div>
+        
         <div id="cropPanelButtons">
             <asp:Button ID="btnCrop" CssClass="submitButton" runat="server" Text="Crop and Save" OnClick="btnCrop_Click" />
             &nbsp;
             <asp:Button ID="cancelBut" CssClass="submitButton" runat="server" Text="Cancel" OnClick="cancelBut_Click" />
-            <asp:Label ID="lblError2" CssClass="avatarError" runat="server" Visible="false" />
         </div>
     </asp:Panel>
+
+    <div style="clear: both"></div>
 
 </asp:Content>
 
