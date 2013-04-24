@@ -25,6 +25,7 @@ public partial class member_MyProfile : System.Web.UI.Page
         publicLink.NavigateUrl = url+ "/user/" + u.UserName;
         publicLink.Text = url+ "/user/" + u.UserName;
         //set gravatar
+        AvatarImage.ImageUrl = "/getavatar.ashx?user=" + u.UserName + "&size=200";
 
     }
 }
