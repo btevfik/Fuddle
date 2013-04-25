@@ -256,6 +256,7 @@ public partial class member_MyProfile : System.Web.UI.Page
     protected void changeBio_Click(object sender, EventArgs e)
     {
         saveBio.Visible = true;
+        cancelBio.Visible = true;
         changeBio.Visible = false;
         aboutmeLabel.Visible = false;
         aboutmeText.Visible = true;
@@ -270,6 +271,7 @@ public partial class member_MyProfile : System.Web.UI.Page
             aboutmeLabel.Text = aboutmeText.Text;
         }
         saveBio.Visible = false;
+        cancelBio.Visible = false;
         changeBio.Visible = true;
         aboutmeLabel.Visible = true;
         aboutmeText.Visible = false;

@@ -32,14 +32,14 @@
                     <ContentTemplate>
                         <asp:Label ID="aboutmeLabel" runat="server">Our goal at Fuddle is to create one website where visitors are greeted with an abundance of popular images from across the globe submitted by fellow users who share their interests. </asp:Label>
                         <asp:TextBox ID="aboutmeText" style="resize:none;" CssClass="aboutmeText" TextMode="MultiLine" Height="105" runat="server" Visible="False" Columns="60" MaxLength="300"></asp:TextBox>
-                        <br />
                         <asp:Button ID="changeBio" runat="server" CssClass="submitButton" Text="Change About Me" OnClick="changeBio_Click" />
                         <asp:Button ID="saveBio" runat="server" CssClass="submitButton" Text="Save" OnClick="saveBio_Click" Visible="False" />
+                        <asp:Button ID="cancelBio" runat="server" CssClass="submitButton" Text="Cancel"  OnClientClick="location.reload()" Visible="False" />
                         <asp:RegularExpressionValidator runat="server" ID="valInput"
                             ControlToValidate="aboutmeText"
                             ValidationExpression="^[\s\S]{0,300}$"
                             ErrorMessage=""
-                            Display="Dynamic">Please enter a maximum of 300 characters.</asp:RegularExpressionValidator>
+                            Display="Dynamic"><span style="font-size:14px">Please enter a maximum of 300 characters.</span></asp:RegularExpressionValidator>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
