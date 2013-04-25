@@ -21,6 +21,9 @@ public partial class Image : System.Web.UI.Page
     {
         //get the requested img
         string reqId = Request.QueryString["id"];
+        //get currently logged in user
+        u = Membership.GetUser();
+
         if (reqId != null && reqId != "")
         {
             id = Int32.Parse(reqId);
@@ -54,12 +57,15 @@ public partial class Image : System.Web.UI.Page
         //load comments from database
         loadComments();
 
+        //for simulating button click from javascript when enter is pressed
+        ScriptManager.GetCurrent(this).RegisterAsyncPostBackControl(this.commentButton);
+
         //add this button (email) script
         ScriptManager.RegisterClientScriptInclude(this, UpdatePanel1.GetType(), "Test", "http://s7.addthis.com/js/300/addthis_widget.js#pubid=undefined");
 
         //Show deletebutton if logged inuser is the one who uploaded this picture
         string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
-        u = Membership.GetUser();
+       
         if( u !=null){
             if (uploadedUser == u.UserName)
             {
@@ -159,22 +165,22 @@ public partial class Image : System.Web.UI.Page
             return;
         }
         
-        //create a comment literal        
-        Literal myComment = new Literal();
-        myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span><span class='date'> just now <span></div></div>";        
-        //add to comment panel        
-        commentPanel.Controls.AddAt(0, myComment);
-
         //add comment to database
-        bool result = FuddleImage.addComment(commentBox.Text,id);
+        int commId = FuddleImage.addComment(commentBox.Text,id);
 
         //there is an error adding comment
-        if(result == false){
+        if(commId == -1){
+            System.Diagnostics.Debug.WriteLine("Error Commenting.");
             error.Text = "Error commenting.";
             lightbox.Visible = true;
         }
         //when comments are added clear the commentbox
         else{
+            //create a comment literal        
+            Literal myComment = new Literal();
+            myComment.Text = "<div id='comment" + commId + "' class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span><span class='date'> just now &nbsp;<button type='button' class='deleteCommentButton submitButton' value='" + commId + "'>Delete</button></span></div></div>";
+            //add to comment panel        
+            commentPanel.Controls.AddAt(0, myComment);
             //clear comment box
             commentBox.Text = "";
             //hide no comment
@@ -200,7 +206,21 @@ public partial class Image : System.Web.UI.Page
         foreach (Comment_Info comment in comments)
         {
             Literal myComment = new Literal();
-            myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "<span></div></div>";
+            if (u != null)
+            {
+                if (comment.username == u.UserName)
+                {
+                    myComment.Text = "<div id='comment"+comment.id+ "' class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "&nbsp;<button type='button' class='deleteCommentButton submitButton' value='" + comment.id + "'>Delete</button></span></div></div>";
+                }
+                else
+                {
+                    myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "</span></div></div>";
+                }
+            }
+            else
+            {
+                 myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "</span></div></div>";
+            }
             //add to comment panel
             commentPanel.Controls.AddAt(0, myComment);
         }
@@ -353,5 +373,13 @@ public partial class Image : System.Web.UI.Page
         {
             //who cares?
         }
+    }
+
+    //delete a comment with given id
+    [WebMethod]
+    public static bool deleteComment(int id)
+    {
+        bool result = FuddleImage.deleteComment(id);
+        return result;
     }
 }

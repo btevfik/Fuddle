@@ -22,7 +22,7 @@
     <div class="content">
         <br />
         <!--SCRIPT MANAGER FOR UPDATE PANELS -->
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server">
         </asp:ScriptManager>
         <div class="outer">
             <div class="inner">
@@ -141,7 +141,7 @@
             <ContentTemplate>
                 <asp:Panel runat="server" ClientIDMode="Static" ID="lightbox" Visible="false">
                     <div id="content">
-                        <asp:Label ID="error" CssClass="error" runat="server" Text=""></asp:Label>
+                        <asp:Label ID="error" ClientIDMode="Static" CssClass="error" runat="server" Text=""></asp:Label>
                         <asp:Button ID="closeError" runat="server" OnClick="closeError_Click" Text="Close" CssClass="submitButton" />
                     </div>
                 </asp:Panel>
@@ -181,7 +181,28 @@
                     //simulate the button click
                     __doPostBack("<%=commentButton.UniqueID %>", "");
                         }
-                    });
+            });
+
+            /* DELETING A COMMENT */
+            /* The page method deleteComment is called when delete button is clicked on server side */
+            /* If return value is true than we remove the comment from the page */
+            /* the actual comment entry from database is removed by the page method */
+
+            //comment id being deleted
+            var commId;
+
+            //delete a comment when button is clicked.
+            $(".deleteCommentButton").click(function (e) {
+                commId = $(this).val();
+                PageMethods.deleteComment(commId, onResultDelete);
+            });
+
+            //on delete remove the div
+            function onResultDelete(result) {
+                if (result === true) {
+                    $("#comment" + commId).remove();
+                }
+            }
         }
     </script>
 </asp:Content>

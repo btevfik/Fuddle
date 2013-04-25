@@ -17,9 +17,11 @@ public class Comment_Info
     public string username;
     public string comment;
     public DateTime date;
+    public int id;
 
-    public Comment_Info(string username, string comment, DateTime date)
+    public Comment_Info(int id, string username, string comment, DateTime date)
     {
+        this.id = id;
         this.username = username;
         this.comment = comment;
         this.date = date;
@@ -36,9 +38,12 @@ public class FuddleImage
         //
     }
 
-    public static bool addComment(string comment, int image_id)
+    public static int addComment(string comment, int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
+
+        //just inserted id.
+        int idOut=-1;
 
         //Grabs the ID of the logged in user
         MembershipUser user = Membership.GetUser();
@@ -50,28 +55,30 @@ public class FuddleImage
         try
         {
             // Insert new comment into database
-            SqlCommand cmd = new SqlCommand("INSERT INTO [Comments_table] (Image_id, Comment, Creation_date_time, Username)" + "VALUES(@imageId, @comment, @dateofcreation, @username)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO [Comments_table] (Image_id, Comment, Creation_date_time, Username)" + "VALUES(@imageId, @comment, @dateofcreation, @username);SELECT @id = SCOPE_IDENTITY()", conn);
             cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = image_id.ToString();
             cmd.Parameters.Add("@comment", SqlDbType.VarChar).Value = comment;
             cmd.Parameters.Add("@username", SqlDbType.VarChar).Value = usrname;
             cmd.Parameters.Add("@dateofcreation", SqlDbType.DateTime2).Value = dateOfCreation;
-
+            cmd.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;    
+            
             // Execute the sql command                
             cmd.Connection = conn;
             conn.Open();
             cmd.ExecuteNonQuery();
+            idOut = (int)cmd.Parameters["@id"].Value;
+            System.Diagnostics.Debug.WriteLine("Inserted id: "+idOut);
         }
         catch
         {
-            return false;
+            return -1;
         }
         finally
         {
             conn.Close();
             conn.Dispose();
-
         }
-        return true;
+        return idOut;
     }
 
     //update description of this image
@@ -219,7 +226,7 @@ public class FuddleImage
         try
         {
             conn = new SqlConnection(connString);
-            cmd = new SqlCommand("SELECT Comment, Creation_date_time, Username FROM [Comments_table] WHERE Image_id = '" + image_id.ToString() + "'", conn);
+            cmd = new SqlCommand("SELECT cid, Comment, Creation_date_time, Username FROM [Comments_table] WHERE Image_id = '" + image_id.ToString() + "'", conn);
             conn.Open();
             rdr = cmd.ExecuteReader();
 
@@ -229,7 +236,8 @@ public class FuddleImage
                 string comment = (string)rdr["Comment"];
                 DateTime date = (DateTime)rdr["Creation_date_time"];
                 string username = (string)rdr["Username"];
-                Comment_Info com = new Comment_Info(username, comment, date);
+                int id = (int)rdr["cid"];
+                Comment_Info com = new Comment_Info(id , username, comment, date);
                 comments.Add(com);
             }
 
@@ -244,6 +252,32 @@ public class FuddleImage
             conn.Dispose();
         }
         return comments;
+    }
+
+    //delete comment with this id
+    public static bool deleteComment(int id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete the image 
+            SqlCommand cmd = new SqlCommand("Delete FROM [Comments_table] WHERE cid = '" + id + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch
+        {
+            return false;
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+        return true;
     }
 
     //get the user who uploaded this image

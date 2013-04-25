@@ -204,6 +204,7 @@ a.updateButton {
   border: 1px solid #7e1515;
   cursor: pointer;
   color: #fff;
+  font-style:normal;
 }
 
 .submitButton:hover,
