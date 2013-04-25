@@ -1,4 +1,8 @@
-﻿.centerPage {
+﻿h1 {
+    margin-bottom:5px;
+}
+
+.centerPage {
     margin: 0 auto;
     width: 800px;
     position: relative;
@@ -25,6 +29,11 @@
     color:white;
     text-decoration:none;
     overflow:hidden;
+    text-align:center;
+}
+
+.centerPage figcaption a:link, .centerPage figcaption a:visited {
+    color:white;    
 }
 
 .centerPage figcaption:hover {
@@ -39,7 +48,7 @@
 /* User Biography*/
 .userBio {
     z-index:-9999;
-    height: 300px;
+    height: 320px;
     background-color:rgb(25, 175, 212);
     background-image:url("/resources/noisy-texture.png");
 }
@@ -73,21 +82,41 @@
 .aboutme {
     position: relative;
     top: -200px;
-    left: 265px;
+    left: 260px;
     height: 100px;
     width: 500px;
     padding: 5px;
     color: white;
 }
 
+.aboutmeText {
+    font-size:15px;
+    word-break:break-all;
+    max-width:500px;		
+}
+
+.aboutmeText:focus {
+    -webkit-appearance: none;
+    border-color:transparent;
+    box-shadow:0px 0px 20px #e8c291;    
+}
 
 .settings {
     position: relative;
     left: 265px;
-    top: -220px;
+    top: -160px;
     width: 500px;
     color:white;
     text-align:right;
+}
+
+.settings a:link, .settings a:visited{
+    color:#f1e453;
+    text-decoration:none;
+}
+
+.settings a:hover{
+    color:#d8cd4d;
 }
 
 /*Albums-Image-Tabs*/
@@ -188,9 +217,6 @@
     display: block;
 }
 
-
-
-
 /*Uploads*/
 .uploads {
     margin-top: 10px;
@@ -206,4 +232,54 @@
     margin-top:20px;
     margin-left:0px;
 }
+
+
+/*Buttons*/
+.submitButton {		
+  background-color: #d14545;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e97171), to(#d14545));
+  background-image: -webkit-linear-gradient(top, #e97171, #d14545);
+  background-image: -moz-linear-gradient(top, #e97171, #d14545);
+  background-image: -ms-linear-gradient(top, #e97171, #d14545);
+  background-image: -o-linear-gradient(top, #e97171, #d14545);
+  background-image: linear-gradient(top, #e97171, #d14545);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+  border: 1px solid #7e1515;
+  cursor: pointer;
+  color: #fff;
+  font-style:normal;
+  padding:4px;
+}
+
+.submitButton:hover,
+.submitButton:focus {		
+  background-color: #e97171;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#d14545), to(#e97171));
+  background-image: -webkit-linear-gradient(top, #d14545, #e97171);
+  background-image: -moz-linear-gradient(top, #d14545, #e97171);
+  background-image: -ms-linear-gradient(top, #d14545, #e97171);
+  background-image: -o-linear-gradient(top, #d14545, #e97171);
+  background-image: linear-gradient(top, #d14545, #e97171);
+}	
+
+.submitButton:active {		
+  outline: none;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+.submitButton::-moz-focus-inner {
+  border: none;
+}
+
+
+
+
  
