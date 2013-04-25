@@ -193,6 +193,8 @@
 
             //delete a comment when button is clicked.
             $(".deleteCommentButton").click(function (e) {
+                //ask if user wants to delet a comment.
+                if (!confirm('Are you sure you want to delete this comment?')) return false;
                 commId = $(this).val();
                 PageMethods.deleteComment(commId, onResultDelete);
             });
