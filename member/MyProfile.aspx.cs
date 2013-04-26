@@ -86,12 +86,12 @@ public partial class member_MyProfile : System.Web.UI.Page
         upload_index = 5;
         loadUploads();
 
-        //Display Album
+        //Load albums
         albums = FuddleAlbum.getAllAlbums((Guid)u.ProviderUserKey);
         album_index = 2;
         loadAlbums();
 
-        //get user cuddles
+        //Load cuddles
         cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
         cuddle_index = 2;
         loadCuddles();

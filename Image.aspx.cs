@@ -85,7 +85,8 @@ public partial class Image : System.Web.UI.Page
             if (u == null) throw new Exception();
 
             FuddleVote.addToUpCount(id);
-            upCount.Text = FuddleVote.getUpCount(id).ToString() + " ";
+            upCount.Text = FuddleVote.getUpCount(id).ToString();
+            upCount.Width = upCount.Text.Length * 8;
         }
         catch
         {
@@ -103,7 +104,8 @@ public partial class Image : System.Web.UI.Page
             if (u == null) throw new Exception();
 
             FuddleVote.addToDownCount(id);
-            downCount.Text = FuddleVote.getDownCount(id).ToString() + " ";
+            downCount.Text = FuddleVote.getDownCount(id).ToString();
+            downCount.Width = downCount.Text.Length * 8;
         }
         catch
         {
@@ -119,15 +121,10 @@ public partial class Image : System.Web.UI.Page
         {
             u = Membership.GetUser();
             if (u == null) throw new Exception();
-            /*
-            bool result = FuddleUser.cuddleImage(id);
-            if(result == false){
-                error.Text = "Error cuddling."
-            }
-            else{
-             */
-            cuddleCount.Text = FuddleVote.cuddleIt((Guid)u.ProviderUserKey, id).ToString() + "";
-            //}
+
+            FuddleVote.cuddleIt((Guid)u.ProviderUserKey, id).ToString();
+            cuddleCount.Text = FuddleVote.getCuddleCount(id).ToString();
+            cuddleCount.Width = cuddleCount.Text.Length * 8;
         }
         catch
         {
