@@ -214,6 +214,16 @@ public class FuddleVote
                 upVote = false;
             else
                 throw new Exception();
+
+            conn.Close();
+
+            SqlCommand update_cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            update_cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = upVote;
+            update_cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            update_cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+            conn.Open();
+            update_cmd.ExecuteNonQuery();
+
         }
         catch
         {
@@ -253,6 +263,15 @@ public class FuddleVote
                 downVote = false;
             else
                 throw new Exception();
+
+            conn.Close();
+
+            SqlCommand update_cmd = new SqlCommand("UPDATE [Vote_table] SET DownVote = @newDownVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            update_cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = downVote;
+            update_cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            update_cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+            conn.Open();
+            update_cmd.ExecuteNonQuery();
         }
         catch
         {
