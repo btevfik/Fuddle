@@ -36,7 +36,7 @@ public partial class Image : System.Web.UI.Page
         //set the voting counts        
         upCount.Text = FuddleVote.getUpCount(id).ToString();
         downCount.Text = FuddleVote.getDownCount(id).ToString();
-         //cuddleCount.Text = FuddleImage.getCuddleCount(id);
+        cuddleCount.Text = FuddleVote.getCuddleCount(id).ToString();
          
 
         //set widths of counts
@@ -67,6 +67,7 @@ public partial class Image : System.Web.UI.Page
         string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
        
         if( u !=null){
+            cuddleButton.Enabled = true;
             if (uploadedUser == u.UserName)
             {
                 deleteButton.Visible = true;
@@ -137,7 +138,7 @@ public partial class Image : System.Web.UI.Page
             }
             else{
              */
-            cuddleCount.Text = Int32.Parse(cuddleCount.Text) + 1 + "";
+            cuddleCount.Text = FuddleVote.cuddleIt((Guid)u.ProviderUserKey, id).ToString() + "";
             //}
         }
         catch

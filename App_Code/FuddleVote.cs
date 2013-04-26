@@ -152,4 +152,94 @@ public class FuddleVote
 
         return downCount;
     }
+
+    public static List<int> getCuddles(Guid user_id)
+    {
+        List<int> cuddles = new List<int>();
+        SqlConnection conn = new SqlConnection();
+        try
+        {
+            conn = new SqlConnection(connString);
+            SqlCommand cmd = new SqlCommand("SELECT Image_id FROM [Cuddle_table] WHERE User_id = '" + user_id.ToString() + "'", conn);
+            SqlDataReader rdr = null;
+
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                int cuddle = (int)rdr["Image_id"];
+                cuddles.Add(cuddle);
+            }
+
+            if (rdr != null)
+                rdr.Close();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+
+        return cuddles;
+    }
+
+    public static int cuddleIt(Guid user_id, int img_id)
+    {
+        int cuddles = getCuddleCount(img_id);
+        cuddles++;
+
+        SqlConnection conn = new SqlConnection();
+        try
+        {
+            conn = new SqlConnection(connString);
+            SqlCommand cmd = new SqlCommand("INSERT INTO [Cuddle_table] ( Image_id, User_id) values (@imageId, @userId)", conn);
+            cmd.Parameters.Add("@imageId", System.Data.SqlDbType.Int).Value = img_id;
+            cmd.Parameters.Add("@userId", System.Data.SqlDbType.UniqueIdentifier).Value = user_id;
+            conn.Open();
+            int count = cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+
+        return cuddles;
+    }
+
+    public static int getCuddleCount(int image_id)
+    {
+        SqlConnection conn = new SqlConnection();
+        int count = 0;
+
+        try
+        {
+            conn = new SqlConnection(connString);
+            SqlCommand cmd = new SqlCommand("SELECT Image_id FROM [Cuddle_table] WHERE Image_id = " + image_id.ToString(), conn);
+            SqlDataReader rdr = null;
+
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                int img_id = (int)rdr["Image_id"];
+                count++;
+            }
+
+            if (rdr != null)
+                rdr.Close();
+        }
+        catch
+        {
+            // If a -1 is returned, something went wrong
+            return -1;
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+
+        return count;
+    }
 }

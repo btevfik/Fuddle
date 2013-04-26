@@ -14,10 +14,34 @@ using System.Globalization;
 //WHERE HE CAN EDIT HIS PROFILE
 public partial class UserProfile : System.Web.UI.Page
 {
+    protected int table_state
+    {
+        get { return (int)Session["table_state"]; }
+        set { Session["table_state"] = value; }
+    }
+    
+    protected int album_index
+    {
+        get { return (int)Session["album_index"]; }
+        set { Session["album_index"] = value; }
+    }
+
+    protected List<int> albums
+    {
+        get { return (List<int>)Session["albums"]; }
+        set { Session["albums"] = value; }
+    }
+
     protected int cuddle_index
     {
         get { return (int)Session["cuddle_index"]; }
         set { Session["cuddle_index"] = value; }
+    }
+
+    protected List<int> cuddles
+    {
+        get { return (List<int>)Session["cuddles"]; }
+        set { Session["cuddles"] = value; }
     }
 
     protected int upload_index
@@ -26,9 +50,9 @@ public partial class UserProfile : System.Web.UI.Page
         set { Session["upload_index"] = value; }
     }
 
-    protected List<SSImage> images
+    protected List<int> uploads
     {
-        get { return (List<SSImage>)Session["images"]; }
+        get { return (List<int>)Session["images"]; }
         set { Session["images"] = value; }
     }
 
@@ -69,72 +93,22 @@ public partial class UserProfile : System.Web.UI.Page
 
                 //set user bio
                 FuddleUser account = new FuddleUser(u.UserName);
-                string bio = account.getBio();
-                //if (!bio.Equals(""))
-                    aboutmeLabel.Text = bio;
+                aboutmeLabel.Text = account.getBio();
 
                 //get user uploads
-                SearchService ss = new SearchService();
-                this.images = ss.GetUserUploads(user);
-                upload_index = 5;
+                uploads = account.getuploads();
+
+                //get user cuddles
+                cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
+                
                 //Displays user uploads
-                for (int i = 0; i < upload_index; i++)
-                {
-                    try
-                    {
-                        SSImage img = images[i];
-                        HyperLink imglink = new HyperLink();
-                        imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                        imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
-                        imglink.ToolTip = img.title;
-                        imglink.CssClass = "imgupload";
-                        Control contentpanel = RecentUpload.ContentTemplateContainer;
-                        contentpanel.Controls.AddAt(contentpanel.Controls.Count - 2, imglink);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        loaduploads.Visible = false;
-                        break;
-                    }
-                }
+                upload_index = 5;
+                loadUploads();
+
                 //Display Album
-                cuddle_index = 2;
-                for (int k = 0; k < cuddle_index; k++)
-                {
-                    TableRow row1 = new TableRow();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        try
-                        {
-                            SSImage img = images[i + k * 5];
-                            HyperLink imglink = new HyperLink();
-                            imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                            imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
-                            imglink.ToolTip = img.title;
-                            imglink.CssClass = "imgtab";
-                            TableCell c = new TableCell();
-                            c.Controls.Add(imglink);
-                            row1.Cells.Add(c);
-                        }
-                        catch (ArgumentOutOfRangeException)
-                        {
-                            break;
-                        }
-                    }
-                    if (row1.Cells.Count > 0)
-                    {
-                        Table1.Rows.Add(row1);
-                    }
-                }
-                if (cuddle_index * 5 < images.Count)
-                {
-                    loadrows.Visible = true;
-                }
-                else
-                {
-                    loadrows.Visible = false;
-                }
-                cuddle_index += 2;
+                albums = FuddleAlbum.getAllAlbums((Guid) u.ProviderUserKey);
+                album_index = 2;
+                loadAlbums();
 
             }
             //if not found, direct to 404
@@ -148,17 +122,45 @@ public partial class UserProfile : System.Web.UI.Page
 
     protected void loaduploads_Click(object sender, EventArgs e)
     {
+        loadUploads();
+    }
+    protected void albumLink_Click(object sender, EventArgs e)
+    {
+        table_state = 0; //Display Albums
+        album_index = 2;
+        loadAlbums();
+
+    }
+    protected void cuddleLink_Click(object sender, EventArgs e)
+    {
+        table_state = 1; //Display Cuddles
+        cuddle_index = 2;
+        loadCuddles();
+    }
+    protected void loadrows_Click(object sender, EventArgs e)
+    {
+        if (table_state == 0)
+        {
+            loadAlbums();
+        }
+        else if (table_state == 1)
+        {
+            loadCuddles();
+        }
+    }
+
+
+    protected void loadUploads()
+    {
         //Displays User Uploads
-        upload_index += 5;
         for (int i = 0; i < upload_index; i++)
         {
             try
             {
-                SSImage img = images[i];
                 HyperLink imglink = new HyperLink();
-                imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                imglink.ImageUrl = "/ShowImage.ashx?imgid=" + img.id;
-                imglink.ToolTip = img.title;
+                imglink.NavigateUrl = "/Image.aspx?id=" + uploads[i];
+                imglink.ImageUrl = "/ShowImage.ashx?imgid=" + uploads[i];
+                imglink.ToolTip = FuddleImage.getTitle(uploads[i]);
                 imglink.CssClass = "imgupload";
                 Control contentpanel = RecentUpload.ContentTemplateContainer;
                 contentpanel.Controls.AddAt(contentpanel.Controls.Count - 2, imglink);
@@ -169,26 +171,22 @@ public partial class UserProfile : System.Web.UI.Page
                 break;
             }
         }
+        upload_index += 5;
     }
-    protected void albumLink_Click(object sender, EventArgs e)
-    {
 
-    }
-    protected void cuddleLink_Click(object sender, EventArgs e)
+    protected void loadAlbums()
     {
-        cuddle_index = 2;
-        for (int k = 0; k < cuddle_index; k++)
+        for (int k = 0; k < album_index; k++)
         {
             TableRow row1 = new TableRow();
             for (int i = 0; i < 5; i++)
             {
                 try
                 {
-                    SSImage img = images[i + k * 5];
                     HyperLink imglink = new HyperLink();
-                    imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
-                    imglink.ToolTip = img.title;
+                    //imglink.NavigateUrl = "/Image.aspx?id=" + albums[i];
+                    //imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + albums[i];
+                    imglink.ToolTip = FuddleAlbum.getTitle(albums[i]);
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
@@ -204,7 +202,7 @@ public partial class UserProfile : System.Web.UI.Page
                 Table1.Rows.Add(row1);
             }
         }
-        if (cuddle_index * 5 < images.Count)
+        if (album_index * 5 < albums.Count)
         {
             loadrows.Visible = true;
         }
@@ -212,9 +210,10 @@ public partial class UserProfile : System.Web.UI.Page
         {
             loadrows.Visible = false;
         }
-        cuddle_index += 2;
+        album_index += 2;
     }
-    protected void loadrows_Click(object sender, EventArgs e)
+
+    protected void loadCuddles()
     {
         for (int k = 0; k < cuddle_index; k++)
         {
@@ -223,11 +222,10 @@ public partial class UserProfile : System.Web.UI.Page
             {
                 try
                 {
-                    SSImage img = images[i + k * 5];
                     HyperLink imglink = new HyperLink();
-                    imglink.NavigateUrl = "/Image.aspx?id=" + img.id;
-                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + img.id;
-                    imglink.ToolTip = img.title;
+                    imglink.NavigateUrl = "/Image.aspx?id=" + cuddles[i + k * 5];
+                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + cuddles[i + k * 5];
+                    imglink.ToolTip = FuddleImage.getTitle(cuddles[i + k * 5]);
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
@@ -243,7 +241,7 @@ public partial class UserProfile : System.Web.UI.Page
                 Table1.Rows.Add(row1);
             }
         }
-        if (cuddle_index * 5 < images.Count)
+        if (cuddle_index * 5 < cuddles.Count)
         {
             loadrows.Visible = true;
         }

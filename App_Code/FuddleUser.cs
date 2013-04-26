@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
+
+
 /// <summary>
 /// FuddleUser is used to update/get info of the membership user
 /// </summary>
@@ -203,5 +205,42 @@ public class FuddleUser
             conn.Dispose();
         }
         return bio;
+    }
+
+    public List<int> getuploads()
+    {
+        List<int> img_ids = new List<int>();
+        //connection
+        SqlConnection conn = new SqlConnection(connString);
+        //reader
+        SqlDataReader rdr = null;
+        try
+        {
+            // change the bio message
+            string selectQuery = "SELECT Image_id FROM [Image_table] WHERE User_Id = @user_id ORDER BY Image_id DESC";
+            SqlCommand cmd = new SqlCommand(selectQuery);
+            cmd.Parameters.Add("@user_id", SqlDbType.UniqueIdentifier).Value = id;
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                //get the id
+                int img_id = ((int)rdr["Image_id"]);
+                img_ids.Add(img_id);
+            }
+
+            if (rdr != null)
+                rdr.Close();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+        //return the json data
+        return img_ids;
     }
 }

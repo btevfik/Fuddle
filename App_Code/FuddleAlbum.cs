@@ -20,7 +20,7 @@ public class FuddleAlbum
         //
     }
 
-    static void createAlbum(string title)
+    public static void createAlbum(string title)
     {
         SqlConnection conn = new SqlConnection(connString);
 
@@ -47,7 +47,7 @@ public class FuddleAlbum
         }
     }
 
-    static void addImage(int album_id, string album_title, int image_id)
+    public static void addImage(int album_id, string album_title, int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
 
@@ -77,7 +77,7 @@ public class FuddleAlbum
         }
     }
 
-    static void updateTitle(string new_album_title, int album_id)
+    public static void updateTitle(string new_album_title, int album_id)
     {
         SqlConnection conn = new SqlConnection(connString);
         try
@@ -97,7 +97,7 @@ public class FuddleAlbum
         }
     }
 
-    static string getTitle(int album_id)
+    public static string getTitle(int album_id)
     {
         SqlDataReader rdr = null;
         SqlConnection conn = new SqlConnection();
@@ -131,7 +131,7 @@ public class FuddleAlbum
         return album_title;
     }
 
-    static List<int> getImages(int album_id) //returns a list of Image Ids in the album
+    public static List<int> getImages(int album_id) //returns a list of Image Ids in the album
     {
         SqlDataReader rdr = null;
         SqlConnection conn = new SqlConnection();
@@ -168,7 +168,7 @@ public class FuddleAlbum
     }
 
     // Must use this method to delete all the specified user's albums when deleting the user 
-    static void deleteAllUsersAlbums(Guid id)
+    public static void deleteAllUsersAlbums(Guid id)
     {
         SqlConnection conn = new SqlConnection(connString);
         try
@@ -188,7 +188,7 @@ public class FuddleAlbum
         }
     }
 
-    static void deleteAlbum(int album_id)
+    public static void deleteAlbum(int album_id)
     {
         SqlConnection conn = new SqlConnection(connString);
         try
@@ -208,7 +208,7 @@ public class FuddleAlbum
         }
     }
 
-    static void deleteImage(int image_id)
+    public static void deleteImage(int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
         try
@@ -228,7 +228,7 @@ public class FuddleAlbum
         }
     }
 
-    static List<int> getAllAlbums(Guid id)
+    public static List<int> getAllAlbums(Guid id)
     {
         SqlDataReader rdr = null;
         SqlConnection conn = new SqlConnection();
