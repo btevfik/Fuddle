@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Data.SqlClient;
+using System.Web.Security;
 
 /// <summary>
 /// This class handles all up votes and down votes for images.
@@ -27,18 +28,11 @@ public class FuddleVote
         try
         {
             conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("SELECT UpVote FROM [Vote_table] WHERE Image_id = " + image_id.ToString(), conn);
-            SqlDataReader rdr = null;            
-
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM [Vote_table] WHERE Image_id = " + image_id.ToString()
+            + " AND UpVote = @true", conn);
+            cmd.Parameters.Add("@true", System.Data.SqlDbType.Bit).Value = true;
             conn.Open();
-            rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                upCount = (int)rdr["UpVote"];
-            }
-
-            if (rdr != null)
-                rdr.Close();            
+            upCount = Convert.ToInt32(cmd.ExecuteScalar());
         }
         catch
         {
@@ -62,18 +56,11 @@ public class FuddleVote
         try
         {
             conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("SELECT DownVote FROM [Vote_table] WHERE Image_id = " + image_id.ToString(), conn);
-            SqlDataReader rdr = null;
-
-            conn.Open();           
-            rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                downCount = (int)rdr["DownVote"];
-            }
-
-            if (rdr != null)
-                rdr.Close();
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM [Vote_table] WHERE Image_id = " + image_id.ToString()
+            + " AND DownVote = @true", conn);
+            cmd.Parameters.Add("@true", System.Data.SqlDbType.Bit).Value = true;
+            conn.Open();
+            downCount = Convert.ToInt32(cmd.ExecuteScalar());
         }
         catch
         {
@@ -86,27 +73,53 @@ public class FuddleVote
             conn.Dispose();
         }
 
+        downCount *= -1;
         return downCount;
     }
 
-    public static int addToUpCount(int image_id)
+    public static void addToUpCount(int image_id)
     {
+        // Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        Guid id = (Guid)user.ProviderUserKey;
+
         SqlConnection conn = new SqlConnection(connString);
+        SqlDataReader rdr = null;
 
-        // Get the current upVote count
-        int upCount = getUpCount(image_id);
-
-        // Increment it by one
-        // For later: check User_id to see if this user has already cast their vote
-        upCount++;
+        bool upVote = false;
+        bool downVote = false;
 
         try
         {
-            SqlCommand cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote WHERE Image_id = " + image_id.ToString(), conn);
-            cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Int).Value = upCount;
-
+            SqlCommand sel_cmd = new SqlCommand("SELECT UpVote, DownVote FROM [Vote_table] WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            sel_cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            sel_cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
             conn.Open();
-            cmd.ExecuteNonQuery();
+            rdr = sel_cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                upVote = (bool)rdr["UpVote"];
+                downVote = (bool)rdr["DownVote"];
+            }
+
+            if (rdr != null)
+                rdr.Close();
+
+            conn.Close();
+
+            // If the user has not voted on this particular image...
+            if (!upVote && !downVote)
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) "
+                    + "VALUES (@newImageid, @newUpVote, @newDownVote, @newUserid)", conn);
+                cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+                cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = true;
+                cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Bit).Value = false;
+                cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
         catch
         {
@@ -117,28 +130,51 @@ public class FuddleVote
             conn.Close();
             conn.Dispose();
         }
-
-        return upCount;
     }
 
-    public static int addToDownCount(int image_id)
+    public static void addToDownCount(int image_id)
     {
+        // Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        Guid id = (Guid)user.ProviderUserKey;
+
         SqlConnection conn = new SqlConnection(connString);
+        SqlDataReader rdr = null;
 
-        // Get the current downVote count
-        int downCount = getDownCount(image_id);
-
-        // Decrement it by one
-        // For later: check User_id to see if this user has already cast their vote
-        downCount--;
+        bool upVote = false;
+        bool downVote = false;
 
         try
         {
-            SqlCommand cmd = new SqlCommand("UPDATE [Vote_table] SET DownVote = @newDownVote WHERE Image_id = " + image_id.ToString(), conn);
-            cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Int).Value = downCount;
-
+            SqlCommand sel_cmd = new SqlCommand("SELECT UpVote, DownVote FROM [Vote_table] WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            sel_cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            sel_cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
             conn.Open();
-            cmd.ExecuteNonQuery();
+            rdr = sel_cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                upVote = (bool)rdr["UpVote"];
+                downVote = (bool)rdr["DownVote"];
+            }
+
+            if (rdr != null)
+                rdr.Close();
+
+            conn.Close();
+
+            // If the user has not voted on this particular image...
+            if (!upVote && !downVote)
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) "
+                    + "VALUES (@newImageid, @newUpVote, @newDownVote, @newUserid)", conn);
+                cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+                cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = false;
+                cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Bit).Value = true;
+                cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
         catch
         {
@@ -149,8 +185,6 @@ public class FuddleVote
             conn.Close();
             conn.Dispose();
         }
-
-        return downCount;
     }
 
     public static List<int> getCuddles(Guid user_id)

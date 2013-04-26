@@ -177,14 +177,14 @@ public partial class Upload : System.Web.UI.Page
                 // Execute the sql command                
                 cmd.Connection = conn;
                 conn.Open();
-                //cmd.ExecuteNonQuery();
            
                 // Get the Image_id of the image just uploaded                
                 int image_id = Convert.ToInt32(cmd.ExecuteScalar());
-                SqlCommand vote_cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote) VALUES (@newImageid, @newUpVote, @newDownVote)", conn2);
+                SqlCommand vote_cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) VALUES (@newImageid, @newUpVote, @newDownVote, @newId)", conn2);
                 vote_cmd.Parameters.Add("@newImageid", SqlDbType.Int).Value = image_id;
-                vote_cmd.Parameters.Add("@newUpVote", SqlDbType.Int).Value = 0;
-                vote_cmd.Parameters.Add("@newDownVote", SqlDbType.Int).Value = 0;
+                vote_cmd.Parameters.Add("@newUpVote", SqlDbType.Bit).Value = false;
+                vote_cmd.Parameters.Add("@newDownVote", SqlDbType.Bit).Value = false;
+                vote_cmd.Parameters.Add("@newId", SqlDbType.UniqueIdentifier).Value = id;
 
                 conn2.Open();
                 vote_cmd.ExecuteNonQuery();

@@ -83,15 +83,9 @@ public partial class Image : System.Web.UI.Page
         {
             u = Membership.GetUser();
             if (u == null) throw new Exception();
-            /*
-            bool result = FuddleImage.upVote(id,u.UserName);
-            if(result == false){
-                error.Text = "Error voting."
-            }
-            else{*/
 
-            upCount.Text = FuddleVote.addToUpCount(id).ToString() + " ";
-             //}
+            FuddleVote.addToUpCount(id);
+            upCount.Text = FuddleVote.getUpCount(id).ToString() + " ";
         }
         catch
         {
@@ -107,15 +101,9 @@ public partial class Image : System.Web.UI.Page
         {
             u = Membership.GetUser();
             if (u == null) throw new Exception();
-            /*
-            bool result = FuddleImage.downVote(id,u.UserName);
-            if(result == false){
-                error.Text = "Error voting."
-            }
-            else{
-             */
-            downCount.Text = FuddleVote.addToDownCount(id).ToString() + " ";
-             // }
+
+            FuddleVote.addToDownCount(id);
+            downCount.Text = FuddleVote.getDownCount(id).ToString() + " ";
         }
         catch
         {
