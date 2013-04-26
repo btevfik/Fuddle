@@ -265,6 +265,39 @@ public class FuddleVote
         }
     }
 
+    public static bool checkIfVoted(int image_id, Guid user_id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        SqlDataReader rdr = null;
+
+        bool upVote = false;
+        bool downVote = false;
+
+        try
+        {
+            SqlCommand cmd = new SqlCommand("SELECT UpVote, DownVote FROM [Vote_table] WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = user_id;
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                upVote = (bool)rdr["UpVote"];
+                downVote = (bool)rdr["DownVote"];
+            }
+
+            if (upVote || downVote)
+                return true;
+            else
+                return false;
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
     public static List<int> getCuddles(Guid user_id)
     {
         List<int> cuddles = new List<int>();
