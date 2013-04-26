@@ -304,7 +304,7 @@ public class FuddleVote
         try
         {
             conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("INSERT INTO [Cuddle_table] ( Image_id, User_id) values (@imageId, @userId)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO [Cuddle_table] ( Image_id, User_id) values (@imageId, @userId) WHERE NOT EXISTS (SELECT * FROM Cuddle_table WHERE Image_id = @imageId AND User_id = @userId)", conn);
             cmd.Parameters.Add("@imageId", System.Data.SqlDbType.Int).Value = img_id;
             cmd.Parameters.Add("@userId", System.Data.SqlDbType.UniqueIdentifier).Value = user_id;
             conn.Open();
