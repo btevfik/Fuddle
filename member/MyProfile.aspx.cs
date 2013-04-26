@@ -82,9 +82,6 @@ public partial class member_MyProfile : System.Web.UI.Page
         //get user uploads
         uploads = account.getuploads();
 
-        //get user cuddles
-        cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
-
         //Displays user uploads
         upload_index = 5;
         loadUploads();
@@ -93,8 +90,13 @@ public partial class member_MyProfile : System.Web.UI.Page
         albums = FuddleAlbum.getAllAlbums((Guid)u.ProviderUserKey);
         album_index = 2;
         loadAlbums();
-        
 
+        //get user cuddles
+        cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
+        cuddle_index = 2;
+        loadCuddles();
+
+        table_state = 0;
     }
 
     protected void changeBio_Click(object sender, EventArgs e)
@@ -177,6 +179,14 @@ public partial class member_MyProfile : System.Web.UI.Page
 
     protected void loadAlbums()
     {
+        //clear table
+        Table1.Controls.Clear();
+
+        //add css
+        albumListItem.Attributes.Add("class", "activated");
+        //remove css
+        cuddleListItem.Attributes.Remove("class");
+
         for (int k = 0; k < album_index; k++)
         {
             TableRow row1 = new TableRow();
@@ -216,6 +226,14 @@ public partial class member_MyProfile : System.Web.UI.Page
 
     protected void loadCuddles()
     {
+        //clear table
+        Table1.Controls.Clear();
+
+        //add css
+        cuddleListItem.Attributes.Add("class", "activated");
+        //remove css
+        albumListItem.Attributes.Remove("class");
+
         for (int k = 0; k < cuddle_index; k++)
         {
             TableRow row1 = new TableRow();
@@ -241,10 +259,10 @@ public partial class member_MyProfile : System.Web.UI.Page
                     deleteCuddle.ID = "deleteButton" + cuddles[i + k * 5].ToString();
                     deleteCuddle.CssClass = "deleteButton";
                     deleteCuddle.Click += new EventHandler(deleteCuddle_Click);
+                    deleteCuddle.CausesValidation = false;
                     deleteCuddle.CommandArgument = cuddles[i + k * 5].ToString();
                     dimglink.Controls.Add(deleteCuddle);
                     deleteCuddle.OnClientClick = "return confirm('Are you sure want to delete from Cuddles?');";
-
 
                     //Add new Cell
                     TableCell c = new TableCell();
@@ -275,8 +293,13 @@ public partial class member_MyProfile : System.Web.UI.Page
     protected void deleteCuddle_Click(object sender, EventArgs e)
     {
         Button clickedbutton = (Button)sender;
+        //remove cuddle from database
         FuddleVote.removeCuddle((Guid)u.ProviderUserKey, Convert.ToInt32(clickedbutton.CommandArgument));
+        //update index
         cuddle_index -= 2;
+        //update cuddles list
+        cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
+        //load cuddles
         loadCuddles();
     }
 
