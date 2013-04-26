@@ -103,11 +103,11 @@
 
 .settings {
     position: relative;
-    left: 265px;
+    left: 380px;
     top: -160px;
-    width: 500px;
-    color:white;
-    text-align:right;
+    width: 400px;
+    color: white;
+    text-align: right;
 }
 
 .settings a:link, .settings a:visited{
