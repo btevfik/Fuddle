@@ -187,6 +187,84 @@ public class FuddleVote
         }
     }
 
+    public static void removeFromUpCount(int image_id)
+    {
+        // Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        Guid id = (Guid)user.ProviderUserKey;
+
+        SqlConnection conn = new SqlConnection(connString);
+        SqlDataReader rdr = null;
+
+        bool upVote = false;
+
+        try
+        {
+            SqlCommand cmd = new SqlCommand("SELECT UpVote FROM [Vote_table] WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                upVote = (bool)rdr["UpVote"];
+            }
+
+            if (upVote)
+                upVote = false;
+            else
+                throw new Exception();
+        }
+        catch
+        {
+            // Never fails!
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    public static void removeFromDownCount(int image_id)
+    {
+        // Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        Guid id = (Guid)user.ProviderUserKey;
+
+        SqlConnection conn = new SqlConnection(connString);
+        SqlDataReader rdr = null;
+
+        bool downVote = false;
+
+        try
+        {
+            SqlCommand cmd = new SqlCommand("SELECT DownVote FROM [Vote_table] WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                downVote = (bool)rdr["DownVote"];
+            }
+
+            if (downVote)
+                downVote = false;
+            else
+                throw new Exception();
+        }
+        catch
+        {
+            // Never fails!
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
     public static List<int> getCuddles(Guid user_id)
     {
         List<int> cuddles = new List<int>();
