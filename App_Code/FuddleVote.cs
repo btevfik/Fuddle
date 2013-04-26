@@ -214,6 +214,16 @@ public class FuddleVote
                 upVote = false;
             else
                 throw new Exception();
+
+            conn.Close();
+
+            SqlCommand update_cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            update_cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = upVote;
+            update_cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            update_cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+            conn.Open();
+            update_cmd.ExecuteNonQuery();
+
         }
         catch
         {
@@ -253,6 +263,15 @@ public class FuddleVote
                 downVote = false;
             else
                 throw new Exception();
+
+            conn.Close();
+
+            SqlCommand update_cmd = new SqlCommand("UPDATE [Vote_table] SET DownVote = @newDownVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            update_cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = downVote;
+            update_cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            update_cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = id;
+            conn.Open();
+            update_cmd.ExecuteNonQuery();
         }
         catch
         {
@@ -328,25 +347,54 @@ public class FuddleVote
         return cuddles;
     }
 
-    public static int cuddleIt(Guid user_id, int img_id)
+    public static bool alreadyCuddled(Guid user_id, int image_id)
     {
-        int cuddles = getCuddleCount(img_id);
-        cuddles++;
-
         SqlConnection conn = new SqlConnection();
+        int cuddleCount = 0;
+
         try
         {
             conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("INSERT INTO [Cuddle_table] ( Image_id, User_id) values (@imageId, @userId)", conn);
-            cmd.Parameters.Add("@imageId", System.Data.SqlDbType.Int).Value = img_id;
-            cmd.Parameters.Add("@userId", System.Data.SqlDbType.UniqueIdentifier).Value = user_id;
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM [Cuddle_table] WHERE Image_id = " + image_id.ToString()
+            + " AND User_id = " + user_id.ToString(), conn);
             conn.Open();
-            int count = cmd.ExecuteNonQuery();
+            cuddleCount = Convert.ToInt32(cmd.ExecuteScalar());
         }
         finally
         {
             conn.Close();
             conn.Dispose();
+        }
+
+        if (cuddleCount == 0)
+        {
+            return false;
+        }
+        else return true;
+    }
+
+    public static int cuddleIt(Guid user_id, int img_id)
+    {
+        int cuddles = getCuddleCount(img_id);
+        cuddles++;
+        
+        if (alreadyCuddled(user_id, img_id) == false)
+        {
+            SqlConnection conn = new SqlConnection();
+            try
+            {
+                conn = new SqlConnection(connString);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [Cuddle_table] ( Image_id, User_id) values (@imageId, @userId)", conn);
+                cmd.Parameters.Add("@imageId", System.Data.SqlDbType.Int).Value = img_id;
+                cmd.Parameters.Add("@userId", System.Data.SqlDbType.UniqueIdentifier).Value = user_id;
+                conn.Open();
+                int count = cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
         }
 
         return cuddles;
