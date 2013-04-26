@@ -55,10 +55,11 @@ public partial class member_MyProfile : System.Web.UI.Page
         set { Session["images"] = value; }
     }
 
+    protected MembershipUser u;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        MembershipUser u = Membership.GetUser();
+        u = Membership.GetUser();
         
         //display username
         userLabel.Text = u.UserName;
@@ -235,14 +236,14 @@ public partial class member_MyProfile : System.Web.UI.Page
                     dimglink.Controls.Add(imglink);
 
                     //Add delete button
-                    Button deleteButton = new Button();
-                    deleteButton.Text = "Delete";
-                    deleteButton.ID = "deleteButton" + cuddles[i + k * 5].ToString();
-                    deleteButton.CssClass = "deleteButton";
-                    deleteButton.Click += new EventHandler(deleteButton_Click);
-                    deleteButton.CommandArgument = cuddles[i + k * 5].ToString();
-                    dimglink.Controls.Add(deleteButton);
-                    deleteButton.OnClientClick = "return confirm('Are you sure want to delete from Cuddles?');";
+                    Button deleteCuddle = new Button();
+                    deleteCuddle.Text = "Delete";
+                    deleteCuddle.ID = "deleteButton" + cuddles[i + k * 5].ToString();
+                    deleteCuddle.CssClass = "deleteButton";
+                    deleteCuddle.Click += new EventHandler(deleteCuddle_Click);
+                    deleteCuddle.CommandArgument = cuddles[i + k * 5].ToString();
+                    dimglink.Controls.Add(deleteCuddle);
+                    deleteCuddle.OnClientClick = "return confirm('Are you sure want to delete from Cuddles?');";
 
 
                     //Add new Cell
@@ -271,11 +272,12 @@ public partial class member_MyProfile : System.Web.UI.Page
         cuddle_index += 2;
     }
 
-    protected void deleteButton_Click(object sender, EventArgs e)
+    protected void deleteCuddle_Click(object sender, EventArgs e)
     {
         Button clickedbutton = (Button)sender;
-        FuddleImage.deleteImage(Convert.ToInt32(clickedbutton.CommandArgument));
-        UpdatePanel1.Update();
-
+        FuddleVote.removeCuddle((Guid)u.ProviderUserKey, Convert.ToInt32(clickedbutton.CommandArgument));
+        cuddle_index -= 2;
+        loadCuddles();
     }
+
 }

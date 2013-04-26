@@ -242,4 +242,24 @@ public class FuddleVote
 
         return count;
     }
+
+    public static void removeCuddle(Guid user_id, int image_id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete the image 
+            SqlCommand cmd = new SqlCommand("Delete FROM [Cuddle_table] WHERE Image_id = '" + image_id.ToString() + "' AND User_id = '" + user_id.ToString() + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            int count = cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
 }
