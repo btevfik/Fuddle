@@ -1,0 +1,99 @@
+﻿#container {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 900px;
+    min-height: 800px;
+    margin: 0 auto;
+}
+
+#container a:visited, #container a:link {
+color: #0D98BA;
+text-decoration: none;
+}
+
+#container a:hover {
+color: rgb(151, 186, 195);
+}
+
+.album-title {
+   font-size:22px;
+  -ms-word-break: break-all;
+  word-wrap:break-word;
+  display:block;
+  max-width:800px;
+  font-weight:bold;
+}
+
+.album-user {
+    font-size:14px;
+    font-style:italic;
+}
+
+.album-user a {
+    font-weight:bold;
+}
+
+.album-img img {
+    margin-left:50px;
+    margin-top:20px;
+    margin-bottom:10px;
+    width:150px;
+    height:150px;
+    padding: 5px;
+    background-color:white;
+    box-shadow: 0px 1px 3px #434141;
+}
+
+.remove-box {
+    position:relative;
+    left:110px;
+    bottom:10px;
+}
+
+.removeButton {
+    margin-left:375px;
+    margin-bottom:20px;
+}
+
+
+.submitButton {		
+  background-color: #d14545;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e97171), to(#d14545));
+  background-image: -webkit-linear-gradient(top, #e97171, #d14545);
+  background-image: -moz-linear-gradient(top, #e97171, #d14545);
+  background-image: -ms-linear-gradient(top, #e97171, #d14545);
+  background-image: -o-linear-gradient(top, #e97171, #d14545);
+  background-image: linear-gradient(top, #e97171, #d14545);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+  border: 1px solid #7e1515;
+  cursor: pointer;
+  color: #fff;
+  font-style:normal;
+}
+
+.submitButton:hover,
+.submitButton:focus {		
+  background-color: #e97171;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#d14545), to(#e97171));
+  background-image: -webkit-linear-gradient(top, #d14545, #e97171);
+  background-image: -moz-linear-gradient(top, #d14545, #e97171);
+  background-image: -ms-linear-gradient(top, #d14545, #e97171);
+  background-image: -o-linear-gradient(top, #d14545, #e97171);
+  background-image: linear-gradient(top, #d14545, #e97171);
+}	
+
+.submitButton:active {		
+  outline: none;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+.submitButton::-moz-focus-inner {
+  border: none;
+}
