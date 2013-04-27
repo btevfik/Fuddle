@@ -110,8 +110,7 @@ public class FuddleVote
             // If the user has not voted on this particular image...
             if (!upVote && !downVote)
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) "
-                    + "VALUES (@newImageid, @newUpVote, @newDownVote, @newUserid)", conn);
+                SqlCommand cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote, DownVote = @newDownVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
                 cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
                 cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = true;
                 cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Bit).Value = false;
@@ -165,8 +164,7 @@ public class FuddleVote
             // If the user has not voted on this particular image...
             if (!upVote && !downVote)
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) "
-                    + "VALUES (@newImageid, @newUpVote, @newDownVote, @newUserid)", conn);
+                SqlCommand cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote, DownVote = @newDownVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
                 cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
                 cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = false;
                 cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Bit).Value = true;
