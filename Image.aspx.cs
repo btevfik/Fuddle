@@ -107,6 +107,7 @@ public partial class Image : System.Web.UI.Page
                 FuddleVote.addToUpCount(id);
                 upCount.Text = FuddleVote.getUpCount(id).ToString();
                 upCount.Width = upCount.Text.Length * 8;
+                upButton.Attributes.Add("style", "background-color:#C4C4C4");
             }
             catch
             {
@@ -114,9 +115,13 @@ public partial class Image : System.Web.UI.Page
                 lightbox.Visible = true;
             }
         }
+        //if already upvoted remove
         else if(vote == "up")
         {
             FuddleVote.removeFromUpCount(id);
+            upCount.Text = FuddleVote.getUpCount(id).ToString();
+            upCount.Width = upCount.Text.Length * 8;
+            upButton.Attributes.Remove("style");
         }
     }
 
@@ -134,6 +139,7 @@ public partial class Image : System.Web.UI.Page
                 FuddleVote.addToDownCount(id);
                 downCount.Text = FuddleVote.getDownCount(id).ToString();
                 downCount.Width = downCount.Text.Length * 8;
+                downButton.Attributes.Add("style", "background-color:#C4C4C4");
             }
             catch
             {
@@ -141,9 +147,13 @@ public partial class Image : System.Web.UI.Page
                 lightbox.Visible = true;
             }
         }
+        //if already downvoted remove
         else if (vote == "down")
         {
             FuddleVote.removeFromDownCount(id);
+            downCount.Text = FuddleVote.getDownCount(id).ToString();
+            downCount.Width = upCount.Text.Length * 8;
+            downButton.Attributes.Remove("style");
         }
     }
 
