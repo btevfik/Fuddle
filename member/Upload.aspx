@@ -85,9 +85,9 @@
             <asp:Panel runat="server" ClientIDMode="Static" ID="lightbox" Visible="false">
                 <asp:Panel runat="server" ID="content" ClientIDMode="Static">
                     <asp:RadioButtonList ID="buttonList" runat="server"></asp:RadioButtonList>
-                    <div style="font-size: 15px">Create new albums through your profile page.</div>
-                    <asp:Button ID="chooseButton" runat="server" Text="Choose" CssClass="submitButton" OnClick="chooseButton_Click" />
+                     <asp:Button ID="chooseButton" runat="server" Text="Choose" CssClass="submitButton" OnClick="chooseButton_Click" />
                     <asp:Button ID="cancelButton" runat="server" Text="Cancel" OnClick="cancelButton_Click" CssClass="submitButton" />
+                    <div style="font-size: 13px">Tip: Create new albums through your profile page.</div>
                 </asp:Panel>
             </asp:Panel>
         </ContentTemplate>

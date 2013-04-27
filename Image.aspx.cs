@@ -32,6 +32,12 @@ public partial class Image : System.Web.UI.Page
             id = Int32.Parse(reqId);
         }
 
+        //if image not found redirect to 404
+        if (FuddleImage.getUser(id) == "")
+        {
+            Response.Redirect("/Oops.aspx?e=404");
+        }
+
         //set img
         string url = "/ShowImage.ashx?imgid=" + id;
         Image1.ImageUrl = url;
