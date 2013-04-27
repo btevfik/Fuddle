@@ -296,4 +296,34 @@ public class FuddleAlbum
         }
         return user_albums;
     }
+
+    public static void changeAlbumCover(int image_id, int albumId)
+    {
+        // Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        Guid id = (Guid)user.ProviderUserKey;
+
+        // Get the album title
+        string album_title = getTitle(albumId);
+
+        SqlConnection conn = new SqlConnection(connString);
+
+        try
+        {            
+            SqlCommand cmd = new SqlCommand("INSERT INTO [Album_table] (Album_id, Album_title, User_id, Cover_id)"
+                + " VALUES (@newAlbumid, @newAlbumtitle, @newUserid, @newCoverid)", conn);
+            cmd.Parameters.Add("@newAlbumid", SqlDbType.Int).Value = albumId;
+            cmd.Parameters.Add("@newAlbumtitle", SqlDbType.VarChar).Value = album_title;
+            cmd.Parameters.Add("@newUserid", SqlDbType.Int).Value = id;
+            cmd.Parameters.Add("@newCoverid", SqlDbType.Int).Value = image_id;
+
+            conn.Open();
+            cmd.ExecuteScalar();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
 }
