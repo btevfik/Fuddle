@@ -298,27 +298,49 @@ public class FuddleAlbum
     }
 
     public static void changeAlbumCover(int image_id, int albumId)
-    {
-        // Grabs the ID of the logged in user
-        MembershipUser user = Membership.GetUser();
-        Guid id = (Guid)user.ProviderUserKey;
-
-        // Get the album title
-        string album_title = getTitle(albumId);
-
+    {        
         SqlConnection conn = new SqlConnection(connString);
 
         try
-        {            
-            SqlCommand cmd = new SqlCommand("INSERT INTO [Album_table] (Album_id, Album_title, User_id, Cover_id)"
-                + " VALUES (@newAlbumid, @newAlbumtitle, @newUserid, @newCoverid)", conn);
-            cmd.Parameters.Add("@newAlbumid", SqlDbType.Int).Value = albumId;
-            cmd.Parameters.Add("@newAlbumtitle", SqlDbType.VarChar).Value = album_title;
-            cmd.Parameters.Add("@newUserid", SqlDbType.Int).Value = id;
+        {
+            SqlCommand cmd = new SqlCommand("UPDATE [Album_table] SET Cover_id = @newCoverid WHERE Album_id = " + albumId.ToString(), conn);
             cmd.Parameters.Add("@newCoverid", SqlDbType.Int).Value = image_id;
 
             conn.Open();
             cmd.ExecuteScalar();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    public static int getAlbumCover(int album_id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        SqlDataReader rdr = null;
+        int cover_id = -1;
+
+        try
+        {
+            SqlCommand cmd = new SqlCommand("SELECT Cover_id FROM [Album_table] WHERE Album_id = " + album_id.ToString(), conn);
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                cover_id = (int)rdr["Cover_id"];
+            }
+
+            if (cover_id == -1)
+                throw new Exception();
+            else
+                return cover_id;
+        }
+        catch
+        {
+            // If cover_id = -1, something went wrong
+            return cover_id;
         }
         finally
         {
