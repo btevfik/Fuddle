@@ -379,10 +379,10 @@ public class FuddleVote
     public static int cuddleIt(Guid user_id, int img_id)
     {
         int cuddles = getCuddleCount(img_id);
-        cuddles++;
         
         if (alreadyCuddled(user_id, img_id) == false)
         {
+            cuddles++;
             SqlConnection conn = new SqlConnection();
             try
             {

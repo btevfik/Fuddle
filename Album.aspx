@@ -55,6 +55,7 @@
         </div>
         <asp:Table ID="ImageTable" runat="server"></asp:Table>
         <asp:Button ID="deleteSelectedButton" runat="server" CssClass="submitButton removeButton" Text="Remove Selected Images" Visible="false" OnClick="DeleteSelectedButton_Click" OnClientClick="if (!confirm('Are you sure you want to REMOVE selected images from the album? (The images will NOT be deleted)')) return false;" />
+        <asp:Button ID="changeCoverButton" OnClick="changeCoverButton_Click" runat="server" Text="Change Cover" Visible="false" />
     </div>
 </asp:Content>
 

@@ -52,6 +52,7 @@ public partial class Album : System.Web.UI.Page
             UpdateTitleButton.Visible = true;
             DeleteAlbumButton.Visible = true;
             deleteSelectedButton.Visible = true;
+            changeCoverButton.Visible = true;
         }
     }
 
@@ -79,6 +80,10 @@ public partial class Album : System.Web.UI.Page
                     c.Controls.Add(imglink);
                     if (loggedUser == user)
                     {
+                        RadioButton coverButton = new RadioButton();
+                        coverButton.ID = imgs[k + i * rows] + " ";
+                        coverButton.GroupName = "coverGroup";
+                        c.Controls.Add(coverButton);
                         CheckBox removeBox = new CheckBox();
                         removeBox.ID = imgs[k + i*rows] + "";
                         removeBox.CssClass = "remove-box";
@@ -147,6 +152,10 @@ public partial class Album : System.Web.UI.Page
         {
             //bad
         }
+    }
+
+    protected void changeCoverButton_Click(object sender, EventArgs e)
+    {
     }
 }
 
