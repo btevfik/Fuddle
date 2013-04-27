@@ -16,6 +16,9 @@ public partial class Image : System.Web.UI.Page
     int id;
     //current user
     MembershipUser u;
+    //get the vote on this img by logged in user
+    string vote;
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -68,6 +71,20 @@ public partial class Image : System.Web.UI.Page
        
         if( u !=null){
             cuddleButton.Enabled = true;
+            vote = FuddleVote.checkIfVoted(id,(Guid)u.ProviderUserKey);
+            if (vote == "up")
+            {
+                upButton.Attributes.Add("style", "background-color:#C4C4C4");
+            }
+            else if (vote == "down")
+            {
+                downButton.Attributes.Add("style", "background-color:#C4C4C4");
+            }
+            else
+            {
+                downButton.Attributes.Remove("style");
+                upButton.Attributes.Remove("style");
+            }
             if (uploadedUser == u.UserName)
             {
                 deleteButton.Visible = true;
@@ -79,38 +96,54 @@ public partial class Image : System.Web.UI.Page
     //upvoting this image
     protected void upButton_Click(object sender, EventArgs e)
     {
-        try
+        vote = FuddleVote.checkIfVoted(id, (Guid)u.ProviderUserKey);
+        if (vote == "non")
         {
-            u = Membership.GetUser();
-            if (u == null) throw new Exception();
+            try
+            {
+                u = Membership.GetUser();
+                if (u == null) throw new Exception();
 
-            FuddleVote.addToUpCount(id);
-            upCount.Text = FuddleVote.getUpCount(id).ToString();
-            upCount.Width = upCount.Text.Length * 8;
+                FuddleVote.addToUpCount(id);
+                upCount.Text = FuddleVote.getUpCount(id).ToString();
+                upCount.Width = upCount.Text.Length * 8;
+            }
+            catch
+            {
+                error.Text = "Please login.";
+                lightbox.Visible = true;
+            }
         }
-        catch
+        else if(vote == "up")
         {
-            error.Text = "Please login.";
-            lightbox.Visible = true;
+            FuddleVote.removeFromUpCount(id);
         }
     }
 
     //down voting this image
     protected void downButton_Click(object sender, EventArgs e)
     {
-        try
+        vote = FuddleVote.checkIfVoted(id, (Guid)u.ProviderUserKey);
+        if (vote == "non")
         {
-            u = Membership.GetUser();
-            if (u == null) throw new Exception();
+            try
+            {
+                u = Membership.GetUser();
+                if (u == null) throw new Exception();
 
-            FuddleVote.addToDownCount(id);
-            downCount.Text = FuddleVote.getDownCount(id).ToString();
-            downCount.Width = downCount.Text.Length * 8;
+                FuddleVote.addToDownCount(id);
+                downCount.Text = FuddleVote.getDownCount(id).ToString();
+                downCount.Width = downCount.Text.Length * 8;
+            }
+            catch
+            {
+                error.Text = "Please login.";
+                lightbox.Visible = true;
+            }
         }
-        catch
+        else if (vote == "down")
         {
-            error.Text = "Please login.";
-            lightbox.Visible = true;
+            FuddleVote.removeFromDownCount(id);
         }
     }
 

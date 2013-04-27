@@ -284,7 +284,7 @@ public class FuddleVote
         }
     }
 
-    public static bool checkIfVoted(int image_id, Guid user_id)
+    public static string checkIfVoted(int image_id, Guid user_id)
     {
         SqlConnection conn = new SqlConnection(connString);
         SqlDataReader rdr = null;
@@ -305,10 +305,12 @@ public class FuddleVote
                 downVote = (bool)rdr["DownVote"];
             }
 
-            if (upVote || downVote)
-                return true;
+            if (upVote)
+                return "up";
+            else if(downVote)
+                return "down";
             else
-                return false;
+                return "non";
         }
         finally
         {
