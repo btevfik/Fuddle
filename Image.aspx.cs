@@ -32,10 +32,13 @@ public partial class Image : System.Web.UI.Page
             id = Int32.Parse(reqId);
         }
 
-        //if image not found redirect to 404
-        if (FuddleImage.getUser(id) == "")
+        if (!IsPostBack)
         {
-            Response.Redirect("/Oops.aspx?e=404");
+            //if image not found redirect to 404
+            if (FuddleImage.getUser(id) == "")
+            {
+                Response.Redirect("/Oops.aspx?e=404");
+            }
         }
 
         //set img
@@ -267,6 +270,8 @@ public partial class Image : System.Web.UI.Page
         try{
         //delete this image
         FuddleImage.deleteImage(id);
+        //delete from albums as well, if it exists in any
+        FuddleAlbum.deleteImage(id);
         //display deleted message
         error.Text = "Image deleted.";
         lightbox.Visible = true;

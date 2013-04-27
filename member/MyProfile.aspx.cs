@@ -21,12 +21,13 @@ public partial class member_MyProfile : System.Web.UI.Page
     /// </summary>
     protected int table_state
     {
-        get {
+        get
+        {
             if (Session["table_state"] == null)
             {
                 Session["table_state"] = 1;
             }
-            return (int)Session["table_state"]; 
+            return (int)Session["table_state"];
         }
         set { Session["table_state"] = value; }
     }
@@ -72,18 +73,18 @@ public partial class member_MyProfile : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         u = Membership.GetUser();
-        
+
         //display username
         userLabel.Text = u.UserName;
-        
+
         //display email
         userEmail.Text = u.Email;
-        
+
         //display public profile link
         string url = HttpContext.Current.Request.Url.Scheme + System.Uri.SchemeDelimiter + HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port);
-        publicLink.NavigateUrl = url+ "/user/" + u.UserName;
-        publicLink.Text = url+ "/user/" + u.UserName;
-        
+        publicLink.NavigateUrl = url + "/user/" + u.UserName;
+        publicLink.Text = url + "/user/" + u.UserName;
+
         //set gravatar
         AvatarImage.ImageUrl = "/getavatar.ashx?user=" + u.UserName + "&size=200";
 
@@ -91,18 +92,21 @@ public partial class member_MyProfile : System.Web.UI.Page
         FuddleUser account = new FuddleUser(u.UserName);
         aboutmeLabel.Text = account.getBio();
 
-        //get user uploads
-        uploads = account.getuploads();
+        if (!IsPostBack)
+        {
+            //get user uploads
+            uploads = account.getuploads();
 
-        //Displays user uploads
-        upload_index = 5;
-        loadUploads();
+            //Displays user uploads
+            upload_index = 5;
+            loadUploads();
+        }
 
         //Load albums
-        if(table_state==0)
+        if (table_state == 0)
         {
-           album_index = 2;
-           loadAlbums();
+            album_index = 2;
+            loadAlbums();
         }
 
         //Load cuddles

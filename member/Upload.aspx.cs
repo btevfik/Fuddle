@@ -206,7 +206,8 @@ public partial class Upload : System.Web.UI.Page
                 //add the album as well if user specified.
                 if (album_index!=-1)
                 {
-                    FuddleAlbum.addImage(album_index, image_id); 
+                    FuddleAlbum.addImage(album_index, image_id);
+                    album_index = -1; //reset
                 }
 
                 // Let the user know the file was uploaded successfully
