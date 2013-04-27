@@ -63,6 +63,7 @@
                     <asp:AsyncPostBackTrigger ControlID="loadrows" />
                     <asp:AsyncPostBackTrigger ControlID="cuddleLink" />
                     <asp:AsyncPostBackTrigger ControlID="albumLink" />
+                    <asp:AsyncPostBackTrigger ControlID="CreateAlbumButton" />
                 </Triggers>
                 <ContentTemplate>
                     <div id="albums-image-tabs">
@@ -75,6 +76,12 @@
                             </li>
                         </ul>
                     </div>
+                    <asp:Panel ID="NewAlbumPanel" style="margin-bottom:20px;" runat="server" Visible="false">
+                     Title: 
+                     <asp:TextBox ID="NewAlbumTitle" runat="server" Columns="25" Height="20"></asp:TextBox>
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="NewAlbumTitle" ValidationGroup="AlbumCreation"><span style="color:#d14545">*</span></asp:RequiredFieldValidator>
+                     <asp:Button ID="CreateAlbumButton" OnClick="CreateAlbumButton_Click" CssClass="submitButton" runat="server" Text="Create New Album" ValidationGroup="AlbumCreation" />
+                    </asp:Panel>
                     <asp:Table ID="Table1" runat="server"></asp:Table>
                     <asp:Button CssClass="uploadButton" ID="loadrows" runat="server" Text="Load More" OnClick="loadrows_Click" />
                 </ContentTemplate>

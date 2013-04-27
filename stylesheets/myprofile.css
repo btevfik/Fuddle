@@ -220,7 +220,6 @@
 /*Uploads*/
 .uploads {
     margin-top: 10px;
-    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -229,6 +228,7 @@
     background-color:white;
     box-shadow: 0px 1px 3px #434141;
     max-width: 700px;
+    margin-bottom:50px;
 }
 
 .uploads .uploadButton {

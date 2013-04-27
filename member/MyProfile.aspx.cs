@@ -13,9 +13,21 @@ using System.Web.Security;
 //PUBLIC PROFILE PAGE IS AT ~/UserProfile.aspx
 public partial class member_MyProfile : System.Web.UI.Page
 {
+    /// <summary>
+    /// SESSION VARIABLE,
+    /// IS USER VIEWING ALBUMS OR CUDDLES ?
+    /// ALBUMS = 0
+    /// CUDDLES = 1
+    /// </summary>
     protected int table_state
     {
-        get { return (int)Session["table_state"]; }
+        get {
+            if (Session["table_state"] == null)
+            {
+                Session["table_state"] = 1;
+            }
+            return (int)Session["table_state"]; 
+        }
         set { Session["table_state"] = value; }
     }
 
@@ -87,18 +99,25 @@ public partial class member_MyProfile : System.Web.UI.Page
         loadUploads();
 
         //Load albums
-        albums = FuddleAlbum.getAllAlbums((Guid)u.ProviderUserKey);
-        album_index = 2;
-        loadAlbums();
+        if(table_state==0)
+        {
+           album_index = 2;
+           loadAlbums();
+        }
 
         //Load cuddles
-        cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
-        cuddle_index = 2;
-        loadCuddles();
-
-        table_state = 0;
+        if (table_state == 1)
+        {
+            cuddle_index = 2;
+            loadCuddles();
+        }
     }
 
+    /// <summary>
+    /// CHANGE ABOUT ME
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void changeBio_Click(object sender, EventArgs e)
     {
         saveBio.Visible = true;
@@ -109,6 +128,12 @@ public partial class member_MyProfile : System.Web.UI.Page
         aboutmeText.Text = aboutmeLabel.Text;
 
     }
+
+    /// <summary>
+    /// SAVE THE NEW ABOUT ME
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void saveBio_Click(object sender, EventArgs e)
     {
         FuddleUser u = new FuddleUser(Membership.GetUser().UserName);
@@ -123,23 +148,44 @@ public partial class member_MyProfile : System.Web.UI.Page
         aboutmeText.Visible = false;
 
     }
+
+    /// <summary>
+    /// IF LOAD MORE IS CLICKED ON UPLOADS
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void loaduploads_Click(object sender, EventArgs e)
     {
         loadUploads();
     }
+
+    /// <summary>
+    /// IF ALBUMS TAB IS CLICKED
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void albumLink_Click(object sender, EventArgs e)
     {
-        table_state = 0; //Display Albums
         album_index = 2;
         loadAlbums();
-
     }
+
+    /// <summary>
+    /// IF CUDDLES TAB IS CLICKED
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void cuddleLink_Click(object sender, EventArgs e)
     {
-        table_state = 1; //Display Cuddles
         cuddle_index = 2;
         loadCuddles();
     }
+
+    /// <summary>
+    /// IF LOAD MORE IS CLICKED ON ALBUMS OR CUDDLES
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void loadrows_Click(object sender, EventArgs e)
     {
         if (table_state == 0)
@@ -152,7 +198,9 @@ public partial class member_MyProfile : System.Web.UI.Page
         }
     }
 
-
+    /// <summary>
+    /// LOAD UPLOADS
+    /// </summary>
     protected void loadUploads()
     {
         //Displays User Uploads
@@ -174,11 +222,25 @@ public partial class member_MyProfile : System.Web.UI.Page
                 break;
             }
         }
+        if (upload_index < uploads.Count)
+        {
+            loaduploads.Visible = true;
+        }
+        else
+        {
+            loaduploads.Visible = false;
+        }
         upload_index += 5;
     }
 
+    /// <summary>
+    /// LOAD ALBUMS
+    /// </summary>
     protected void loadAlbums()
     {
+        table_state = 0; //set state
+        albums = FuddleAlbum.getAllAlbums((Guid)u.ProviderUserKey);
+
         //clear table
         Table1.Controls.Clear();
 
@@ -186,6 +248,9 @@ public partial class member_MyProfile : System.Web.UI.Page
         albumListItem.Attributes.Add("class", "activated");
         //remove css
         cuddleListItem.Attributes.Remove("class");
+
+        //show album creation panel
+        NewAlbumPanel.Visible = true;
 
         for (int k = 0; k < album_index; k++)
         {
@@ -195,9 +260,10 @@ public partial class member_MyProfile : System.Web.UI.Page
                 try
                 {
                     HyperLink imglink = new HyperLink();
-                    //imglink.NavigateUrl = "/Image.aspx?id=" + albums[i];
-                    //imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + albums[i];
-                    imglink.ToolTip = FuddleAlbum.getTitle(albums[i]);
+                    imglink.NavigateUrl = "/Album.aspx?id=" + albums[i + k * 5];
+                    imglink.ImageUrl = "/resources/gravatar.jpg";
+                    //imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + 1; ///GET ALBUM COVER HERE FuddleAblum.GetCover(id);
+                    imglink.ToolTip = FuddleAlbum.getTitle(albums[i + k * 5]);
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
@@ -224,8 +290,15 @@ public partial class member_MyProfile : System.Web.UI.Page
         album_index += 2;
     }
 
+
+    /// <summary>
+    /// LOAD CUDDLES
+    /// </summary>
     protected void loadCuddles()
     {
+        table_state = 1; //set state
+        cuddles = FuddleVote.getCuddles((Guid)u.ProviderUserKey);
+
         //clear table
         Table1.Controls.Clear();
 
@@ -233,6 +306,9 @@ public partial class member_MyProfile : System.Web.UI.Page
         cuddleListItem.Attributes.Add("class", "activated");
         //remove css
         albumListItem.Attributes.Remove("class");
+
+        //hide album creation panel
+        NewAlbumPanel.Visible = false;
 
         for (int k = 0; k < cuddle_index; k++)
         {
@@ -279,7 +355,7 @@ public partial class member_MyProfile : System.Web.UI.Page
                 Table1.Rows.Add(row1);
             }
         }
-        if (cuddle_index * 5 < uploads.Count)
+        if (cuddle_index * 5 < cuddles.Count)
         {
             loadrows.Visible = true;
         }
@@ -290,6 +366,11 @@ public partial class member_MyProfile : System.Web.UI.Page
         cuddle_index += 2;
     }
 
+    /// <summary>
+    /// DELETE A CUDDLE
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void deleteCuddle_Click(object sender, EventArgs e)
     {
         Button clickedbutton = (Button)sender;
@@ -303,4 +384,24 @@ public partial class member_MyProfile : System.Web.UI.Page
         loadCuddles();
     }
 
+    /// <summary>
+    /// CREATE A NEW ALBUM
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void CreateAlbumButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            TextBox title = (TextBox)NewAlbumPanel.FindControl("NewAlbumTitle");
+            string newTitle = title.Text;
+            FuddleAlbum.createAlbum(newTitle);
+            title.Text = "";
+            loadAlbums();
+        }
+        catch
+        {
+            //something wrong
+        }
+    }
 }
