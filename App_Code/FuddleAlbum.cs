@@ -131,6 +131,41 @@ public class FuddleAlbum
         return album_title;
     }
 
+    public static string getUser(int album_id)
+    {
+        SqlDataReader rdr = null;
+        SqlConnection conn = new SqlConnection();
+        SqlCommand cmd = new SqlCommand();
+
+        string album_user = "";
+
+        try
+        {
+            conn = new SqlConnection(connString);
+            cmd = new SqlCommand("SELECT User_id FROM [Album_table] WHERE Album_id = '" + album_id.ToString() + "'", conn);
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+
+            // Retreive album title
+            while (rdr.Read())
+            {
+                Guid user_id = (Guid)rdr["User_id"];
+                album_user = Membership.GetUser(user_id).UserName;
+            }
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+        return album_user;
+    }
+
     public static List<int> getImages(int album_id) //returns a list of Image Ids in the album
     {
         SqlDataReader rdr = null;
