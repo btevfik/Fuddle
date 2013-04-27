@@ -355,8 +355,9 @@ public class FuddleVote
         try
         {
             conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM [Cuddle_table] WHERE Image_id = " + image_id.ToString()
-            + " AND User_id = " + user_id.ToString(), conn);
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM [Cuddle_table] WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+            cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
+            cmd.Parameters.Add("@newUserid", System.Data.SqlDbType.UniqueIdentifier).Value = user_id;
             conn.Open();
             cuddleCount = Convert.ToInt32(cmd.ExecuteScalar());
         }
