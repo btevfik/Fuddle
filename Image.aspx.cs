@@ -152,7 +152,7 @@ public partial class Image : System.Web.UI.Page
         {
             FuddleVote.removeFromDownCount(id);
             downCount.Text = FuddleVote.getDownCount(id).ToString();
-            downCount.Width = upCount.Text.Length * 8;
+            downCount.Width = downCount.Text.Length * 8;
             downButton.Attributes.Remove("style");
         }
     }
