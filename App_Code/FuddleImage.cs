@@ -28,6 +28,20 @@ public class Comment_Info
     }
 }
 
+public class ImageVoteList
+{
+    public int img_id;
+    public int votes;
+    public int rank;
+
+    public ImageVoteList(int img_id, int votes, int rank)
+    {
+        this.img_id = img_id;
+        this.votes = votes;
+        this.rank = rank;
+    }
+}
+
 public class FuddleImage
 {
     static string connString = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
@@ -361,5 +375,69 @@ public class FuddleImage
             conn.Dispose();
         }
         return width + 10;
+    }
+
+    // Get the top 20 images with the highest ranking (upvotes + downvotes because downvotes are negative)
+    public static List<ImageVoteList> getTopImages()
+    {
+        SqlDataReader rdr = null;
+        SqlConnection conn = new SqlConnection();
+        SqlCommand cmd = new SqlCommand();
+
+        // List of all images and their upvotes and rank
+        List<ImageVoteList> ImageVotes = new List<ImageVoteList>();
+
+        // List of top 20 images according to rank
+        List<ImageVoteList> TopImages = new List<ImageVoteList>();
+
+        try
+        {
+            conn = new SqlConnection(connString);
+            cmd = new SqlCommand("SELECT DISTINCT Image_id FROM [Vote_table]", conn);
+            conn.Open();
+            rdr = cmd.ExecuteReader();
+
+
+            // Retreive user uploaded image
+            while (rdr.Read())
+            {
+                int img_id = (int)rdr["Image_id"];
+                System.Diagnostics.Debug.WriteLine(img_id);
+                int votes = FuddleVote.getUpCount(img_id);
+                int rank = votes + FuddleVote.getDownCount(img_id);
+                ImageVoteList ivl = new ImageVoteList(img_id, votes, rank);
+                ImageVotes.Add(ivl);
+            }
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+
+        // Function to sort the list of images by rank
+        ImageVotes.Sort((x, y) => x.rank.CompareTo(y.rank));
+
+        // Reverse the order of the list to make it in descending order
+        ImageVotes.Reverse();
+
+        // Put the top 20 in the list TopImages
+        for (int i = 0; i < 20; i++)
+        {
+            try
+            {
+                TopImages.Add(ImageVotes[i]);
+            }
+            catch
+            {
+                break;
+            }
+        }
+        return TopImages;
     }
 }
