@@ -12,21 +12,35 @@ using System.Web.Security;
 
 public partial class Upload : System.Web.UI.Page
 {
+    //id of logged in user
+    Guid id;
+
+    //album index that user want the image to be added to
+    protected int album_index
+    {
+        get { return (int)Session["album_index"]; }
+        set { Session["album_index"] = value; }
+    }
+
     protected string connString = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        //Grabs the ID of the logged in user
+        MembershipUser user = Membership.GetUser();
+        id = (Guid)user.ProviderUserKey;
 
+        if (!IsPostBack)
+        {
+            album_index = -1;
+            loadAlbums();
+        }
     }
 
     // User clicks this button to save the image in the database
     // after previewing the image
     protected void uploadButton_Click(object sender, EventArgs e)
     {
-        //Grabs the ID of the logged in user
-        MembershipUser user = Membership.GetUser();
-        Guid id = (Guid)user.ProviderUserKey;
-
         // Read the file and store its name and extension
         string fileName = uploadFile.PostedFile.FileName;
         string extension = Path.GetExtension(fileName).ToLower();
@@ -143,12 +157,12 @@ public partial class Upload : System.Web.UI.Page
                 }
 
                 // Create a new image object to create the actual thumbnail data
-                System.Drawing.Image img = System.Drawing.Image.FromStream(fs);                
+                System.Drawing.Image img = System.Drawing.Image.FromStream(fs);
                 Bitmap tempBmp = new Bitmap(img, (int)fileWidthThumb, (int)fileHeightThumb);
                 Graphics g = Graphics.FromImage(tempBmp);
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                g.DrawImage(img, 0, 0, tempBmp.Width, tempBmp.Height);                
+                g.DrawImage(img, 0, 0, tempBmp.Width, tempBmp.Height);
                 MemoryStream ms = new MemoryStream();
                 tempBmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 Byte[] bytes_thumb = ms.ToArray();
@@ -177,7 +191,7 @@ public partial class Upload : System.Web.UI.Page
                 // Execute the sql command                
                 cmd.Connection = conn;
                 conn.Open();
-           
+
                 // Get the Image_id of the image just uploaded                
                 int image_id = Convert.ToInt32(cmd.ExecuteScalar());
                 SqlCommand vote_cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) VALUES (@newImageid, @newUpVote, @newDownVote, @newId)", conn2);
@@ -188,6 +202,12 @@ public partial class Upload : System.Web.UI.Page
 
                 conn2.Open();
                 vote_cmd.ExecuteNonQuery();
+
+                //add the album as well if user specified.
+                if (album_index!=-1)
+                {
+                    FuddleAlbum.addImage(album_index, image_id); 
+                }
 
                 // Let the user know the file was uploaded successfully
                 uploadStatus.ForeColor = Color.Green;
@@ -217,5 +237,42 @@ public partial class Upload : System.Web.UI.Page
             uploadStatus.Text = "Error uploading file. Accepted file formats: .jpg, .jpeg, .png, .gif, .bmp";
             uploadStatus.Visible = true;
         }
+    }
+
+    protected void pickAlbum_Click(object sender, EventArgs e)
+    {
+        lightbox.Visible = true;
+    }
+
+    protected void cancelButton_Click(object sender, EventArgs e)
+    {
+        lightbox.Visible = false;
+    }
+
+    protected void chooseButton_Click(object sender, EventArgs e)
+    {
+
+        try
+        {
+            ListItem item = buttonList.SelectedItem;
+            album_index = Int32.Parse(item.Value);
+            lightbox.Visible = false;
+        }
+        catch
+        {
+            //bad
+        }
+    }
+
+    private void loadAlbums(){
+        buttonList.Items.Clear();
+        List<int> albumIds = FuddleAlbum.getAllAlbums(id);
+        foreach (int albumId in albumIds)
+        {
+            ListItem albumSelect = new ListItem();
+            albumSelect.Value = albumId.ToString();
+            albumSelect.Text = FuddleAlbum.getTitle(albumId);
+            buttonList.Items.Add(albumSelect);
+       }
     }
 }

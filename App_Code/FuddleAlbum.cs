@@ -47,7 +47,7 @@ public class FuddleAlbum
         }
     }
 
-    public static void addImage(int album_id, string album_title, int image_id)
+    public static void addImage(int album_id, int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
 
@@ -57,13 +57,11 @@ public class FuddleAlbum
         try
         {
             // Insert the image into the album table
-            string insertQuery = "INSERT INTO [Album_table] ( User_Id, Album_id, Image_id, Album_title)"
-                + "values ( @userId, @albumId, @imageId, @albumTitle)";
+            string insertQuery = "INSERT INTO [Album_Records] ( Album_id, Image_id)"
+                + "values ( @albumId, @imageId)";
             SqlCommand cmd = new SqlCommand(insertQuery);
-            cmd.Parameters.Add("@newTitle", SqlDbType.VarChar).Value = album_title;
             cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = image_id;
             cmd.Parameters.Add("@albumId", SqlDbType.Int).Value = album_id;
-            cmd.Parameters.Add("@userId", SqlDbType.UniqueIdentifier).Value = id;
 
             // Execute the sql command                
             cmd.Connection = conn;
@@ -178,7 +176,7 @@ public class FuddleAlbum
         try
         {
             conn = new SqlConnection(connString);
-            cmd = new SqlCommand("SELECT Image_id FROM [Album_table] WHERE Album_id = '" + album_id.ToString() + "'", conn);
+            cmd = new SqlCommand("SELECT Image_id FROM [Album_Records] WHERE Album_id = '" + album_id.ToString() + "'", conn);
             conn.Open();
             rdr = cmd.ExecuteReader();
 
@@ -249,7 +247,7 @@ public class FuddleAlbum
         try
         {
             // Delete the image 
-            SqlCommand cmd = new SqlCommand("Delete FROM [Album_table] WHERE Image_id = '" + image_id.ToString() + "'", conn);
+            SqlCommand cmd = new SqlCommand("Delete FROM [Album_Records] WHERE Image_id = '" + image_id + "'", conn);
 
             // Execute the sql command                
             cmd.Connection = conn;
@@ -275,7 +273,7 @@ public class FuddleAlbum
         try
         {
             conn = new SqlConnection(connString);
-            cmd = new SqlCommand("SELECT DISTINCT Album_id FROM [Album_table] WHERE User_id = '" + id.ToString() + "'", conn);
+            cmd = new SqlCommand("SELECT Album_id FROM [Album_table] WHERE User_id = '" + id.ToString() + "'", conn);
             conn.Open();
             rdr = cmd.ExecuteReader();
 

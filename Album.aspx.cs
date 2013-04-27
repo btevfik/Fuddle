@@ -50,14 +50,20 @@ public partial class Album : System.Web.UI.Page
         if (loggedUser == user)
         {
             UpdateTitleButton.Visible = true;
+            DeleteAlbumButton.Visible = true;
+            deleteSelectedButton.Visible = true;
         }
     }
 
     protected void loadImages()
     {
-        //List<int> imgs = FuddleAlbum.getImages(albumId);
-        //int rows = imgs.Count/5;
-        int rows = 10;
+        //clear table
+        ImageTable.Controls.Clear();
+        //get images
+        List<int> imgs = FuddleAlbum.getImages(albumId);
+        //calculate how many rows we need
+        int rows = imgs.Count/5;
+        if (rows == 0) rows = 1;
         for (int k = 0; k < rows; k++)
         {
             TableRow row1 = new TableRow();
@@ -66,15 +72,15 @@ public partial class Album : System.Web.UI.Page
                 try
                 {
                     HyperLink imglink = new HyperLink();
-                    imglink.NavigateUrl = "/resources/gravatar.jpg";
-                    imglink.ImageUrl = "/resources/gravatar.jpg";
+                    imglink.NavigateUrl = "/Image.aspx?id=" + imgs[k + rows *i];
+                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + imgs[k + rows * i];
                     imglink.CssClass = "album-img";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
                     if (loggedUser == user)
                     {
                         CheckBox removeBox = new CheckBox();
-                        removeBox.ID = i + k*rows + "";
+                        removeBox.ID = imgs[k + i*rows] + "";
                         removeBox.CssClass = "remove-box";
                         c.Controls.Add(removeBox);
                     }
@@ -113,7 +119,7 @@ public partial class Album : System.Web.UI.Page
             //something bad ???
         }
     }
-    protected void deleteSelectedButton_Click(object sender, EventArgs e)
+    protected void DeleteSelectedButton_Click(object sender, EventArgs e)
     {
         var boxes =  Page.GetAllControlsOfType<CheckBox>();
         foreach (CheckBox checkbox in boxes)
@@ -121,10 +127,25 @@ public partial class Album : System.Web.UI.Page
             //if checked remove from album
             if (checkbox.Checked)
             {
-                System.Diagnostics.Debug.WriteLine(checkbox.ID);
+                FuddleAlbum.deleteImage(Int32.Parse(checkbox.ID));
+                //reload images.
+                loadImages();
             }
             //reset boxes
             checkbox.Checked = false;
+        }
+    }
+
+    protected void DeleteAlbumButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            FuddleAlbum.deleteAlbum(albumId);
+            Response.Redirect("/member/MyProfile.aspx");
+        }
+        catch
+        {
+            //bad
         }
     }
 }
