@@ -28,8 +28,8 @@
     </script>
     <div id="container">
         <div style="margin-left: 50px;">
-              <!-- FB LIKE / SHARE BUTTON -->
-            <fb:like send="true" layout="button_count" width="0" style="float:right;margin-right:30px;margin-top:30px;" show_faces="true"></fb:like>
+            <!-- FB LIKE / SHARE BUTTON -->
+            <fb:like send="true" layout="button_count" width="0" style="float: right; margin-right: 30px; margin-top: 30px;" show_faces="true"></fb:like>
             <br />
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -40,6 +40,12 @@
                     <asp:Button ID="SaveTitleButton" CssClass="submitButton" OnClick="SaveTitleButton_Click" Visible="false" runat="server" Text="Save" ValidationGroup="AlbumTitle" />
                     <asp:Button ID="DeleteAlbumButton" CssClass="submitButton" OnClick="DeleteAlbumButton_Click" Visible="false" runat="server" Text="Delete Album" OnClientClick="if (!confirm('Are you sure you want to DELETE this album? (The images will NOT be deleted)')) return false;" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="" ControlToValidate="NewAlbumTitle" ValidationGroup="AlbumTitle"><span style="color:#d14545;font-size:15px;">Title can't be empty.</span></asp:RequiredFieldValidator>
+                    <br />
+                    <asp:RegularExpressionValidator runat="server" ID="titleLenghtValidator"
+                        ControlToValidate="NewAlbumTitle"
+                        ValidationExpression="^[\s\S]{0,40}$"
+                        ErrorMessage=""
+                        Display="Dynamic" ValidationGroup="AlbumTitle"><span style="font-size:14px;color:#d14545;">Please enter a maximum of 40 characters.</span></asp:RegularExpressionValidator>
                 </ContentTemplate>
             </asp:UpdatePanel>
             <div class="album-user">
