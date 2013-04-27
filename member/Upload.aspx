@@ -14,17 +14,6 @@
 
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/upload.css" />
-
-    <script>
-        window.onload(function () {
-            $('#content input:radio').screwDefaultButtons({
-                image: 'url("/resources/checkboxSmall.jpg")',
-                width: 43,
-                height: 43
-            });
-        });
-    </script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -95,5 +84,17 @@
 
     <!-- clear floats -->
     <div style="clear: both; margin-bottom: 20px"></div>
+     
+    <script>
+         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(pageLoaded);
+         function pageLoaded(sender, args) {
+             console.log("AAA");
+             $('#content input:radio').screwDefaultButtons({
+                 image: 'url("/resources/checkboxSmall.jpg")',
+                 width: 43,
+                 height: 43
+             });
+         }
+    </script>
 
 </asp:Content>

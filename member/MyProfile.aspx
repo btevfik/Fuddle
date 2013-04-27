@@ -81,6 +81,12 @@
                      <asp:TextBox ID="NewAlbumTitle" runat="server" Columns="25" Height="20"></asp:TextBox>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="NewAlbumTitle" ValidationGroup="AlbumCreation"><span style="color:#d14545">*</span></asp:RequiredFieldValidator>
                      <asp:Button ID="CreateAlbumButton" OnClick="CreateAlbumButton_Click" CssClass="submitButton" runat="server" Text="Create New Album" ValidationGroup="AlbumCreation" />
+                     <br /> 
+                     <asp:RegularExpressionValidator runat="server" ID="titleLenghtValidator"
+                            ControlToValidate="NewAlbumTitle"
+                            ValidationExpression="^[\s\S]{0,40}$"
+                            ErrorMessage=""
+                            Display="Dynamic" ValidationGroup="AlbumCreation"><span style="font-size:14px;color:#d14545;">Please enter a maximum of 40 characters.</span></asp:RegularExpressionValidator>
                     </asp:Panel>
                     <asp:Table ID="Table1" runat="server"></asp:Table>
                     <asp:Button CssClass="uploadButton" ID="loadrows" runat="server" Text="Load More" OnClick="loadrows_Click" />
