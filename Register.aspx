@@ -50,7 +50,7 @@
                 <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
                     <ContentTemplate>
                         <div style="text-align:center;width:260px">
-                        You are almost there. <br /> An activation link has been sent to your email. Don't forget to check your spam folder.
+                        You are almost there. <br /> An activation link has been sent to your email. <br /> <span style="font-size:14px"> (Don't forget to check your spam folder.) </span>
                         </div>
                         <br />
                         <asp:Button ID="ContinueButton" CssClass="submitButton" runat="server" CausesValidation="False" CommandName="Continue" Text="Cool" ValidationGroup="CreateUserWizard1" style="margin-left:80px;width:100px"/>
