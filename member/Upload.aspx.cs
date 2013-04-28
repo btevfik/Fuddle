@@ -268,12 +268,22 @@ public partial class Upload : System.Web.UI.Page
     private void loadAlbums(){
         buttonList.Items.Clear();
         List<int> albumIds = FuddleAlbum.getAllAlbums(id);
-        foreach (int albumId in albumIds)
+        if (albumIds.Count == 0)
         {
-            ListItem albumSelect = new ListItem();
-            albumSelect.Value = albumId.ToString();
-            albumSelect.Text = FuddleAlbum.getTitle(albumId);
-            buttonList.Items.Add(albumSelect);
-       }
+            noAlbumLabel.Visible = true;
+            chooseButton.Visible = false;
+        }
+        else
+        {
+            foreach (int albumId in albumIds)
+            {
+                noAlbumLabel.Visible = false;
+                chooseButton.Visible = true;
+                ListItem albumSelect = new ListItem();
+                albumSelect.Value = albumId.ToString();
+                albumSelect.Text = FuddleAlbum.getTitle(albumId);
+                buttonList.Items.Add(albumSelect);
+            }
+        }
     }
 }
