@@ -200,6 +200,7 @@ public class FuddleAlbum
         return images;
     }
 
+    /*NOT NEEDED FOR NOW
     // Must use this method to delete all the specified user's albums when deleting the user 
     public static void deleteAllUsersAlbums(Guid id)
     {
@@ -220,6 +221,7 @@ public class FuddleAlbum
             conn.Dispose();
         }
     }
+    */
 
     public static void deleteAlbum(int album_id)
     {
@@ -243,6 +245,9 @@ public class FuddleAlbum
 
     public static void deleteImage(int image_id)
     {
+        //deletes this image from cover of an album if exists
+        FuddleAlbum.deleteCover(image_id);
+
         SqlConnection conn = new SqlConnection(connString);
         try
         {
@@ -253,6 +258,26 @@ public class FuddleAlbum
             cmd.Connection = conn;
             conn.Open();
             cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    //sets to null
+    private static void deleteCover(int cover_id)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+
+        try
+        {
+            SqlCommand cmd = new SqlCommand("UPDATE [Album_table] SET Cover_id = @newCoverid WHERE Cover_id = " + cover_id, conn);
+            cmd.Parameters.Add("@newCoverid", SqlDbType.Int).Value = DBNull.Value;
+
+            conn.Open();
+            cmd.ExecuteScalar();
         }
         finally
         {

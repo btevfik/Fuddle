@@ -38,7 +38,7 @@
                     <asp:TextBox ID="NewAlbumTitle" runat="server" Visible="false"></asp:TextBox>
                     <asp:Button ID="UpdateTitleButton" CssClass="submitButton" OnClick="UpdateTitleButton_Click" Visible="false" runat="server" Text="Update Title" />
                     <asp:Button ID="SaveTitleButton" CssClass="submitButton" OnClick="SaveTitleButton_Click" Visible="false" runat="server" Text="Save" ValidationGroup="AlbumTitle" />
-                    <asp:Button ID="DeleteAlbumButton" CssClass="submitButton" OnClick="DeleteAlbumButton_Click" Visible="false" runat="server" Text="Delete Album" OnClientClick="if (!confirm('Are you sure you want to DELETE this album? (The images will NOT be deleted)')) return false;" />
+                    <asp:Button ID="DeleteAlbumButton" CssClass="submitButton" OnClick="DeleteAlbumButton_Click" Visible="false" runat="server" Text="Delete Album" OnClientClick="if (!confirm('Are you sure you want to DELETE this album? (All images in this album will be DELETED)')) return false;" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="" ControlToValidate="NewAlbumTitle" ValidationGroup="AlbumTitle"><span style="color:#d14545;font-size:15px;">Title can't be empty.</span></asp:RequiredFieldValidator>
                     <br />
                     <asp:RegularExpressionValidator runat="server" ID="titleLenghtValidator"
@@ -54,7 +54,7 @@
             </div>
         </div>
         <asp:Table ID="ImageTable" ClientIDMode="Static" runat="server"></asp:Table>
-        <asp:Button ID="deleteSelectedButton" runat="server" CssClass="submitButton removeButton" Text="Remove Selected Images" Visible="false" OnClick="DeleteSelectedButton_Click" OnClientClick="if (!confirm('Are you sure you want to REMOVE selected images from the album? (The images will NOT be deleted)')) return false;" />
+        <asp:Button ID="deleteSelectedButton" runat="server" CssClass="submitButton removeButton" Text="Delete Selected Images" Visible="false" OnClick="DeleteSelectedButton_Click" OnClientClick="if (!confirm('Are you sure you want to DELETE selected images?')) return false;" />
         </div>
 </asp:Content>
 

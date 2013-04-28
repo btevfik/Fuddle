@@ -132,10 +132,13 @@ public partial class Album : System.Web.UI.Page
         var boxes =  Page.GetAllControlsOfType<CheckBox>();
         foreach (CheckBox checkbox in boxes)
         {
-            //if checked remove from album
+            //if checked remove from album and delete image
             if (checkbox.Checked)
             {
+                //delete from album
                 FuddleAlbum.deleteImage(Int32.Parse(checkbox.ID));
+                //delete from image table too
+                FuddleImage.deleteImage(Int32.Parse(checkbox.ID));
                 //reload images.
                 loadImages();
             }
@@ -148,6 +151,15 @@ public partial class Album : System.Web.UI.Page
     {
         try
         {
+            //delete all images in this album
+            //get images
+            List<int> imgs = FuddleAlbum.getImages(albumId);
+            //delete them
+            foreach (int img in imgs)
+            {
+                FuddleImage.deleteImage(img);
+            }
+            //now the delete album
             FuddleAlbum.deleteAlbum(albumId);
             Response.Redirect("/member/MyProfile.aspx");
         }
