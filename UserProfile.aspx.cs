@@ -184,9 +184,19 @@ public partial class UserProfile : System.Web.UI.Page
                 try
                 {
                     HyperLink imglink = new HyperLink();
-                    //imglink.NavigateUrl = "/Image.aspx?id=" + albums[i];
-                    //imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + albums[i];
-                    imglink.ToolTip = FuddleAlbum.getTitle(albums[i]);
+                    imglink.NavigateUrl = "/Album.aspx?id=" + albums[i + k * 5];
+                    int albumCoverId = FuddleAlbum.getAlbumCover(albums[i + k * 5]);
+                    //if no cover show default
+                    if (albumCoverId == -1)
+                    {
+                        imglink.ImageUrl = "/resources/gravatar.jpg";
+                    }
+                    //if cover found
+                    else
+                    {
+                        imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + albumCoverId;
+                    }
+                    imglink.ToolTip = FuddleAlbum.getTitle(albums[i + k * 5]);
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);

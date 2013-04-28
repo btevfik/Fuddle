@@ -107,3 +107,10 @@ text-decoration: none;
 color: transparent;
 }
 
+#ImageTable .uploadButton {
+   position: relative;
+   right: 185px;
+   padding:5px;
+   font-size: 12px;
+   bottom: 25px;
+}

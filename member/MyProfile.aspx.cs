@@ -265,8 +265,17 @@ public partial class member_MyProfile : System.Web.UI.Page
                 {
                     HyperLink imglink = new HyperLink();
                     imglink.NavigateUrl = "/Album.aspx?id=" + albums[i + k * 5];
-                    imglink.ImageUrl = "/resources/gravatar.jpg";
-                    //imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + 1; ///GET ALBUM COVER HERE FuddleAblum.GetCover(id);
+                    int albumCoverId = FuddleAlbum.getAlbumCover(albums[i+k*5]);
+                    //if no cover show default
+                    if (albumCoverId == -1)
+                    {
+                        imglink.ImageUrl = "/resources/gravatar.jpg";
+                    }
+                    //if cover found
+                    else
+                    {
+                        imglink.ImageUrl = "/ShowThumbnail.ashx?imgid="+albumCoverId;
+                    }
                     imglink.ToolTip = FuddleAlbum.getTitle(albums[i + k * 5]);
                     imglink.CssClass = "imgtab";
                     TableCell c = new TableCell();

@@ -52,7 +52,6 @@ public partial class Album : System.Web.UI.Page
             UpdateTitleButton.Visible = true;
             DeleteAlbumButton.Visible = true;
             deleteSelectedButton.Visible = true;
-            changeCoverButton.Visible = true;
         }
     }
 
@@ -80,10 +79,13 @@ public partial class Album : System.Web.UI.Page
                     c.Controls.Add(imglink);
                     if (loggedUser == user)
                     {
-                        RadioButton coverButton = new RadioButton();
-                        coverButton.ID = imgs[k + i * rows] + " ";
-                        coverButton.GroupName = "coverGroup";
-                        c.Controls.Add(coverButton);
+                        Button changeCover = new Button();
+                        changeCover.Text = "Make album cover";
+                        changeCover.CssClass = "uploadButton";
+                        changeCover.Click += new EventHandler(changeCoverButton_Click);
+                        changeCover.ID = imgs[k + i * rows] + " ";
+                        c.Controls.Add(changeCover);
+
                         CheckBox removeBox = new CheckBox();
                         removeBox.ID = imgs[k + i*rows] + "";
                         removeBox.CssClass = "remove-box";
@@ -156,6 +158,16 @@ public partial class Album : System.Web.UI.Page
 
     protected void changeCoverButton_Click(object sender, EventArgs e)
     {
+        Button theButton = (Button)sender;
+        try
+        {
+            int id = Int32.Parse(theButton.ID);
+            FuddleAlbum.changeAlbumCover(id, albumId);
+        }
+        catch
+        {
+            //something bad happened
+        }
     }
 }
 
