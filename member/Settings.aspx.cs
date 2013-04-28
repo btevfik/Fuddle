@@ -66,6 +66,8 @@ public partial class member_Account : System.Web.UI.Page
                 //delete all comments by this user
                 FuddleUser fUser = new FuddleUser(user.UserName);
                 fUser.deleteAllComments();
+                //delete all votes and cuddles
+                fUser.removeVoteAndCuddlesForUser();
                 //delete user
                 Membership.DeleteUser(user.UserName);
                 FormsAuthentication.SignOut();
