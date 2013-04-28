@@ -1,6 +1,6 @@
 ﻿h1 {
     margin-bottom: 5px;
-    width:500px;
+    width: 500px;
 }
 
 .centerPage {
@@ -107,9 +107,9 @@
 
 .settings {
     position: relative;
-    left: 380px;
+    left: 230px;
     top: -160px;
-    width: 400px;
+    width: 550px;
     color: white;
     text-align: right;
 }
@@ -244,7 +244,7 @@
 .uploads .uploadButton {
     position: relative;
     top: 15px;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 
