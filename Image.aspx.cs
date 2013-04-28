@@ -114,7 +114,7 @@ public partial class Image : System.Web.UI.Page
             double spamRatio = upvoteCount / downvoteCount;
 
             // If the spam ratio is lower than the threshold, then flag the image as spam
-            if (spamRatio <= threshold && upvoteCount != 0)
+            if (spamRatio <= threshold && upvoteCount != 0 && downvoteCount != 0)
             {
                 error.Text = "This image has been flagged as spam!";
                 lightbox.Visible = true;
