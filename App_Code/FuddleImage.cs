@@ -402,7 +402,6 @@ public class FuddleImage
             while (rdr.Read())
             {
                 int img_id = (int)rdr["Image_id"];
-                System.Diagnostics.Debug.WriteLine(img_id);
                 int votes = FuddleVote.getUpCount(img_id);
                 int rank = votes + FuddleVote.getDownCount(img_id);
                 ImageVoteList ivl = new ImageVoteList(img_id, votes, rank);

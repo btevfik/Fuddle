@@ -2,7 +2,7 @@
 
 <script RunAt="server">
 
-    static Regex ProfileRegex = new Regex(@"/user/(?<username>[a-zA-Z-0-9]+)$",
+    static Regex ProfileRegex = new Regex(@"/user/(?<username>[^~,]+)$",
     RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     void Application_BeginRequest(object sender, EventArgs e)
@@ -12,8 +12,9 @@
         Match match = ProfileRegex.Match(Context.Request.FilePath);
         if ((match != null) && match.Success)
         {
-            Context.RewritePath((String.Format("~/UserProfile.aspx?user={0}",
-             match.Groups["username"])), false);
+            String path = (String.Format("~/UserProfile.aspx?user={0}",
+            match.Groups["username"]));
+            Context.RewritePath(path, false);
         }
     }
 
