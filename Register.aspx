@@ -37,6 +37,8 @@
                         </fieldset>
                         <div class="registerError">
                             <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="Email"  Display="Dynamic" ValidationGroup="CreateUserWizard1" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ErrorMessage="E-mail address must be in a valid format."></asp:RegularExpressionValidator>
+                            <asp:RegularExpressionValidator ID="UserNameLengthValidator" runat="server" ControlToValidate="UserName" Display="Dynamic" ValidationGroup="CreateUserWizard1" ValidationExpression="^[\s\S]{0,15}$" ErrorMessage="Username can be maximum 15 characters long."></asp:RegularExpressionValidator>
+                            <asp:RegularExpressionValidator ID="UserNameValidator" runat="server" Display="Dynamic" ControlToValidate="UserName" ValidationGroup="CreateUserWizard1" ErrorMessage="Username can only contain alphanumeric characters and underscore." ValidationExpression="^\w*$"></asp:RegularExpressionValidator>
                             <asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword" Display="Dynamic" ErrorMessage="Passwords don't match." ValidationGroup="CreateUserWizard1"></asp:CompareValidator>
                             <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False"></asp:Literal>
                         </div>

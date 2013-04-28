@@ -2,7 +2,7 @@
 
 <script RunAt="server">
 
-    static Regex ProfileRegex = new Regex(@"/user/(?<username>[^~,]+)$",
+    static Regex ProfileRegex = new Regex(@"/user/(?<username>\w*$)",
     RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     void Application_BeginRequest(object sender, EventArgs e)
