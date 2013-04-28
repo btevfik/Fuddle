@@ -117,6 +117,9 @@ public partial class Image : System.Web.UI.Page
                 upCount.Text = FuddleVote.getUpCount(id).ToString();
                 upCount.Width = upCount.Text.Length * 8;
                 upButton.Attributes.Add("style", "background-color:#C4C4C4");
+
+                // Clean up the table
+                FuddleVote.dbGarbageCollector();
             }
             catch
             {
@@ -149,6 +152,9 @@ public partial class Image : System.Web.UI.Page
                 downCount.Text = FuddleVote.getDownCount(id).ToString();
                 downCount.Width = downCount.Text.Length * 8;
                 downButton.Attributes.Add("style", "background-color:#C4C4C4");
+
+                // Clean up the table
+                FuddleVote.dbGarbageCollector();
             }
             catch
             {

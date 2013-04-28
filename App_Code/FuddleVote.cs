@@ -107,10 +107,10 @@ public class FuddleVote
 
             conn.Close();
 
-            // If the user has not voted on this particular image...
+            // If the user has not voted on this particular image and if the user is the same...
             if (!upVote && !downVote)
             {
-                SqlCommand cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote, DownVote = @newDownVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) VALUES (@newImageid, @newUpVote, @newDownVote, @newUserid)", conn);
                 cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
                 cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = true;
                 cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Bit).Value = false;
@@ -164,7 +164,7 @@ public class FuddleVote
             // If the user has not voted on this particular image...
             if (!upVote && !downVote)
             {
-                SqlCommand cmd = new SqlCommand("UPDATE [Vote_table] SET UpVote = @newUpVote, DownVote = @newDownVote WHERE Image_id = @newImageid AND User_id = @newUserid", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO [Vote_table] (Image_id, UpVote, DownVote, User_id) VALUES (@newImageid, @newUpVote, @newDownVote, @newUserid)", conn);
                 cmd.Parameters.Add("@newImageid", System.Data.SqlDbType.Int).Value = image_id;
                 cmd.Parameters.Add("@newUpVote", System.Data.SqlDbType.Bit).Value = false;
                 cmd.Parameters.Add("@newDownVote", System.Data.SqlDbType.Bit).Value = true;
@@ -449,6 +449,30 @@ public class FuddleVote
             cmd.Connection = conn;
             conn.Open();
             int count = cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
+
+    public static void dbGarbageCollector()
+    {
+        SqlConnection conn = new SqlConnection(connString);
+
+        try
+        {
+            SqlCommand sel_cmd = new SqlCommand("SELECT * FROM [Vote_table] WHERE Vote_id NOT IN "
+                + "(SELECT MIN(Vote_id) FROM [Vote_table] GROUP BY Image_id, UpVote, DownVote, User_id)", conn);
+            conn.Open();
+            sel_cmd.ExecuteScalar();
+            conn.Close();
+
+            SqlCommand del_cmd = new SqlCommand("DELETE FROM [Vote_table] WHERE Vote_id NOT IN "
+                + "(SELECT MIN(Vote_id) FROM [Vote_table] GROUP BY Image_id, UpVote, DownVote, User_id)", conn);
+            conn.Open();
+            del_cmd.ExecuteNonQuery();
         }
         finally
         {
