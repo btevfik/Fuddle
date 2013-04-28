@@ -270,4 +270,31 @@ public class FuddleUser
             conn.Dispose();
         }
     }
+
+    public void removeVoteAndCuddlesForUser()
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete the cuddles
+            SqlCommand cmd = new SqlCommand("Delete FROM [Cuddle_table] WHERE User_id = '" + id + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+
+            // Delete the votes 
+            cmd = new SqlCommand("Delete FROM [Vote_table] WHERE User_id = '" + id + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
+    }
 }
