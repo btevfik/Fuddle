@@ -16,6 +16,7 @@ public class FuddleUser
 {
     MembershipUser user;
     Guid id;
+    String username;
     protected string connString = ConfigurationManager.ConnectionStrings["fuddleConnectionString"].ConnectionString;
 
 	public FuddleUser(string username)
@@ -23,6 +24,7 @@ public class FuddleUser
         SqlConnection conn = new SqlConnection(connString);
         this.user = Membership.GetUser(username);
         this.id = (Guid)user.ProviderUserKey;
+        this.username = username;
 	}
 
 
@@ -242,5 +244,30 @@ public class FuddleUser
         }
         //return the json data
         return img_ids;
+    }
+
+    public bool deleteAllComments()
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        try
+        {
+            // Delete the comments for this user 
+            SqlCommand cmd = new SqlCommand("Delete FROM [Comments_table] WHERE Username = '" + username + "'", conn);
+
+            // Execute the sql command                
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+        finally
+        {
+            conn.Close();
+            conn.Dispose();
+        }
     }
 }

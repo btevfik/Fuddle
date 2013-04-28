@@ -104,6 +104,10 @@ public partial class admin_ManageUsers : System.Web.UI.Page
     {
         if (!String.IsNullOrEmpty(UserNameText.Text))
         {
+            //delete all comments by this user
+            FuddleUser fUser = new FuddleUser(UserNameText.Text);
+            fUser.deleteAllComments();
+            //delete user
             Membership.DeleteUser(UserNameText.Text);
             UserGrid.DataBind();
         }

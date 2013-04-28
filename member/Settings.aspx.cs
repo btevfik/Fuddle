@@ -63,9 +63,11 @@ public partial class member_Account : System.Web.UI.Page
 
             if (result)
             {
+                //delete all comments by this user
+                FuddleUser fUser = new FuddleUser(user.UserName);
+                fUser.deleteAllComments();
                 //delete user
                 Membership.DeleteUser(user.UserName);
-                //go to login url
                 FormsAuthentication.SignOut();
                 Response.Redirect(FormsAuthentication.LoginUrl);
             }
