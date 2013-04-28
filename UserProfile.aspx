@@ -3,7 +3,7 @@
     
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link href="/stylesheets/userprofile.css" rel="stylesheet" />
+    <link href="/stylesheets/myprofile.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -14,8 +14,8 @@
         <div class="userBio">
             <!-- User's Avatar -->
             <div class ="avatar">
-                <asp:Image ID="AvatarImage" runat="server"/>
-            </div>
+                <figure><asp:Image ID="AvatarImage" runat="server"/></figure>
+                </div>
             <!-- Username -->
             <div class ="username">
                 <h1>
