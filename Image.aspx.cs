@@ -76,7 +76,7 @@ public partial class Image : System.Web.UI.Page
         ScriptManager.RegisterClientScriptInclude(this, UpdatePanel1.GetType(), "Test", "http://s7.addthis.com/js/300/addthis_widget.js#pubid=undefined");
 
         //Show deletebutton if logged inuser is the one who uploaded this picture
-        string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
+        string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture        
 
         if (u != null)
         {
@@ -98,6 +98,33 @@ public partial class Image : System.Web.UI.Page
             {
                 deleteButton.Visible = true;
                 updateButton.Visible = true;
+            }
+        }
+
+        if (!IsPostBack)
+        {
+            // Spam stuff -------
+            // Setting a threshold ratio of 1/10
+            double threshold = 0.1;
+
+            // Get the upvote and downvote counts and calculate the spam ratio
+            double upvoteCount = FuddleVote.getUpCount(id);
+            double downvoteCount = FuddleVote.getDownCount(id);
+            downvoteCount *= -1;
+            double spamRatio = upvoteCount / downvoteCount;
+
+            // If the spam ratio is lower than the threshold, then flag the image as spam
+            if (spamRatio <= threshold && upvoteCount != 0)
+            {
+                error.Text = "This image has been flagged as spam!";
+                lightbox.Visible = true;
+                return;
+            }
+            else if (upvoteCount == 0 && downvoteCount >= 10)
+            {
+                error.Text = "This image has been flagged as spam!";
+                lightbox.Visible = true;
+                return;
             }
         }
     }
