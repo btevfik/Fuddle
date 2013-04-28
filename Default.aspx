@@ -21,12 +21,12 @@
             margin-right: auto;
         }
 
-            #container img {
+        #container img {
                 padding: 5px;
                 background-color: white;
                 margin: 5px;
                 box-shadow: 0px 1px 3px #434141;
-            }
+        }
 
         figure {
             position: relative;
@@ -54,12 +54,16 @@
         }
 
         figcaption:hover {
-            display:block;
+            display: block;
+        }
+
+        #container a:link img {
+            border: none;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div style="text-align:center;width:100%;background-color: rgba(0, 0, 0, 0.1);color:#0D98BA;padding:5px">The most liked fuddles by our members.</div>
+    <div style="text-align: center; width: 100%; background-color: rgba(0, 0, 0, 0.1); color: #0D98BA; padding: 5px">The most liked fuddles by our members.</div>
     <asp:Panel ID="container" ClientIDMode="Static" runat="server"></asp:Panel>
 </asp:Content>
 

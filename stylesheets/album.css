@@ -97,3 +97,13 @@ color: rgb(151, 186, 195);
 .submitButton::-moz-focus-inner {
   border: none;
 }
+
+#ImageTable a:visited, #ImageTable a:link {
+color: transparent;
+text-decoration: none;
+}
+
+#ImageTable a:hover {
+color: transparent;
+}
+

@@ -1,62 +1,65 @@
 ﻿h1 {
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
 
 .centerPage {
     margin: 0 auto;
     width: 800px;
     position: relative;
-    background-color:rgba(0, 0, 0, 0.1);
-    top:1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    top: 1px;
 }
 
-.centerPage figure {
-    position:relative;
-    display:inline-block;
-    margin:0;
-}
+    .centerPage figure {
+        position: relative;
+        display: inline-block;
+        margin: 0;
+    }
 
-.centerPage figcaption {
-    padding:5px;
-    margin: 2px 3px 3px 2px;
-    font-size:12px;
-    bottom: 4px;
-    left: 0;
-    right: 0;
-    position:absolute;
-    display:none;
-    background-color:rgba(0, 0, 0, 0.80);
-    color:white;
-    text-decoration:none;
-    overflow:hidden;
-    text-align:center;
-}
+    .centerPage figcaption {
+        padding: 5px;
+        margin: 2px 3px 3px 2px;
+        font-size: 12px;
+        bottom: 4px;
+        left: 0;
+        right: 0;
+        position: absolute;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.80);
+        color: white;
+        text-decoration: none;
+        overflow: hidden;
+        text-align: center;
+    }
 
-.centerPage figcaption a:link, .centerPage figcaption a:visited {
-    color:white;    
-}
+        .centerPage figcaption a:link, .centerPage figcaption a:visited {
+            color: white;
+        }
 
-.centerPage figcaption:hover {
-    display: block;
-}
+        .centerPage figcaption:hover {
+            display: block;
+        }
 
-.centerPage img:hover ~ figcaption{
-    display:block;
-}
+    .centerPage img:hover ~ figcaption {
+        display: block;
+    }
+
+    .centerPage a:link img {
+        border: none;
+    }
 
 
 /* User Biography*/
 .userBio {
-    z-index:-9999;
+    z-index: -9999;
     height: 320px;
-    background-color:rgb(25, 175, 212);
-    background-image:url("/resources/noisy-texture.png");
+    background-color: rgb(25, 175, 212);
+    background-image: url("/resources/noisy-texture.png");
 }
 
-.avatar img{
-
-    width:200px;
-    height:200px;
+.avatar img {
+    width: 200px;
+    height: 200px;
     padding: 5px;
     background-color: white;
     box-shadow: 0px 1px 3px #434141;
@@ -65,9 +68,9 @@
 .avatar figure {
     top: 50px;
     left: 25px;
-    position:relative;
-    display:inline-block;
-    margin:0;
+    position: relative;
+    display: inline-block;
+    margin: 0;
 }
 
 
@@ -90,16 +93,16 @@
 }
 
 .aboutmeText {
-    font-size:15px;
-    word-break:break-all;
-    max-width:500px;		
+    font-size: 15px;
+    word-break: break-all;
+    max-width: 500px;
 }
 
-.aboutmeText:focus {
-    -webkit-appearance: none;
-    border-color:transparent;
-    box-shadow:0px 0px 20px #e8c291;    
-}
+    .aboutmeText:focus {
+        -webkit-appearance: none;
+        border-color: transparent;
+        box-shadow: 0px 0px 20px #e8c291;
+    }
 
 .settings {
     position: relative;
@@ -110,14 +113,14 @@
     text-align: right;
 }
 
-.settings a:link, .settings a:visited{
-    color:#f1e453;
-    text-decoration:none;
-}
+    .settings a:link, .settings a:visited {
+        color: #f1e453;
+        text-decoration: none;
+    }
 
-.settings a:hover{
-    color:#d8cd4d;
-}
+    .settings a:hover {
+        color: #d8cd4d;
+    }
 
 /*Albums-Image-Tabs*/
 #albums-image-tabs {
@@ -131,75 +134,79 @@
     position: relative;
 }
 
-#albums-image-tabs ul {
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
-    width: 100%;
-    cursor:default;
-}
+    #albums-image-tabs ul {
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+        width: 100%;
+        cursor: default;
+    }
 
-#albums-image-tabs ul li {
-    height: 30px;
-    list-style: none outside none;
-    display: inline-block;
-    width: 160px;
-    border: 1px solid rgb(204, 204, 204);
-    background: none repeat scroll 0% 0% rgb(243, 243, 243);
-    cursor:pointer;
-}
+        #albums-image-tabs ul li {
+            height: 30px;
+            list-style: none outside none;
+            display: inline-block;
+            width: 160px;
+            border: 1px solid rgb(204, 204, 204);
+            background: none repeat scroll 0% 0% rgb(243, 243, 243);
+            cursor: pointer;
+        }
 
-#albums-image-tabs ul li a{
-    color: black;
-    text-decoration: none;
-    line-height: 30px;
-    width:100%;
-    display: inline-block;
-}
+            #albums-image-tabs ul li a {
+                color: black;
+                text-decoration: none;
+                line-height: 30px;
+                width: 100%;
+                display: inline-block;
+            }
 
-#albums-image-tabs ul li:hover, li:active{
-     background: white;
-}
+            #albums-image-tabs ul li:hover, li:active {
+                background: white;
+            }
 
 .activated a {
-     background: white;
-     color: #0D98BA !important;
+    background: white;
+    color: #0D98BA !important;
 }
 
-#albums-image-tabs ul li:hover, li:active a{
-     color: #0D98BA;
+#albums-image-tabs ul li:hover, li:active a {
+    color: #0D98BA;
 }
 
 .imgtab {
-    position:relative;
+    position: relative;
     width: 700px;
     margin: 10px auto 10px auto;
     text-align: center;
 }
 
-.imgtab table {
-    max-width: 700px;
-    min-width: 125px;
-    margin: auto;
-    background-color:rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
+    .imgtab table {
+        max-width: 700px;
+        min-width: 125px;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
 
-.imgtab img {
-    width: 125px;
-    height: 125px;
-}
+    .imgtab img {
+        width: 125px;
+        height: 125px;
+        padding: 5px;
+        background-color: white;
+        box-shadow: 0px 1px 3px #434141;
+    }
 
-.imgtab .uploadButton {
-    margin-top: 20px;
-    margin-left: 0px;
-}
+    .imgtab .uploadButton {
+        margin-top: 20px;
+        margin-left: 0px;
+    }
 
 .imgpanel {
     position: relative;
     display: inline-block;
     width: 125px;
     height: 125px;
+    margin-right: 10px;
 }
 
 .deleteButton {
@@ -221,68 +228,66 @@
 .uploads {
     margin-top: 10px;
     text-align: center;
+    padding-bottom: 30px;
 }
 
 .imgupload img {
     padding: 10px;
-    background-color:white;
+    background-color: white;
     box-shadow: 0px 1px 3px #434141;
     max-width: 700px;
-    margin-bottom:50px;
+    display: block;
+    margin: 50px auto 0 auto;
 }
 
 .uploads .uploadButton {
-    margin-top:20px;
-    margin-left:0px;
+    position: relative;
+    top: 15px;
+    margin:0 auto;
 }
 
 
 /*Buttons*/
-.submitButton {		
-  background-color: #d14545;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#e97171), to(#d14545));
-  background-image: -webkit-linear-gradient(top, #e97171, #d14545);
-  background-image: -moz-linear-gradient(top, #e97171, #d14545);
-  background-image: -ms-linear-gradient(top, #e97171, #d14545);
-  background-image: -o-linear-gradient(top, #e97171, #d14545);
-  background-image: linear-gradient(top, #e97171, #d14545);
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  text-shadow: 0 1px 0 rgba(0,0,0,.5);
-  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
-  border: 1px solid #7e1515;
-  cursor: pointer;
-  color: #fff;
-  font-style:normal;
-  padding:4px;
+.submitButton {
+    background-color: #d14545;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e97171), to(#d14545));
+    background-image: -webkit-linear-gradient(top, #e97171, #d14545);
+    background-image: -moz-linear-gradient(top, #e97171, #d14545);
+    background-image: -ms-linear-gradient(top, #e97171, #d14545);
+    background-image: -o-linear-gradient(top, #e97171, #d14545);
+    background-image: linear-gradient(top, #e97171, #d14545);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.5);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    border: 1px solid #7e1515;
+    cursor: pointer;
+    color: #fff;
+    font-style: normal;
+    padding: 4px;
 }
 
-.submitButton:hover,
-.submitButton:focus {		
-  background-color: #e97171;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#d14545), to(#e97171));
-  background-image: -webkit-linear-gradient(top, #d14545, #e97171);
-  background-image: -moz-linear-gradient(top, #d14545, #e97171);
-  background-image: -ms-linear-gradient(top, #d14545, #e97171);
-  background-image: -o-linear-gradient(top, #d14545, #e97171);
-  background-image: linear-gradient(top, #d14545, #e97171);
-}	
+    .submitButton:hover,
+    .submitButton:focus {
+        background-color: #e97171;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#d14545), to(#e97171));
+        background-image: -webkit-linear-gradient(top, #d14545, #e97171);
+        background-image: -moz-linear-gradient(top, #d14545, #e97171);
+        background-image: -ms-linear-gradient(top, #d14545, #e97171);
+        background-image: -o-linear-gradient(top, #d14545, #e97171);
+        background-image: linear-gradient(top, #d14545, #e97171);
+    }
 
-.submitButton:active {		
-  outline: none;
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
-}
+    .submitButton:active {
+        outline: none;
+        -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+        -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    }
 
-.submitButton::-moz-focus-inner {
-  border: none;
-}
-
-
-
-
- 
+    .submitButton::-moz-focus-inner {
+        border: none;
+    }
