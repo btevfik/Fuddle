@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Globalization;
+using System.Web.UI.HtmlControls;
 
 
 //THIS USER PROFILE PAGE IS PUBLIC PROFILE
@@ -183,21 +184,28 @@ public partial class UserProfile : System.Web.UI.Page
             {
                 try
                 {
+                    var figure = new HtmlGenericControl("figure");
+                    var figcaption = new HtmlGenericControl("figcaption");
+                    figcaption.InnerText = FuddleAlbum.getTitle(albums[i + k * 5]);
                     HyperLink imglink = new HyperLink();
                     imglink.NavigateUrl = "/Album.aspx?id=" + albums[i + k * 5];
                     int albumCoverId = FuddleAlbum.getAlbumCover(albums[i + k * 5]);
+                    System.Web.UI.WebControls.Image img = new System.Web.UI.WebControls.Image();
                     //if no cover show default
                     if (albumCoverId == -1)
                     {
-                        imglink.ImageUrl = "/resources/gravatar.jpg";
+                        img.ImageUrl = "/resources/gravatar.jpg";
                     }
                     //if cover found
                     else
                     {
-                        imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + albumCoverId;
+                        img.ImageUrl = "/ShowThumbnail.ashx?imgid=" + albumCoverId;
                     }
+                    figure.Controls.Add(img);
+                    figure.Controls.Add(figcaption);
                     imglink.ToolTip = FuddleAlbum.getTitle(albums[i + k * 5]);
                     imglink.CssClass = "imgtab";
+                    imglink.Controls.Add(figure);
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
                     row1.Cells.Add(c);

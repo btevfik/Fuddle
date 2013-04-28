@@ -19,13 +19,13 @@
 
     .centerPage figcaption {
         padding: 5px;
-        margin: 2px 3px 3px 2px;
+        margin: 5px 5px 5px 5px;
         font-size: 12px;
         bottom: 4px;
         left: 0;
         right: 0;
         position: absolute;
-        display: none;
+        display: block;
         background-color: rgba(0, 0, 0, 0.80);
         color: white;
         text-decoration: none;
@@ -37,13 +37,7 @@
             color: white;
         }
 
-        .centerPage figcaption:hover {
-            display: block;
-        }
 
-    .centerPage img:hover ~ figcaption {
-        display: block;
-    }
 
     .centerPage a:link img {
         border: none;
