@@ -216,6 +216,7 @@ public partial class Upload : System.Web.UI.Page
                 title.Text = "";
                 description.Text = "";
                 uploadStatus.Visible = true;
+                pickAlbum.CssClass = "albumButton";
             }
             catch (Exception ee)
             {
@@ -258,6 +259,7 @@ public partial class Upload : System.Web.UI.Page
             ListItem item = buttonList.SelectedItem;
             album_index = Int32.Parse(item.Value);
             lightbox.Visible = false;
+            pickAlbum.CssClass = "albumSelected";
         }
         catch
         {
