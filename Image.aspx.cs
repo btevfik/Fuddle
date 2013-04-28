@@ -49,14 +49,14 @@ public partial class Image : System.Web.UI.Page
         upCount.Text = FuddleVote.getUpCount(id).ToString();
         downCount.Text = FuddleVote.getDownCount(id).ToString();
         cuddleCount.Text = FuddleVote.getCuddleCount(id).ToString();
-         
+
 
         //set widths of counts
         upCount.Width = upCount.Text.Length * 8;
         downCount.Width = downCount.Text.Length * 8;
         cuddleCount.Width = cuddleCount.Text.Length * 8;
 
-         //set the title of the page
+        //set the title of the page
         Page.Header.Title = "Fuddle | " + FuddleImage.getTitle(id);
 
         //set title and description of image
@@ -64,7 +64,7 @@ public partial class Image : System.Web.UI.Page
         imageDescription.Text = FuddleImage.getDescription(id);
 
         //set the user who uploded img
-        imageUser.Text = "by <b><a href='/user/" + FuddleImage.getUser(id)+"' target='_blank'>" + FuddleImage.getUser(id) + "</a></b>";
+        imageUser.Text = "by <b><a href='/user/" + FuddleImage.getUser(id) + "' target='_blank'>" + FuddleImage.getUser(id) + "</a></b>";
 
         //load comments from database
         loadComments();
@@ -77,10 +77,10 @@ public partial class Image : System.Web.UI.Page
 
         //Show deletebutton if logged inuser is the one who uploaded this picture
         string uploadedUser = FuddleImage.getUser(id); //returns the user who uploaded that picture
-       
-        if( u !=null){
-            cuddleButton.Enabled = true;
-            vote = FuddleVote.checkIfVoted(id,(Guid)u.ProviderUserKey);
+
+        if (u != null)
+        {
+            vote = FuddleVote.checkIfVoted(id, (Guid)u.ProviderUserKey);
             if (vote == "up")
             {
                 upButton.Attributes.Add("style", "background-color:#C4C4C4");
@@ -105,6 +105,12 @@ public partial class Image : System.Web.UI.Page
     //upvoting this image
     protected void upButton_Click(object sender, EventArgs e)
     {
+        if (u == null)
+        {
+            error.Text = "Please login to vote.";
+            lightbox.Visible = true;
+            return;
+        }
         vote = FuddleVote.checkIfVoted(id, (Guid)u.ProviderUserKey);
         if (vote == "non")
         {
@@ -123,12 +129,12 @@ public partial class Image : System.Web.UI.Page
             }
             catch
             {
-                error.Text = "Please login.";
+                error.Text = "Error voting.";
                 lightbox.Visible = true;
             }
         }
         //if already upvoted remove
-        else if(vote == "up")
+        else if (vote == "up")
         {
             FuddleVote.removeFromUpCount(id);
             upCount.Text = FuddleVote.getUpCount(id).ToString();
@@ -140,6 +146,12 @@ public partial class Image : System.Web.UI.Page
     //down voting this image
     protected void downButton_Click(object sender, EventArgs e)
     {
+        if (u == null)
+        {
+            error.Text = "Please login to vote.";
+            lightbox.Visible = true;
+            return;
+        }
         vote = FuddleVote.checkIfVoted(id, (Guid)u.ProviderUserKey);
         if (vote == "non")
         {
@@ -158,7 +170,7 @@ public partial class Image : System.Web.UI.Page
             }
             catch
             {
-                error.Text = "Please login.";
+                error.Text = "Error voting.";
                 lightbox.Visible = true;
             }
         }
@@ -175,6 +187,12 @@ public partial class Image : System.Web.UI.Page
     //cuddling this image
     protected void cuddleButton_Click(object sender, EventArgs e)
     {
+        if (u == null)
+        {
+            error.Text = "Please login to cuddle.";
+            lightbox.Visible = true;
+            return;
+        }
         try
         {
             u = Membership.GetUser();
@@ -186,7 +204,7 @@ public partial class Image : System.Web.UI.Page
         }
         catch
         {
-            error.Text = "Please login.";
+            error.Text = "Error cuddling.";
             lightbox.Visible = true;
         }
     }
@@ -208,18 +226,20 @@ public partial class Image : System.Web.UI.Page
             lightbox.Visible = true;
             return;
         }
-        
+
         //add comment to database
-        int commId = FuddleImage.addComment(commentBox.Text,id);
+        int commId = FuddleImage.addComment(commentBox.Text, id);
 
         //there is an error adding comment
-        if(commId == -1){
+        if (commId == -1)
+        {
             System.Diagnostics.Debug.WriteLine("Error Commenting.");
             error.Text = "Error commenting.";
             lightbox.Visible = true;
         }
         //when comments are added clear the commentbox
-        else{
+        else
+        {
             //create a comment literal        
             Literal myComment = new Literal();
             myComment.Text = "<div id='comment" + commId + "' class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + u.UserName + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + u.UserName + "'target='_blank'>" + u.UserName + "</a></span><span class='message'>" + commentBox.Text + "</span><span class='date'> just now &nbsp;<button type='button' class='deleteCommentButton submitButton' value='" + commId + "'>Delete</button></span></div></div>";
@@ -229,13 +249,13 @@ public partial class Image : System.Web.UI.Page
             commentBox.Text = "";
             //hide no comment
             nocomment.Visible = false;
-         }
+        }
     }
 
     //load all the comments for this image
     protected void loadComments()
     {
-        List <Comment_Info> comments = FuddleImage.getComments(id);  //this should return all the comments for that image
+        List<Comment_Info> comments = FuddleImage.getComments(id);  //this should return all the comments for that image
         //display no comments if non found
         if (comments.Count == 0)
         {
@@ -254,7 +274,7 @@ public partial class Image : System.Web.UI.Page
             {
                 if (comment.username == u.UserName)
                 {
-                    myComment.Text = "<div id='comment"+comment.id+ "' class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "&nbsp;<button type='button' class='deleteCommentButton submitButton' value='" + comment.id + "'>Delete</button></span></div></div>";
+                    myComment.Text = "<div id='comment" + comment.id + "' class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "&nbsp;<button type='button' class='deleteCommentButton submitButton' value='" + comment.id + "'>Delete</button></span></div></div>";
                 }
                 else
                 {
@@ -263,7 +283,7 @@ public partial class Image : System.Web.UI.Page
             }
             else
             {
-                 myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "</span></div></div>";
+                myComment.Text = "<div class='comment'><div class='pro-image'><img src='/GetAvatar.ashx?user=" + comment.username + "'/></div><div class='comm-cont'><span class='commenter'><a href='/user/" + comment.username + "'target='_blank'>" + comment.username + "</a></span><span class='message'>" + comment.comment + "</span><span class='date'>" + findTimeDiff(comment.date) + "</span></div></div>";
             }
             //add to comment panel
             commentPanel.Controls.AddAt(0, myComment);
@@ -273,20 +293,22 @@ public partial class Image : System.Web.UI.Page
     //delete button is clicked
     protected void delete_Click(object sender, EventArgs e)
     {
-        try{
-        //delete this image
-        FuddleImage.deleteImage(id);
-        //delete from albums as well, if it exists in any
-        FuddleAlbum.deleteImage(id);
-        //display deleted message
-        error.Text = "Image deleted.";
-        lightbox.Visible = true;
-        Session["deleted"] = true;
+        try
+        {
+            //delete this image
+            FuddleImage.deleteImage(id);
+            //delete from albums as well, if it exists in any
+            FuddleAlbum.deleteImage(id);
+            //display deleted message
+            error.Text = "Image deleted.";
+            lightbox.Visible = true;
+            Session["deleted"] = true;
         }
-        catch{
-             error.Text = "Error on deletion.";
-             lightbox.Visible = true;
-             Session["deleted"] = false;
+        catch
+        {
+            error.Text = "Error on deletion.";
+            lightbox.Visible = true;
+            Session["deleted"] = false;
         }
     }
 
@@ -294,7 +316,7 @@ public partial class Image : System.Web.UI.Page
     {
         var ts = new TimeSpan(DateTime.UtcNow.Ticks - then.Ticks);
         double delta = Math.Abs(ts.TotalSeconds);
-        
+
         const int SECOND = 1;
         const int MINUTE = 60 * SECOND;
         const int HOUR = 60 * MINUTE;
@@ -369,7 +391,7 @@ public partial class Image : System.Web.UI.Page
     protected void saveButton_Click(object sender, EventArgs e)
     {
         try
-        {  
+        {
             //get new info
             string newTitle = updateTitle.Text;
             string newDesc = updateDesc.Text;

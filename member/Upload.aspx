@@ -73,6 +73,7 @@
         <ContentTemplate>
             <asp:Panel runat="server" ClientIDMode="Static" ID="lightbox" Visible="false">
                 <asp:Panel runat="server" ID="content" ClientIDMode="Static">
+                    <asp:Label runat="server" ID="noAlbumLabel">You don't have any albums.</asp:Label>
                     <asp:RadioButtonList ID="buttonList" runat="server"></asp:RadioButtonList>
                      <asp:Button ID="chooseButton" runat="server" Text="Choose" CssClass="submitButton" OnClick="chooseButton_Click" />
                     <asp:Button ID="cancelButton" runat="server" Text="Cancel" OnClick="cancelButton_Click" CssClass="submitButton" />

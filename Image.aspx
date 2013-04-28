@@ -86,7 +86,7 @@
                     <asp:Button runat="server" ID="downButton" OnClick="downButton_Click" Text="Down &darr;" CssClass="uploadButton" />
                     <asp:TextBox runat="server" ID="downCount" Width="10" Text="0" Enabled="false" />
                     &nbsp;&nbsp;
-                    <asp:Button runat="server" ID="cuddleButton" OnClick="cuddleButton_Click" Text="Cuddle &hearts;" CssClass="uploadButton" Enabled="False" />
+                    <asp:Button runat="server" ID="cuddleButton" OnClick="cuddleButton_Click" Text="Cuddle &hearts;" CssClass="uploadButton"/>
                     <asp:TextBox runat="server" ID="cuddleCount" Width="10" Text="0" Enabled="false" />
                     &nbsp;&nbsp;
                 </ContentTemplate>
@@ -137,6 +137,9 @@
                 <asp:AsyncPostBackTrigger ControlID="updateButton" EventName="Click" />
                 <asp:AsyncPostBackTrigger ControlID="saveButton" EventName="Click" />
                 <asp:AsyncPostBackTrigger ControlID="closeError" EventName="Click" />
+                <asp:AsyncPostBackTrigger ControlID="upButton" EventName="Click"/>
+                <asp:AsyncPostBackTrigger ControlID="downButton" EventName="Click"/>
+                <asp:AsyncPostBackTrigger ControlID="cuddleButton" EventName="Click"/>
             </Triggers>
             <ContentTemplate>
                 <asp:Panel runat="server" ClientIDMode="Static" ID="lightbox" Visible="false">
