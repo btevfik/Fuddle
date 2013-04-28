@@ -39,10 +39,10 @@
                 <ContentTemplate>
                     <div id="albums-image-tabs">
                         <ul>
-                            <li runat="server" id="imageListItem">
+                            <li runat="server" id="albumListItem">
                                 <asp:LinkButton ID="albumLink" runat="server" OnClick="albumLink_Click">Albums</asp:LinkButton>
                             </li>
-                            <li runat="server" id="userListItem">
+                            <li runat="server" id="cuddleListItem">
                                 <asp:LinkButton ID="cuddleLink" runat="server" OnClick="cuddleLink_Click">Cuddles</asp:LinkButton>
                             </li>
                         </ul>

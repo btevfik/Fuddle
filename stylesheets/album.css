@@ -46,7 +46,7 @@ color: rgb(151, 186, 195);
 .remove-box {
     position:relative;
     left:110px;
-    bottom:10px;
+    bottom:30px;
 }
 
 .removeButton {
@@ -109,8 +109,9 @@ color: transparent;
 
 #ImageTable .uploadButton {
    position: relative;
-   right: 185px;
    padding:5px;
+   bottom:50px;
    font-size: 12px;
-   bottom: 25px;
+   display:block;
+   left:20px;
 }

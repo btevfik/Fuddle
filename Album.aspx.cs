@@ -62,8 +62,9 @@ public partial class Album : System.Web.UI.Page
         //get images
         List<int> imgs = FuddleAlbum.getImages(albumId);
         //calculate how many rows we need
-        int rows = imgs.Count/5;
-        if (rows == 0) rows = 1;
+        double calcRows = imgs.Count/4.0;
+        calcRows = Math.Ceiling(calcRows);
+        int rows = Convert.ToInt32(calcRows);
         for (int k = 0; k < rows; k++)
         {
             TableRow row1 = new TableRow();
@@ -72,8 +73,8 @@ public partial class Album : System.Web.UI.Page
                 try
                 {
                     HyperLink imglink = new HyperLink();
-                    imglink.NavigateUrl = "/Image.aspx?id=" + imgs[k + rows *i];
-                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + imgs[k + rows * i];
+                    imglink.NavigateUrl = "/Image.aspx?id=" + imgs[i + 4 *k];
+                    imglink.ImageUrl = "/ShowThumbnail.ashx?imgid=" + imgs[i + 4 * k];
                     imglink.CssClass = "album-img";
                     TableCell c = new TableCell();
                     c.Controls.Add(imglink);
@@ -83,11 +84,11 @@ public partial class Album : System.Web.UI.Page
                         changeCover.Text = "Make album cover";
                         changeCover.CssClass = "uploadButton";
                         changeCover.Click += new EventHandler(changeCoverButton_Click);
-                        changeCover.ID = imgs[k + i * rows] + " ";
+                        changeCover.ID = imgs[i + k * 4] + " ";
                         c.Controls.Add(changeCover);
 
                         CheckBox removeBox = new CheckBox();
-                        removeBox.ID = imgs[k + i*rows] + "";
+                        removeBox.ID = imgs[i + k * 4] + "";
                         removeBox.CssClass = "remove-box";
                         c.Controls.Add(removeBox);
                     }

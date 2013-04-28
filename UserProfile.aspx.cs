@@ -177,6 +177,11 @@ public partial class UserProfile : System.Web.UI.Page
 
     protected void loadAlbums()
     {
+        //add css
+        albumListItem.Attributes.Add("class", "activated");
+        //remove css
+        cuddleListItem.Attributes.Remove("class");
+
         for (int k = 0; k < album_index; k++)
         {
             TableRow row1 = new TableRow();
@@ -233,6 +238,11 @@ public partial class UserProfile : System.Web.UI.Page
 
     protected void loadCuddles()
     {
+        //add css
+        cuddleListItem.Attributes.Add("class", "activated");
+        //remove css
+        albumListItem.Attributes.Remove("class");
+
         for (int k = 0; k < cuddle_index; k++)
         {
             TableRow row1 = new TableRow();
