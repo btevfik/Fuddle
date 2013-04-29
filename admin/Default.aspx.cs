@@ -11,4 +11,39 @@ public partial class admin_Default : System.Web.UI.Page
     {
 
     }
+
+    protected void DeleteImagesButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string input = DeleteImagesText.Text;
+            string[] ids = input.Split(',');
+            foreach (string id in ids)
+            {
+                FuddleImage.deleteImage(Int32.Parse(id));
+            }
+            result.Text = "Images deleted.";
+        }
+        catch
+        {
+            result.Text = "Error deleting images.";
+        }
+    }
+    protected void DeleteAlbumsButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string input = DeleteAlbumsText.Text;
+            string[] ids = input.Split(',');
+            foreach (string id in ids)
+            {
+                FuddleAlbum.deleteAlbum(Int32.Parse(id));
+            }
+            result.Text = "Albums deleted.";
+        }
+        catch
+        {
+            result.Text = "Error deleting albums.";
+        }
+    }
 }
