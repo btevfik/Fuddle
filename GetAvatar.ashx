@@ -67,8 +67,17 @@ public class GetAvatar : IHttpHandler {
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    context.Response.ContentType = "image/jpg";
-                    context.Response.BinaryWrite((byte[])rdr["User_avatar"]);
+                    //if not null write to page
+                    if (rdr["User_avatar"]!=System.DBNull.Value)
+                    {
+                        context.Response.ContentType = "image/jpg";
+                        context.Response.BinaryWrite((byte[])rdr["User_avatar"]); 
+                    }
+                    //if empty display default
+                    else
+                    {
+                        context.Response.Redirect("/resources/gravatar.jpg");  
+                    }
                 }
 
             }
