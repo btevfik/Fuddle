@@ -81,7 +81,9 @@ public class FuddleAlbum
         try
         {
             // Update the album title
-            SqlCommand cmd = new SqlCommand("UPDATE [Album_table] SET Album_title = '" + new_album_title + "'" + " WHERE Album_id = '" + album_id.ToString() + "'", conn);
+            SqlCommand cmd = new SqlCommand("UPDATE [Album_table] SET Album_title = @new_album_title WHERE Album_id = @album_id", conn);
+            cmd.Parameters.Add("@new_album_title", SqlDbType.NVarChar).Value = new_album_title;
+            cmd.Parameters.Add("@album_id", SqlDbType.Int).Value = album_id;
 
             // Execute the sql command                
             cmd.Connection = conn;
@@ -199,29 +201,6 @@ public class FuddleAlbum
         }
         return images;
     }
-
-    /*NOT NEEDED FOR NOW
-    // Must use this method to delete all the specified user's albums when deleting the user 
-    public static void deleteAllUsersAlbums(Guid id)
-    {
-        SqlConnection conn = new SqlConnection(connString);
-        try
-        {
-            // Delete all the albums of the user
-            SqlCommand cmd = new SqlCommand("Delete FROM [Album_table] WHERE User_id = '" + id.ToString() + "'", conn);
-
-            // Execute the sql command                
-            cmd.Connection = conn;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-        finally
-        {
-            conn.Close();
-            conn.Dispose();
-        }
-    }
-    */
 
     public static void deleteAlbum(int album_id)
     {

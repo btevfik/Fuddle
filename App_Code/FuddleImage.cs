@@ -81,7 +81,6 @@ public class FuddleImage
             conn.Open();
             cmd.ExecuteNonQuery();
             idOut = (int)cmd.Parameters["@id"].Value;
-            System.Diagnostics.Debug.WriteLine("Inserted id: "+idOut);
         }
         catch
         {
@@ -96,13 +95,15 @@ public class FuddleImage
     }
 
     //update description of this image
-    public static void updateDescription(string s, int image_id)
+    public static void updateDescription(string newDesc, int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
         try
         {
             // Update the image description
-            SqlCommand cmd = new SqlCommand("UPDATE [Image_table] SET Image_desc = '" + s + "'" + " WHERE Image_id = '" + image_id.ToString() + "'", conn);
+            SqlCommand cmd = new SqlCommand("UPDATE [Image_table] SET Image_desc = @new_image_desc WHERE Image_id = @image_id", conn);
+            cmd.Parameters.Add("@new_image_desc", SqlDbType.VarChar).Value = newDesc;
+            cmd.Parameters.Add("@image_id", SqlDbType.Int).Value = image_id;
 
             // Execute the sql command                
             cmd.Connection = conn;
@@ -117,13 +118,15 @@ public class FuddleImage
     }
 
     //update title of this image
-    public static void updateTitle(string s, int image_id)
+    public static void updateTitle(string newTitle, int image_id)
     {
         SqlConnection conn = new SqlConnection(connString);
         try
         {
             // Update the image title
-            SqlCommand cmd = new SqlCommand("UPDATE [Image_table] SET Image_title = '" + s + "'" + " WHERE Image_id = '" + image_id.ToString() + "'", conn);
+            SqlCommand cmd = new SqlCommand("UPDATE [Image_table] SET Image_title = @new_image_title WHERE Image_id = @image_id", conn);
+            cmd.Parameters.Add("@new_image_title", SqlDbType.VarChar).Value = newTitle;
+            cmd.Parameters.Add("@image_id", SqlDbType.Int).Value = image_id;
 
             // Execute the sql command                
             cmd.Connection = conn;
