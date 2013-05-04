@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="ShowImage" %>
+﻿<%@ WebHandler Language="C#" Class="ShowThumbnail" %>
 
 using System;
 using System.Web;
@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
-public class ShowImage : IHttpHandler {
+public class ShowThumbnail : IHttpHandler {
 
     public void ProcessRequest(HttpContext context)
     {
