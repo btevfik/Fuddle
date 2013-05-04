@@ -39,13 +39,6 @@ public class ShowImage : IHttpHandler
             if (rdr != null)
                 rdr.Close();
         }
-        //if an error, than display a default img, Fuddlelephant
-        catch
-        {
-            string loc = HttpContext.Current.Server.MapPath("/resources/fuddlelephant.png");
-            context.Response.WriteFile(loc);
-            context.Response.ContentType = "image/png";
-        }
         finally
         {
             conn.Close();
