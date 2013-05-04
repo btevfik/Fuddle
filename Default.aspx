@@ -63,7 +63,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div style="text-align: center; width: 100%; background-color: rgba(0, 0, 0, 0.1); color: #0D98BA; padding: 5px">The most liked fuddles by our members.</div>
+    <div style="text-align: center; width: 100%; background-color: rgba(0, 0, 0, 0.1); color: #0D98BA; padding: 5px 0 5px 0">The most liked fuddles by our members.</div>
     <asp:Panel ID="container" ClientIDMode="Static" runat="server"></asp:Panel>
 </asp:Content>
 
