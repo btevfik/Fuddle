@@ -76,7 +76,9 @@ public class GetAvatar : IHttpHandler {
                     //if empty display default
                     else
                     {
-                        context.Response.Redirect("/resources/gravatar.jpg");  
+                        string loc = HttpContext.Current.Server.MapPath("/resources/gravatar.jpg");
+                        context.Response.WriteFile(loc);
+                        context.Response.ContentType = "image/jpg";
                     }
                 }
 
