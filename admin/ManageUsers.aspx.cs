@@ -63,7 +63,7 @@ public partial class admin_ManageUsers : System.Web.UI.Page
     
     protected void UnlockUser(object sender, EventArgs e)
     {
-        MembershipUser user = Membership.GetUser(UserGrid.SelectedRow.Cells[1].Text);
+        MembershipUser userToUnlock = Membership.GetUser(UserGrid.SelectedRow.Cells[1].Text);
         userToUnlock.UnlockUser();
     }
 
