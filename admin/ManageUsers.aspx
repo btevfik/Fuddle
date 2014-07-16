@@ -91,6 +91,7 @@
             <asp:Button runat="server" ID="ManageSave" Text="Save" OnClick="ManageUserSave" />
             <asp:Button runat="server" ID="ManageDelete" Text="Delete" OnClick="AskMessage" style="margin-left:10px; margin-right: 10px;" />
             <asp:Button ID="Button1" runat="server" Text="Cancel" />
+            <asp:Button runat="server" ID="UserUnlock" Text="Unlock" OnClick="UnlockUser" />
         </div>
         </asp:Panel>
     </div>
