@@ -43,7 +43,7 @@ public class ShowThumbnail : IHttpHandler {
     public bool IsReusable 
     {
         get {
-            return false;
+            return true;
         }
     }
 
