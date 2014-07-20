@@ -26,7 +26,7 @@ public class ShowImage : IHttpHandler
             rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-                context.Response.ContentType = "image/jpg";
+                context.Response.ContentType = "image/png";
                 context.Response.BinaryWrite((byte[])rdr["Image_data"]);
             }
 
