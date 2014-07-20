@@ -45,7 +45,7 @@ public class ShowImage : IHttpHandler
     {
         get
         {
-            return false;
+            return true;
         }
     }
 
