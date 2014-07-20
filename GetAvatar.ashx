@@ -70,7 +70,7 @@ public class GetAvatar : IHttpHandler {
                     //if not null write to page
                     if (rdr["User_avatar"]!=System.DBNull.Value)
                     {
-                        context.Response.ContentType = "image/jpg";
+                        context.Response.ContentType = "image/png";
                         context.Response.BinaryWrite((byte[])rdr["User_avatar"]); 
                     }
                     //if empty display default
