@@ -30,7 +30,7 @@
 
         <!-- Albums / Images Tab -->
         <div class ="imgtab">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="loadrows"/>
                     <asp:AsyncPostBackTrigger ControlID="cuddleLink" />
@@ -57,7 +57,7 @@
         <!--Recent Uploads-->
         <div class="uploads">
             <h2>Uploads</h2>
-            <asp:UpdatePanel ID="RecentUpload" runat="server" UpdateMode="Conditional">
+            <asp:UpdatePanel ID="RecentUpload" runat="server">
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="loaduploads"/>
                 </Triggers>
