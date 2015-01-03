@@ -206,7 +206,7 @@ public partial class Upload : System.Web.UI.Page
                 //add the album as well if user specified.
                 if (album_index!=-1)
                 {
-                    uploadStatus.Text = item.Value; //TODO:REMOVE
+                    uploadStatus.Text = album_index.ToString(); //TODO:REMOVE
                     uploadStatus.Visible = true; //TODO:REMOVE
                     FuddleAlbum.addImage(album_index, image_id);
                     album_index = -1; //reset
