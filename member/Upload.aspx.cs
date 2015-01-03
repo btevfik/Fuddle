@@ -267,6 +267,8 @@ public partial class Upload : System.Web.UI.Page
         }
         catch
         {
+            uploadStatus.Text = "Error Picking Album"; //TODO:REMOVE
+            uploadStatus.Visible = true //TODO:REMOVE
             //bad
         }
     }
