@@ -203,6 +203,12 @@ public partial class Upload : System.Web.UI.Page
                 conn2.Open();
                 vote_cmd.ExecuteNonQuery();
 
+                //TODO: REMOVE
+                uploadStatus.ForeColor = Color.Red;
+                uploadStatus.Text = "Picked album: " + album_index.ToString();
+                uploadStatus.Visible = true;
+                //
+        
                 //add the album as well if user specified.
                 if (album_index!=-1)
                 {
