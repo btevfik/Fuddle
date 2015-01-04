@@ -218,7 +218,7 @@ public partial class Upload : System.Web.UI.Page
 
                 // Let the user know the file was uploaded successfully
                 uploadStatus.ForeColor = Color.Green;
-                uploadStatus.Text = "File uploaded successfully!";
+                uploadStatus.Text = uploadStatus.Text + "File uploaded successfully!";
                 title.Text = "";
                 description.Text = "";
                 uploadStatus.Visible = true;
@@ -227,7 +227,7 @@ public partial class Upload : System.Web.UI.Page
             catch (Exception ee)
             {
                 uploadStatus.ForeColor = Color.Red;
-                uploadStatus.Text = "Error uploading file." + ee;
+                uploadStatus.Text = uploadStatus.Text + "Error uploading file." + ee;
                 uploadStatus.Visible = true;
             }
             finally
