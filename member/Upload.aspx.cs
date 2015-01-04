@@ -206,8 +206,6 @@ public partial class Upload : System.Web.UI.Page
                 //add the album as well if user specified.
                 if (album_index!=-1)
                 {
-                    uploadStatus.Text = album_index.ToString(); //TODO:REMOVE
-                    uploadStatus.Visible = true; //TODO:REMOVE
                     FuddleAlbum.addImage(album_index, image_id);
                     album_index = -1; //reset
                 }
@@ -262,13 +260,12 @@ public partial class Upload : System.Web.UI.Page
             album_index = Int32.Parse(item.Value);
             lightbox.Visible = false;
             pickAlbum.CssClass = "albumSelected";
-            uploadStatus.Text = item.Value; //TODO:REMOVE
-            uploadStatus.Visible = true; //TODO:REMOVE
         }
-        catch
+        catch (Exception ex)
         {
-            uploadStatus.Text = "Error Picking Album"; //TODO:REMOVE
-            uploadStatus.Visible = true //TODO:REMOVE
+            uploadStatus.ForeColor = Color.Red;
+            uploadStatus.Text = "Error picking album. " + ex;
+            uploadStatus.Visible = true;
             //bad
         }
     }
